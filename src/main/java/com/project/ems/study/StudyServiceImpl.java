@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.project.ems.constants.Constants.STUDY_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class StudyServiceImpl implements StudyService {
@@ -63,7 +65,7 @@ public class StudyServiceImpl implements StudyService {
 
     @Override
     public Study findEntityById(Integer id) {
-        return studyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Study with id " + id + " not found"));
+        return studyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format(STUDY_NOT_FOUND, id)));
     }
 
     private void updateEntityFromDto(Study study, StudyDto studyDto) {

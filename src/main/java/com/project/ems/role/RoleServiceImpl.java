@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.project.ems.constants.Constants.ROLE_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
@@ -51,6 +53,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role findEntityById(Integer id) {
-        return roleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Role with id " + id + " not found"));
+        return roleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format(ROLE_NOT_FOUND, id)));
     }
 }

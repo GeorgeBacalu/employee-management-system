@@ -11,18 +11,21 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.project.ems.constants.Constants.INVALID_REQUEST;
+import static com.project.ems.constants.Constants.RESOURCE_NOT_FOUND;
+
 @RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException exception) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource not found: " + exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(RESOURCE_NOT_FOUND + exception.getMessage());
     }
 
     @ExceptionHandler(InvalidRequestException.class)
     public ResponseEntity<String> handleInvalidRequestException(InvalidRequestException exception) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid request: " + exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(INVALID_REQUEST + exception.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

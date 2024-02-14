@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.project.ems.constants.Constants.EMPLOYEE_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
@@ -91,7 +93,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee findEntityById(Integer id) {
-        return employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee with id " + id + " not found"));
+        return employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format(EMPLOYEE_NOT_FOUND, id)));
     }
 
     private void updateEntityFromDto(Employee employee, EmployeeDto employeeDto) {

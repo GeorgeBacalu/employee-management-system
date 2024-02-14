@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.project.ems.constants.Constants.AUTHORITY_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class AuthorityServiceImpl implements AuthorityService {
@@ -51,6 +53,6 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     @Override
     public Authority findEntityById(Integer id) {
-        return authorityRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Authority with id " + id + " not found"));
+        return authorityRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format(AUTHORITY_NOT_FOUND, id)));
     }
 }

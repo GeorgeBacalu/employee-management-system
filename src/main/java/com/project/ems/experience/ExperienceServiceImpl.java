@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.project.ems.constants.Constants.EXPERIENCE_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class ExperienceServiceImpl implements ExperienceService {
@@ -63,7 +65,7 @@ public class ExperienceServiceImpl implements ExperienceService {
 
     @Override
     public Experience findEntityById(Integer id) {
-        return experienceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Experience with id " + id + " not found"));
+        return experienceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format(EXPERIENCE_NOT_FOUND, id)));
     }
 
     private void updateEntityFromDto(Experience experience, ExperienceDto experienceDto) {

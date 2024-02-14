@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.project.ems.constants.Constants.TRAINER_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class TrainerServiceImpl implements TrainerService {
@@ -92,7 +94,7 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     public Trainer findEntityById(Integer id) {
-        return trainerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Trainer with id " + id + " not found"));
+        return trainerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format(TRAINER_NOT_FOUND, id)));
     }
 
     private void updateEntityFromDto(Trainer trainer, TrainerDto trainerDto) {

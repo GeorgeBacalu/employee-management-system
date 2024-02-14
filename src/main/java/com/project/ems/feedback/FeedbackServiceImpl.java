@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.project.ems.constants.Constants.FEEDBACK_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class FeedbackServiceImpl implements FeedbackService {
@@ -70,7 +72,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public Feedback findEntityById(Integer id) {
-        return feedbackRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Feedback with id " + id + " not found"));
+        return feedbackRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(String.format(FEEDBACK_NOT_FOUND, id)));
     }
 
     private void updateEntityFromDto(Feedback feedback, FeedbackDto feedbackDto) {
