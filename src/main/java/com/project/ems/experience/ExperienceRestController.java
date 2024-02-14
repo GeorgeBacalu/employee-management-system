@@ -11,31 +11,31 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/experiences")
 @RequiredArgsConstructor
-public class ExperienceRestController {
+public class ExperienceRestController implements ExperienceApi {
 
     private final ExperienceService experienceService;
 
-    @GetMapping
+    @Override @GetMapping
     public ResponseEntity<List<ExperienceDto>> findAll() {
         return ResponseEntity.ok(experienceService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @Override @GetMapping("/{id}")
     public ResponseEntity<ExperienceDto> findById(@PathVariable Integer id) {
         return ResponseEntity.ok(experienceService.findById(id));
     }
 
-    @PostMapping
+    @Override @PostMapping
     public ResponseEntity<ExperienceDto> save(@RequestBody @Valid ExperienceDto experienceDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(experienceService.save(experienceDto));
     }
 
-    @PutMapping("/{id}")
+    @Override @PutMapping("/{id}")
     public ResponseEntity<ExperienceDto> updateById(@RequestBody @Valid ExperienceDto experienceDto, @PathVariable Integer id) {
         return ResponseEntity.ok(experienceService.updateById(experienceDto, id));
     }
 
-    @DeleteMapping("/{id}")
+    @Override @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
         experienceService.deleteById(id);
         return ResponseEntity.noContent().build();

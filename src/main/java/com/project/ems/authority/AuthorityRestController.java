@@ -11,21 +11,21 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/authorities")
 @RequiredArgsConstructor
-public class AuthorityRestController {
+public class AuthorityRestController implements AuthorityApi {
 
     private final AuthorityService authorityService;
 
-    @GetMapping
+    @Override @GetMapping
     public ResponseEntity<List<AuthorityDto>> findAll() {
         return ResponseEntity.ok(authorityService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @Override @GetMapping("/{id}")
     public ResponseEntity<AuthorityDto> findById(@PathVariable Integer id) {
         return ResponseEntity.ok(authorityService.findById(id));
     }
 
-    @PostMapping
+    @Override @PostMapping
     public ResponseEntity<AuthorityDto> save(@RequestBody @Valid AuthorityDto authorityDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(authorityService.save(authorityDto));
     }

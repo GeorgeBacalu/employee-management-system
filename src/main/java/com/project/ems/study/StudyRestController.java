@@ -11,31 +11,31 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/studies")
 @RequiredArgsConstructor
-public class StudyRestController {
+public class StudyRestController implements StudyApi {
 
     private final StudyService studyService;
 
-    @GetMapping
+    @Override @GetMapping
     public ResponseEntity<List<StudyDto>> findAll() {
         return ResponseEntity.ok(studyService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @Override @GetMapping("/{id}")
     public ResponseEntity<StudyDto> findById(@PathVariable Integer id) {
         return ResponseEntity.ok(studyService.findById(id));
     }
 
-    @PostMapping
+    @Override @PostMapping
     public ResponseEntity<StudyDto> save(@RequestBody @Valid StudyDto studyDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(studyService.save(studyDto));
     }
 
-    @PutMapping("/{id}")
+    @Override @PutMapping("/{id}")
     public ResponseEntity<StudyDto> updateById(@RequestBody @Valid StudyDto studyDto, @PathVariable Integer id) {
         return ResponseEntity.ok(studyService.updateById(studyDto, id));
     }
 
-    @DeleteMapping("/{id}")
+    @Override @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
         studyService.deleteById(id);
         return ResponseEntity.noContent().build();

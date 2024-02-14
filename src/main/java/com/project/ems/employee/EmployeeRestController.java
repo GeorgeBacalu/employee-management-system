@@ -11,31 +11,31 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/employees")
 @RequiredArgsConstructor
-public class EmployeeRestController {
+public class EmployeeRestController implements EmployeeApi {
 
     private final EmployeeService employeeService;
 
-    @GetMapping
+    @Override @GetMapping
     public ResponseEntity<List<EmployeeDto>> findAll() {
         return ResponseEntity.ok(employeeService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @Override @GetMapping("/{id}")
     public ResponseEntity<EmployeeDto> findById(@PathVariable Integer id) {
         return ResponseEntity.ok(employeeService.findById(id));
     }
 
-    @PostMapping
+    @Override @PostMapping
     public ResponseEntity<EmployeeDto> save(@RequestBody @Valid EmployeeDto employeeDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.save(employeeDto));
     }
 
-    @PutMapping("/{id}")
+    @Override @PutMapping("/{id}")
     public ResponseEntity<EmployeeDto> updateById(@RequestBody @Valid EmployeeDto employeeDto, @PathVariable Integer id) {
         return ResponseEntity.ok(employeeService.updateById(employeeDto, id));
     }
 
-    @DeleteMapping("/{id}")
+    @Override @DeleteMapping("/{id}")
     public ResponseEntity<EmployeeDto> disableById(@PathVariable Integer id) {
         return ResponseEntity.ok(employeeService.disableById(id));
     }

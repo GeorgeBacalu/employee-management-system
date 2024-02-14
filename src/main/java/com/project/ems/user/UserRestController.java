@@ -11,31 +11,31 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
-public class UserRestController {
+public class UserRestController implements UserApi {
 
     private final UserService userService;
 
-    @GetMapping
+    @Override @GetMapping
     public ResponseEntity<List<UserDto>> findAll() {
         return ResponseEntity.ok(userService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @Override @GetMapping("/{id}")
     public ResponseEntity<UserDto> findById(@PathVariable Integer id) {
         return ResponseEntity.ok(userService.findById(id));
     }
 
-    @PostMapping
+    @Override @PostMapping
     public ResponseEntity<UserDto> save(@RequestBody @Valid UserDto userDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userDto));
     }
 
-    @PutMapping("/{id}")
+    @Override @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateById(@RequestBody @Valid UserDto userDto, @PathVariable Integer id) {
         return ResponseEntity.ok(userService.updateById(userDto, id));
     }
 
-    @DeleteMapping("/{id}")
+    @Override @DeleteMapping("/{id}")
     public ResponseEntity<UserDto> disableById(@PathVariable Integer id) {
         return ResponseEntity.ok(userService.disableById(id));
     }

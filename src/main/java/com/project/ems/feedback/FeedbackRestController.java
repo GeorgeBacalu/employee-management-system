@@ -11,31 +11,31 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/feedbacks")
 @RequiredArgsConstructor
-public class FeedbackRestController {
+public class FeedbackRestController implements FeedbackApi {
 
     private final FeedbackService feedbackService;
 
-    @GetMapping
+    @Override @GetMapping
     public ResponseEntity<List<FeedbackDto>> findAll() {
         return ResponseEntity.ok(feedbackService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @Override @GetMapping("/{id}")
     public ResponseEntity<FeedbackDto> findById(@PathVariable Integer id) {
         return ResponseEntity.ok(feedbackService.findById(id));
     }
 
-    @PostMapping
+    @Override @PostMapping
     public ResponseEntity<FeedbackDto> save(@RequestBody @Valid FeedbackDto feedbackDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(feedbackService.save(feedbackDto));
     }
 
-    @PutMapping("/{id}")
+    @Override @PutMapping("/{id}")
     public ResponseEntity<FeedbackDto> updateById(@RequestBody @Valid FeedbackDto feedbackDto, @PathVariable Integer id) {
         return ResponseEntity.ok(feedbackService.updateById(feedbackDto, id));
     }
 
-    @DeleteMapping("/{id}")
+    @Override @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
         feedbackService.deleteById(id);
         return ResponseEntity.noContent().build();

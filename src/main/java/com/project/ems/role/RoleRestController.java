@@ -11,21 +11,21 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/roles")
 @RequiredArgsConstructor
-public class RoleRestController {
+public class RoleRestController implements RoleApi {
 
     private final RoleService roleService;
 
-    @GetMapping
+    @Override @GetMapping
     public ResponseEntity<List<RoleDto>> findAll() {
         return ResponseEntity.ok(roleService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @Override @GetMapping("/{id}")
     public ResponseEntity<RoleDto> findById(@PathVariable Integer id) {
         return ResponseEntity.ok(roleService.findById(id));
     }
 
-    @PostMapping
+    @Override @PostMapping
     public ResponseEntity<RoleDto> save(@RequestBody @Valid RoleDto roleDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(roleService.save(roleDto));
     }
