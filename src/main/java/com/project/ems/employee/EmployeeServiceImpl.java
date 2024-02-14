@@ -2,6 +2,7 @@ package com.project.ems.employee;
 
 import com.project.ems.authority.Authority;
 import com.project.ems.authority.AuthorityService;
+import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.experience.Experience;
 import com.project.ems.experience.ExperienceService;
 import com.project.ems.role.RoleService;
@@ -90,7 +91,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee findEntityById(Integer id) {
-        return employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee with id " + id + " not found"));
+        return employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee with id " + id + " not found"));
     }
 
     private void updateEntityFromDto(Employee employee, EmployeeDto employeeDto) {

@@ -1,5 +1,6 @@
 package com.project.ems.feedback;
 
+import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -69,7 +70,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public Feedback findEntityById(Integer id) {
-        return feedbackRepository.findById(id).orElseThrow(() -> new RuntimeException("Feedback with id " + id + " not found"));
+        return feedbackRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Feedback with id " + id + " not found"));
     }
 
     private void updateEntityFromDto(Feedback feedback, FeedbackDto feedbackDto) {

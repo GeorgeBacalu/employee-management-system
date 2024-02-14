@@ -1,5 +1,6 @@
 package com.project.ems.experience;
 
+import com.project.ems.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -62,7 +63,7 @@ public class ExperienceServiceImpl implements ExperienceService {
 
     @Override
     public Experience findEntityById(Integer id) {
-        return experienceRepository.findById(id).orElseThrow(() -> new RuntimeException("Experience with id " + id + " not found"));
+        return experienceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Experience with id " + id + " not found"));
     }
 
     private void updateEntityFromDto(Experience experience, ExperienceDto experienceDto) {

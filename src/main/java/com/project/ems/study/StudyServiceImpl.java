@@ -1,5 +1,6 @@
 package com.project.ems.study;
 
+import com.project.ems.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -62,7 +63,7 @@ public class StudyServiceImpl implements StudyService {
 
     @Override
     public Study findEntityById(Integer id) {
-        return studyRepository.findById(id).orElseThrow(() -> new RuntimeException("Study with id " + id + " not found"));
+        return studyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Study with id " + id + " not found"));
     }
 
     private void updateEntityFromDto(Study study, StudyDto studyDto) {

@@ -2,6 +2,7 @@ package com.project.ems.user;
 
 import com.project.ems.authority.Authority;
 import com.project.ems.authority.AuthorityService;
+import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.role.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -77,7 +78,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findEntityById(Integer id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User with id " + id + " not found"));
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
     }
 
     private void updateEntityFromDto(User user, UserDto userDto) {

@@ -1,5 +1,6 @@
 package com.project.ems.authority;
 
+import com.project.ems.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,6 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     @Override
     public Authority findEntityById(Integer id) {
-        return authorityRepository.findById(id).orElseThrow(() -> new RuntimeException("Authority with id " + id + " not found"));
+        return authorityRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Authority with id " + id + " not found"));
     }
 }

@@ -2,6 +2,7 @@ package com.project.ems.trainer;
 
 import com.project.ems.authority.Authority;
 import com.project.ems.authority.AuthorityService;
+import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.experience.Experience;
 import com.project.ems.experience.ExperienceService;
 import com.project.ems.role.RoleService;
@@ -91,7 +92,7 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     public Trainer findEntityById(Integer id) {
-        return trainerRepository.findById(id).orElseThrow(() -> new RuntimeException("Trainer with id " + id + " not found"));
+        return trainerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Trainer with id " + id + " not found"));
     }
 
     private void updateEntityFromDto(Trainer trainer, TrainerDto trainerDto) {
