@@ -15,27 +15,27 @@ public class TrainerRestController {
     private final TrainerService trainerService;
 
     @GetMapping
-    public ResponseEntity<List<Trainer>> findAll() {
+    public ResponseEntity<List<TrainerDto>> findAll() {
         return ResponseEntity.ok(trainerService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Trainer> findById(@PathVariable Integer id) {
+    public ResponseEntity<TrainerDto> findById(@PathVariable Integer id) {
         return ResponseEntity.ok(trainerService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Trainer> save(@RequestBody Trainer trainer) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(trainerService.save(trainer));
+    public ResponseEntity<TrainerDto> save(@RequestBody TrainerDto trainerDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(trainerService.save(trainerDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Trainer> updateById(@RequestBody Trainer trainer, @PathVariable Integer id) {
-        return ResponseEntity.ok(trainerService.updateById(trainer, id));
+    public ResponseEntity<TrainerDto> updateById(@RequestBody TrainerDto trainerDto, @PathVariable Integer id) {
+        return ResponseEntity.ok(trainerService.updateById(trainerDto, id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Trainer> disableById(@PathVariable Integer id) {
+    public ResponseEntity<TrainerDto> disableById(@PathVariable Integer id) {
         return ResponseEntity.ok(trainerService.disableById(id));
     }
 }

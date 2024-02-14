@@ -4,13 +4,23 @@ import java.util.List;
 
 public interface ExperienceService {
 
-    List<Experience> findAll();
+    List<ExperienceDto> findAll();
 
-    Experience findById(Integer id);
+    ExperienceDto findById(Integer id);
 
-    Experience save(Experience experience);
+    ExperienceDto save(ExperienceDto experienceDto);
 
-    Experience updateById(Experience experience, Integer id);
+    ExperienceDto updateById(ExperienceDto experienceDto, Integer id);
 
     void deleteById(Integer id);
+
+    List<ExperienceDto> convertToDtos(List<Experience> experiences);
+
+    List<Experience> convertToEntities(List<ExperienceDto> experienceDtos);
+
+    ExperienceDto convertToDto(Experience experience);
+
+    Experience convertToEntity(ExperienceDto experienceDto);
+
+    Experience findEntityById(Integer id);
 }

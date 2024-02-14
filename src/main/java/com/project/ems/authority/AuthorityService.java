@@ -4,9 +4,19 @@ import java.util.List;
 
 public interface AuthorityService {
 
-    List<Authority> findAll();
+    List<AuthorityDto> findAll();
 
-    Authority findById(Integer id);
+    AuthorityDto findById(Integer id);
 
-    Authority save(Authority authority);
+    AuthorityDto save(AuthorityDto authorityDto);
+
+    List<AuthorityDto> convertToDtos(List<Authority> authorities);
+
+    List<Authority> convertToEntities(List<AuthorityDto> authorityDtos);
+
+    AuthorityDto convertToDto(Authority authority);
+
+    Authority convertToEntity(AuthorityDto authorityDto);
+
+    Authority findEntityById(Integer id);
 }

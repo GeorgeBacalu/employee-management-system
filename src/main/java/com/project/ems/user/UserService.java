@@ -4,13 +4,23 @@ import java.util.List;
 
 public interface UserService {
 
-    List<User> findAll();
+    List<UserDto> findAll();
 
-    User findById(Integer id);
+    UserDto findById(Integer id);
 
-    User save(User user);
+    UserDto save(UserDto userDto);
 
-    User updateById(User user, Integer id);
+    UserDto updateById(UserDto userDto, Integer id);
 
-    User disableById(Integer id);
+    UserDto disableById(Integer id);
+
+    List<UserDto> convertToDtos(List<User> users);
+
+    List<User> convertToEntities(List<UserDto> userDtos);
+
+    UserDto convertToDto(User user);
+
+    User convertToEntity(UserDto userDto);
+
+    User findEntityById(Integer id);
 }

@@ -4,13 +4,23 @@ import java.util.List;
 
 public interface FeedbackService {
 
-    List<Feedback> findAll();
+    List<FeedbackDto> findAll();
 
-    Feedback findById(Integer id);
+    FeedbackDto findById(Integer id);
 
-    Feedback save(Feedback feedback);
+    FeedbackDto save(FeedbackDto feedbackDto);
 
-    Feedback updateById(Feedback feedback, Integer id);
+    FeedbackDto updateById(FeedbackDto feedbackDto, Integer id);
 
     void deleteById(Integer id);
+
+    List<FeedbackDto> convertToDtos(List<Feedback> feedbacks);
+
+    List<Feedback> convertToEntities(List<FeedbackDto> feedbackDtos);
+
+    FeedbackDto convertToDto(Feedback feedback);
+
+    Feedback convertToEntity(FeedbackDto feedbackDto);
+
+    Feedback findEntityById(Integer id);
 }

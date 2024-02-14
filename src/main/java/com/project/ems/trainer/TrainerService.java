@@ -4,13 +4,23 @@ import java.util.List;
 
 public interface TrainerService {
 
-    List<Trainer> findAll();
+    List<TrainerDto> findAll();
 
-    Trainer findById(Integer id);
+    TrainerDto findById(Integer id);
 
-    Trainer save(Trainer trainer);
+    TrainerDto save(TrainerDto trainerDto);
 
-    Trainer updateById(Trainer trainer, Integer id);
+    TrainerDto updateById(TrainerDto trainerDto, Integer id);
 
-    Trainer disableById(Integer id);
+    TrainerDto disableById(Integer id);
+
+    List<TrainerDto> convertToDtos(List<Trainer> trainers);
+
+    List<Trainer> convertToEntities(List<TrainerDto> trainerDtos);
+
+    TrainerDto convertToDto(Trainer trainer);
+
+    Trainer convertToEntity(TrainerDto trainerDto);
+
+    Trainer findEntityById(Integer id);
 }

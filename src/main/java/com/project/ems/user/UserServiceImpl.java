@@ -1,50 +1,93 @@
 package com.project.ems.user;
 
+import com.project.ems.authority.Authority;
+import com.project.ems.authority.AuthorityService;
+import com.project.ems.role.RoleService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final RoleService roleService;
+    private final AuthorityService authorityService;
+    private final ModelMapper modelMapper;
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<UserDto> findAll() {
+        return convertToDtos(userRepository.findAll());
     }
 
     @Override
-    public User findById(Integer id) {
+    public UserDto findById(Integer id) {
+        return convertToDto(findEntityById(id));
+    }
+
+    @Override
+    public UserDto save(UserDto userDto) {
+        User userToSave = convertToEntity(userDto);
+        userToSave.setIsActive(true);
+        return convertToDto(userRepository.save(userToSave));
+    }
+
+    @Override
+    public UserDto updateById(UserDto userDto, Integer id) {
+        User userToUpdate = findEntityById(id);
+        updateEntityFromDto(userToUpdate, userDto);
+        return convertToDto(userRepository.save(userToUpdate));
+    }
+
+    @Override
+    public UserDto disableById(Integer id) {
+        User userToDisable = findEntityById(id);
+        userToDisable.setIsActive(false);
+        return convertToDto(userRepository.save(userToDisable));
+    }
+
+    @Override
+    public List<UserDto> convertToDtos(List<User> users) {
+        return users.stream().map(this::convertToDto).toList();
+    }
+
+    @Override
+    public List<User> convertToEntities(List<UserDto> userDtos) {
+        return userDtos.stream().map(this::convertToEntity).toList();
+    }
+
+    @Override
+    public UserDto convertToDto(User user) {
+        UserDto userDto = modelMapper.map(user, UserDto.class);
+        userDto.setAuthoritiesIds(user.getAuthorities().stream().map(Authority::getId).toList());
+        return userDto;
+    }
+
+    @Override
+    public User convertToEntity(UserDto userDto) {
+        User user = modelMapper.map(userDto, User.class);
+        user.setRole(roleService.findEntityById(userDto.getRoleId()));
+        user.setAuthorities(userDto.getAuthoritiesIds().stream().map(authorityService::findEntityById).toList());
+        return user;
+    }
+
+    @Override
+    public User findEntityById(Integer id) {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User with id " + id + " not found"));
     }
 
-    @Override
-    public User save(User user) {
-        user.setIsActive(true);
-        return userRepository.save(user);
-    }
-
-    @Override
-    public User updateById(User user, Integer id) {
-        User userToUpdate = findById(id);
-        userToUpdate.setName(user.getName());
-        userToUpdate.setEmail(user.getEmail());
-        userToUpdate.setPassword(user.getPassword());
-        userToUpdate.setMobile(user.getMobile());
-        userToUpdate.setAddress(user.getAddress());
-        userToUpdate.setBirthday(user.getBirthday());
-        userToUpdate.setRole(user.getRole());
-        userToUpdate.setAuthorities(user.getAuthorities());
-        return userRepository.save(userToUpdate);
-    }
-
-    @Override
-    public User disableById(Integer id) {
-        User userToDisable = findById(id);
-        userToDisable.setIsActive(false);
-        return userRepository.save(userToDisable);
+    private void updateEntityFromDto(User user, UserDto userDto) {
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(userDto.getPassword());
+        user.setMobile(userDto.getMobile());
+        user.setAddress(userDto.getAddress());
+        user.setBirthday(userDto.getBirthday());
+        user.setRole(roleService.findEntityById(userDto.getRoleId()));
+        user.setAuthorities(userDto.getAuthoritiesIds().stream().map(authorityService::findEntityById).collect(Collectors.toList()));
     }
 }

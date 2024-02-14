@@ -15,17 +15,17 @@ public class AuthorityRestController {
     private final AuthorityService authorityService;
 
     @GetMapping
-    public ResponseEntity<List<Authority>> findAll() {
+    public ResponseEntity<List<AuthorityDto>> findAll() {
         return ResponseEntity.ok(authorityService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Authority> findById(@PathVariable Integer id) {
+    public ResponseEntity<AuthorityDto> findById(@PathVariable Integer id) {
         return ResponseEntity.ok(authorityService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Authority> save(@RequestBody Authority authority) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(authorityService.save(authority));
+    public ResponseEntity<AuthorityDto> save(@RequestBody AuthorityDto authorityDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(authorityService.save(authorityDto));
     }
 }

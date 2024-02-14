@@ -1,6 +1,7 @@
 package com.project.ems.experience;
 
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,36 +11,66 @@ import java.util.List;
 public class ExperienceServiceImpl implements ExperienceService {
 
     private final ExperienceRepository experienceRepository;
+    private final ModelMapper modelMapper;
 
     @Override
-    public List<Experience> findAll() {
-        return experienceRepository.findAll();
+    public List<ExperienceDto> findAll() {
+        return convertToDtos(experienceRepository.findAll());
     }
 
     @Override
-    public Experience findById(Integer id) {
-        return experienceRepository.findById(id).orElseThrow(() -> new RuntimeException("Experience with id " + id + " not found"));
+    public ExperienceDto findById(Integer id) {
+        return convertToDto(findEntityById(id));
     }
 
     @Override
-    public Experience save(Experience experience) {
-        return experienceRepository.save(experience);
+    public ExperienceDto save(ExperienceDto experienceDto) {
+        return convertToDto(experienceRepository.save(convertToEntity(experienceDto)));
     }
 
     @Override
-    public Experience updateById(Experience experience, Integer id) {
-        Experience experienceToUpdate = findById(id);
-        experienceToUpdate.setTitle(experience.getTitle());
-        experienceToUpdate.setOrganization(experience.getOrganization());
-        experienceToUpdate.setDescription(experience.getDescription());
-        experienceToUpdate.setType(experience.getType());
-        experienceToUpdate.setStartedAt(experience.getStartedAt());
-        experienceToUpdate.setFinishedAt(experience.getFinishedAt());
-        return experienceRepository.save(experienceToUpdate);
+    public ExperienceDto updateById(ExperienceDto experienceDto, Integer id) {
+        Experience experienceToUpdate = findEntityById(id);
+        updateEntityFromDto(experienceToUpdate, experienceDto);
+        return convertToDto(experienceRepository.save(experienceToUpdate));
     }
 
     @Override
     public void deleteById(Integer id) {
-        experienceRepository.delete(findById(id));
+        experienceRepository.delete(findEntityById(id));
+    }
+
+    @Override
+    public List<ExperienceDto> convertToDtos(List<Experience> experiences) {
+        return experiences.stream().map(this::convertToDto).toList();
+    }
+
+    @Override
+    public List<Experience> convertToEntities(List<ExperienceDto> experienceDtos) {
+        return experienceDtos.stream().map(this::convertToEntity).toList();
+    }
+
+    @Override
+    public ExperienceDto convertToDto(Experience experience) {
+        return modelMapper.map(experience, ExperienceDto.class);
+    }
+
+    @Override
+    public Experience convertToEntity(ExperienceDto experienceDto) {
+        return modelMapper.map(experienceDto, Experience.class);
+    }
+
+    @Override
+    public Experience findEntityById(Integer id) {
+        return experienceRepository.findById(id).orElseThrow(() -> new RuntimeException("Experience with id " + id + " not found"));
+    }
+
+    private void updateEntityFromDto(Experience experience, ExperienceDto experienceDto) {
+        experience.setTitle(experienceDto.getTitle());
+        experience.setOrganization(experienceDto.getOrganization());
+        experience.setDescription(experienceDto.getDescription());
+        experience.setType(experienceDto.getType());
+        experience.setStartedAt(experienceDto.getStartedAt());
+        experience.setFinishedAt(experienceDto.getFinishedAt());
     }
 }
