@@ -1,5 +1,6 @@
 package com.project.ems.trainer;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +26,12 @@ public class TrainerRestController {
     }
 
     @PostMapping
-    public ResponseEntity<TrainerDto> save(@RequestBody TrainerDto trainerDto) {
+    public ResponseEntity<TrainerDto> save(@RequestBody @Valid TrainerDto trainerDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(trainerService.save(trainerDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TrainerDto> updateById(@RequestBody TrainerDto trainerDto, @PathVariable Integer id) {
+    public ResponseEntity<TrainerDto> updateById(@RequestBody @Valid TrainerDto trainerDto, @PathVariable Integer id) {
         return ResponseEntity.ok(trainerService.updateById(trainerDto, id));
     }
 

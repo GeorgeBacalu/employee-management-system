@@ -1,5 +1,6 @@
 package com.project.ems.feedback;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +26,12 @@ public class FeedbackRestController {
     }
 
     @PostMapping
-    public ResponseEntity<FeedbackDto> save(@RequestBody FeedbackDto feedbackDto) {
+    public ResponseEntity<FeedbackDto> save(@RequestBody @Valid FeedbackDto feedbackDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(feedbackService.save(feedbackDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FeedbackDto> updateById(@RequestBody FeedbackDto feedbackDto, @PathVariable Integer id) {
+    public ResponseEntity<FeedbackDto> updateById(@RequestBody @Valid FeedbackDto feedbackDto, @PathVariable Integer id) {
         return ResponseEntity.ok(feedbackService.updateById(feedbackDto, id));
     }
 

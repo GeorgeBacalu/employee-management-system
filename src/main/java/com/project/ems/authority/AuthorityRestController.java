@@ -1,5 +1,6 @@
 package com.project.ems.authority;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class AuthorityRestController {
     }
 
     @PostMapping
-    public ResponseEntity<AuthorityDto> save(@RequestBody AuthorityDto authorityDto) {
+    public ResponseEntity<AuthorityDto> save(@RequestBody @Valid AuthorityDto authorityDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(authorityService.save(authorityDto));
     }
 }

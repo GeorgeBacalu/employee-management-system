@@ -1,5 +1,6 @@
 package com.project.ems.role;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class RoleRestController {
     }
 
     @PostMapping
-    public ResponseEntity<RoleDto> save(@RequestBody RoleDto roleDto) {
+    public ResponseEntity<RoleDto> save(@RequestBody @Valid RoleDto roleDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(roleService.save(roleDto));
     }
 }
