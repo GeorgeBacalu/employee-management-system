@@ -17,7 +17,7 @@
         <p>Role: [[${user.role.type}]]</p>
         <p>Authorities: <th:block th:each="authority : ${user.authorities}">[[${authority.type}]]  </th:block></p>
       </div>
-      <a th:href="@{/users}" type="button" class="btn btn-secondary btn-container">Back</a>
+      <a th:href="@{/users}" type="button" class="btn btn-secondary btn-container"><i class="fas fa-arrow-left"></i> Back</a>
     </div>
   </div>
 </main>

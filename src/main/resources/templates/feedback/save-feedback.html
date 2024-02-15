@@ -19,8 +19,8 @@
           <label for="user-id" class="mt-2">User ID <span class="text-danger font-weight-bold">*</span></label>
           <input type="number" id="user-id" th:field="*{userId}" placeholder="Enter user ID" class="form-control" required>
         </div>
-        <button type="submit" class="btn btn-success btn-container">[[${id == -1 ? 'Save' : 'Update'}]]</button>
-        <a th:href="@{/feedbacks}" type="button" class="btn btn-danger btn-container ml-2">Cancel</a>
+        <button type="submit" class="btn btn-success btn-container"><i class="fa fa-save"></i> [[${id == -1 ? 'Save' : 'Update'}]]</button>
+        <a th:href="@{/feedbacks}" type="button" class="btn btn-danger btn-container ml-2"><i class="fa fa-times"></i> Cancel</a>
       </form>
     </div>
   </div>

@@ -15,8 +15,8 @@
             <option th:each="type : ${T(com.project.ems.authority.enums.AuthorityType).values()}" th:value="${type}">[[${type}]]</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-success btn-container">Save</button>
-        <a th:href="@{/authorities}" type="button" class="btn btn-danger btn-container ml-2">Cancel</a>
+        <button type="submit" class="btn btn-success btn-container"><i class="fa fa-save"></i> Save</button>
+        <a th:href="@{/authorities}" type="button" class="btn btn-danger btn-container ml-2"><i class="fa fa-times"></i> Cancel</a>
       </form>
     </div>
   </div>
