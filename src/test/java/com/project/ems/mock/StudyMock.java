@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -22,19 +23,19 @@ public class StudyMock {
     }
 
     public static List<Study> getMockedStudies1() {
-        return List.of(getMockedStudy1(), getMockedStudy2());
+        return new ArrayList<>(List.of(getMockedStudy1(), getMockedStudy2()));
     }
 
     public static List<Study> getMockedStudies2() {
-        return List.of(getMockedStudy3(), getMockedStudy4());
+        return new ArrayList<>(List.of(getMockedStudy3(), getMockedStudy4()));
     }
 
     public static List<StudyDto> getMockedStudyDtos1() {
-        return List.of(getMockedStudyDto1(), getMockedStudyDto2());
+        return new ArrayList<>(List.of(getMockedStudyDto1(), getMockedStudyDto2()));
     }
 
     public static List<StudyDto> getMockedStudyDtos2() {
-        return List.of(getMockedStudyDto3(), getMockedStudyDto4());
+        return new ArrayList<>(List.of(getMockedStudyDto3(), getMockedStudyDto4()));
     }
 
     public static Study getMockedStudy1() {

@@ -1,6 +1,8 @@
 package com.project.ems.study;
 
+import com.project.ems.employee.EmployeeRepository;
 import com.project.ems.exception.ResourceNotFoundException;
+import com.project.ems.trainer.TrainerRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ import static com.project.ems.constants.Constants.STUDY_NOT_FOUND;
 public class StudyServiceImpl implements StudyService {
 
     private final StudyRepository studyRepository;
+    private final EmployeeRepository employeeRepository;
+    private final TrainerRepository trainerRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -40,7 +44,10 @@ public class StudyServiceImpl implements StudyService {
 
     @Override
     public void deleteById(Integer id) {
-        studyRepository.delete(findEntityById(id));
+        Study studyToDelete = findEntityById(id);
+        employeeRepository.findAllByStudiesContains(studyToDelete).forEach(employee -> employee.getStudies().remove(studyToDelete));
+        trainerRepository.findAllByStudiesContains(studyToDelete).forEach(trainer -> trainer.getStudies().remove(studyToDelete));
+        studyRepository.delete(studyToDelete);
     }
 
     @Override

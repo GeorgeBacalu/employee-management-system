@@ -2,6 +2,7 @@ package com.project.ems.trainer;
 
 import com.project.ems.authority.Authority;
 import com.project.ems.authority.AuthorityService;
+import com.project.ems.employee.EmployeeRepository;
 import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.experience.Experience;
 import com.project.ems.experience.ExperienceService;
@@ -22,6 +23,7 @@ import static com.project.ems.constants.Constants.TRAINER_NOT_FOUND;
 public class TrainerServiceImpl implements TrainerService {
 
     private final TrainerRepository trainerRepository;
+    private final EmployeeRepository employeeRepository;
     private final RoleService roleService;
     private final AuthorityService authorityService;
     private final ExperienceService experienceService;
@@ -61,6 +63,8 @@ public class TrainerServiceImpl implements TrainerService {
     public TrainerDto disableById(Integer id) {
         Trainer trainerToDisable = findEntityById(id);
         trainerToDisable.setIsActive(false);
+        employeeRepository.findAllByTrainer(trainerToDisable).forEach(employee -> employee.setTrainer(null));
+        trainerRepository.findAllBySupervisingTrainer(trainerToDisable).forEach(trainer -> trainer.setSupervisingTrainer(null));
         return convertToDto(trainerRepository.save(trainerToDisable));
     }
 

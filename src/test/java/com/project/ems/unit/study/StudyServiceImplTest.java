@@ -1,7 +1,11 @@
 package com.project.ems.unit.study;
 
+import com.project.ems.employee.Employee;
+import com.project.ems.employee.EmployeeRepository;
 import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.study.*;
+import com.project.ems.trainer.Trainer;
+import com.project.ems.trainer.TrainerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +17,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.project.ems.constants.Constants.*;
+import static com.project.ems.mock.EmployeeMock.getMockedEmployee1;
 import static com.project.ems.mock.StudyMock.*;
+import static com.project.ems.mock.TrainerMock.getMockedTrainer1;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -30,6 +36,12 @@ class StudyServiceImplTest {
     @Mock
     private StudyRepository studyRepository;
 
+    @Mock
+    private EmployeeRepository employeeRepository;
+
+    @Mock
+    private TrainerRepository trainerRepository;
+
     @Spy
     private ModelMapper modelMapper;
 
@@ -42,6 +54,8 @@ class StudyServiceImplTest {
     private StudyDto studyDto1;
     private StudyDto studyDto2;
     private List<StudyDto> studyDtos;
+    private Employee employee;
+    private Trainer trainer;
 
     @BeforeEach
     void setUp() {
@@ -51,6 +65,8 @@ class StudyServiceImplTest {
         studyDto1 = getMockedStudyDto1();
         studyDto2 = getMockedStudyDto2();
         studyDtos = getMockedStudyDtos();
+        employee = getMockedEmployee1();
+        trainer = getMockedTrainer1();
     }
 
     @Test
@@ -104,6 +120,8 @@ class StudyServiceImplTest {
     @Test
     void deleteById_validId_test() {
         given(studyRepository.findById(VALID_ID)).willReturn(Optional.ofNullable(study1));
+        given(employeeRepository.findAllByStudiesContains(any(Study.class))).willReturn(List.of(employee));
+        given(trainerRepository.findAllByStudiesContains(any(Study.class))).willReturn(List.of(trainer));
         studyService.deleteById(VALID_ID);
         verify(studyRepository).delete(study1);
     }

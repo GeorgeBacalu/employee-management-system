@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -22,19 +23,19 @@ public class ExperienceMock {
     }
 
     public static List<Experience> getMockedExperiences1() {
-        return List.of(getMockedExperience1(), getMockedExperience2());
+        return new ArrayList<>(List.of(getMockedExperience1(), getMockedExperience2()));
     }
 
     public static List<Experience> getMockedExperiences2() {
-        return List.of(getMockedExperience3(), getMockedExperience4());
+        return new ArrayList<>(List.of(getMockedExperience3(), getMockedExperience4()));
     }
 
     public static List<ExperienceDto> getMockedExperienceDtos1() {
-        return List.of(getMockedExperienceDto1(), getMockedExperienceDto2());
+        return new ArrayList<>(List.of(getMockedExperienceDto1(), getMockedExperienceDto2()));
     }
 
     public static List<ExperienceDto> getMockedExperienceDtos2() {
-        return List.of(getMockedExperienceDto3(), getMockedExperienceDto4());
+        return new ArrayList<>(List.of(getMockedExperienceDto3(), getMockedExperienceDto4()));
     }
 
     public static Experience getMockedExperience1() {

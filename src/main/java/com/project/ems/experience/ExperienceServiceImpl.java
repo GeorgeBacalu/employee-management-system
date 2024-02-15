@@ -1,6 +1,8 @@
 package com.project.ems.experience;
 
+import com.project.ems.employee.EmployeeRepository;
 import com.project.ems.exception.ResourceNotFoundException;
+import com.project.ems.trainer.TrainerRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ import static com.project.ems.constants.Constants.EXPERIENCE_NOT_FOUND;
 public class ExperienceServiceImpl implements ExperienceService {
 
     private final ExperienceRepository experienceRepository;
+    private final EmployeeRepository employeeRepository;
+    private final TrainerRepository trainerRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -40,7 +44,10 @@ public class ExperienceServiceImpl implements ExperienceService {
 
     @Override
     public void deleteById(Integer id) {
-        experienceRepository.delete(findEntityById(id));
+        Experience experienceToDelete = findEntityById(id);
+        employeeRepository.findAllByExperiencesContains(experienceToDelete).forEach(employee -> employee.getExperiences().remove(experienceToDelete));
+        trainerRepository.findAllByExperiencesContains(experienceToDelete).forEach(trainer -> trainer.getExperiences().remove(experienceToDelete));
+        experienceRepository.delete(experienceToDelete);
     }
 
     @Override

@@ -1,7 +1,11 @@
 package com.project.ems.integration.experience;
 
+import com.project.ems.employee.Employee;
+import com.project.ems.employee.EmployeeRepository;
 import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.experience.*;
+import com.project.ems.trainer.Trainer;
+import com.project.ems.trainer.TrainerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -16,7 +20,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.project.ems.constants.Constants.*;
+import static com.project.ems.mock.EmployeeMock.getMockedEmployee1;
 import static com.project.ems.mock.ExperienceMock.*;
+import static com.project.ems.mock.TrainerMock.getMockedTrainer1;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -33,6 +39,12 @@ class ExperienceServiceIntegrationTest {
     @MockBean
     private ExperienceRepository experienceRepository;
 
+    @MockBean
+    private EmployeeRepository employeeRepository;
+
+    @MockBean
+    private TrainerRepository trainerRepository;
+
     @SpyBean
     private ModelMapper modelMapper;
 
@@ -45,6 +57,8 @@ class ExperienceServiceIntegrationTest {
     private ExperienceDto experienceDto1;
     private ExperienceDto experienceDto2;
     private List<ExperienceDto> experienceDtos;
+    private Employee employee;
+    private Trainer trainer;
 
     @BeforeEach
     void setUp() {
@@ -54,6 +68,8 @@ class ExperienceServiceIntegrationTest {
         experienceDto1 = getMockedExperienceDto1();
         experienceDto2 = getMockedExperienceDto2();
         experienceDtos = getMockedExperienceDtos();
+        employee = getMockedEmployee1();
+        trainer = getMockedTrainer1();
     }
 
     @Test
@@ -107,6 +123,8 @@ class ExperienceServiceIntegrationTest {
     @Test
     void deleteById_validId_test() {
         given(experienceRepository.findById(VALID_ID)).willReturn(Optional.ofNullable(experience1));
+        given(employeeRepository.findAllByExperiencesContains(any(Experience.class))).willReturn(List.of(employee));
+        given(trainerRepository.findAllByExperiencesContains(any(Experience.class))).willReturn(List.of(trainer));
         experienceService.deleteById(VALID_ID);
         verify(experienceRepository).delete(experience1);
     }

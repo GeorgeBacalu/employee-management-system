@@ -2,6 +2,8 @@ package com.project.ems.unit.trainer;
 
 import com.project.ems.authority.Authority;
 import com.project.ems.authority.AuthorityService;
+import com.project.ems.employee.Employee;
+import com.project.ems.employee.EmployeeRepository;
 import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.experience.Experience;
 import com.project.ems.experience.ExperienceService;
@@ -22,6 +24,7 @@ import java.util.Optional;
 
 import static com.project.ems.constants.Constants.*;
 import static com.project.ems.mock.AuthorityMock.getMockedAuthorities1;
+import static com.project.ems.mock.EmployeeMock.getMockedEmployee1;
 import static com.project.ems.mock.ExperienceMock.getMockedExperiences1;
 import static com.project.ems.mock.RoleMock.getMockedRole1;
 import static com.project.ems.mock.StudyMock.getMockedStudies1;
@@ -41,6 +44,9 @@ class TrainerServiceImplTest {
 
     @Mock
     private TrainerRepository trainerRepository;
+
+    @Mock
+    private EmployeeRepository employeeRepository;
 
     @Mock
     private RoleService roleService;
@@ -72,6 +78,7 @@ class TrainerServiceImplTest {
     private List<Authority> authorities;
     private List<Experience> experiences;
     private List<Study> studies;
+    private Employee employee;
 
     @BeforeEach
     void setUp() {
@@ -87,6 +94,7 @@ class TrainerServiceImplTest {
         authorities = getMockedAuthorities1();
         experiences = getMockedExperiences1();
         studies = getMockedStudies1();
+        employee = getMockedEmployee1();
     }
 
     @Test
@@ -153,6 +161,8 @@ class TrainerServiceImplTest {
         Trainer disabledTrainer = trainer1;
         disabledTrainer.setIsActive(false);
         given(trainerRepository.findById(VALID_ID)).willReturn(Optional.ofNullable(trainer1));
+        given(employeeRepository.findAllByTrainer(any(Trainer.class))).willReturn(List.of(employee));
+        given(trainerRepository.findAllBySupervisingTrainer(any(Trainer.class))).willReturn(List.of(trainer2));
         given(trainerRepository.save(any(Trainer.class))).willReturn(disabledTrainer);
         TrainerDto result = trainerService.disableById(VALID_ID);
         verify(trainerRepository).save(trainerCaptor.capture());
