@@ -1,0 +1,15 @@
+DELETE FROM user_authority;
+DELETE FROM trainer_study;
+DELETE FROM trainer_experience;
+DELETE FROM trainer_authority;
+DELETE FROM employee_study;
+DELETE FROM employee_experience;
+DELETE FROM employee_authority;
+DELETE FROM employee;
+DELETE FROM trainer;
+DELETE FROM feedback;
+DELETE FROM _user;
+DELETE FROM study;
+DELETE FROM experience;
+DELETE FROM role;
+DELETE FROM authority;
