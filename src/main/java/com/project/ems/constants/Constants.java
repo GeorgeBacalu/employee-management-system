@@ -20,4 +20,13 @@ public class Constants {
 
     public static final Integer VALID_ID = 1;
     public static final Integer INVALID_ID = 999;
+
+    public static final String API_AUTHORITIES = "/api/authorities";
+    public static final String API_EMPLOYEES = "/api/employees";
+    public static final String API_EXPERIENCES = "/api/experiences";
+    public static final String API_FEEDBACKS = "/api/feedbacks";
+    public static final String API_ROLES = "/api/roles";
+    public static final String API_STUDIES = "/api/studies";
+    public static final String API_TRAINERS = "/api/trainers";
+    public static final String API_USERS = "/api/users";
 }
