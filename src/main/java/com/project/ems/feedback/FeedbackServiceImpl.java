@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     private final FeedbackRepository feedbackRepository;
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final Clock clock;
 
     @Override
     public List<FeedbackDto> findAll() {
@@ -32,7 +34,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public FeedbackDto save(FeedbackDto feedbackDto) {
         Feedback feedbackToSave = convertToEntity(feedbackDto);
-        feedbackToSave.setSentAt(LocalDateTime.now());
+        feedbackToSave.setSentAt(LocalDateTime.now(clock));
         return convertToDto(feedbackRepository.save(feedbackToSave));
     }
 
