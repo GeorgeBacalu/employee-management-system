@@ -24,27 +24,20 @@ public class TrainerController {
         return "trainer/trainer-details";
     }
 
-    @GetMapping("/save")
-    public String getSavePage(Model model) {
-        model.addAttribute("trainerDto", new TrainerDto());
+    @GetMapping("/save/{id}")
+    public String getSavePage(Model model, @PathVariable Integer id) {
+        model.addAttribute("id", id);
+        model.addAttribute("trainerDto", id == -1 ? new TrainerDto() : trainerService.findById(id));
         return "trainer/save-trainer";
     }
 
-    @PostMapping("/save")
-    public String save(@ModelAttribute TrainerDto trainerDto) {
-        trainerService.save(trainerDto);
-        return "redirect:/trainers";
-    }
-
-    @GetMapping("/update/{id}")
-    public String getUpdatePage(Model model, @PathVariable Integer id) {
-        model.addAttribute("trainerDto", trainerService.findById(id));
-        return "trainer/update-trainer";
-    }
-
-    @PostMapping("/update/{id}")
-    public String updateById(@ModelAttribute TrainerDto trainerDto, @PathVariable Integer id) {
-        trainerService.updateById(trainerDto, id);
+    @PostMapping("/save/{id}")
+    public String save(@ModelAttribute TrainerDto trainerDto, @PathVariable Integer id) {
+        if (id == -1) {
+            trainerService.save(trainerDto);
+        } else {
+            trainerService.updateById(trainerDto, id);
+        }
         return "redirect:/trainers";
     }
 

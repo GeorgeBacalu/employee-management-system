@@ -28,7 +28,7 @@
 </header>
 <main class="my-1 mx-auto text-left main-container">
   <h3>Feedbacks</h3>
-  <a th:href="@{/feedbacks/save}" class="btn btn-primary my-1">Save</a>
+  <a th:href="@{/feedbacks/save/-1}" class="btn btn-primary my-1">Save</a>
   <table class="table table striped table-bordered">
     <thead class="thead-dark">
     <tr>
@@ -46,7 +46,7 @@
       <td>[[${feedback.sentAt}]]</td>
       <td>[[${feedback.user.name}]]</td>
       <td>
-        <a th:href="@{'/feedbacks/update/' + ${feedback.id}}" class="btn btn-secondary">Update</a>
+        <a th:href="@{'/feedbacks/save/' + ${feedback.id}}" class="btn btn-secondary">Update</a>
         <a th:href="@{'/feedbacks/delete/' + ${feedback.id}}" class="btn btn-danger">Remove</a>
         <a th:href="@{'/feedbacks/' + ${feedback.id}}" class="btn btn-info">View details</a>
       </td>

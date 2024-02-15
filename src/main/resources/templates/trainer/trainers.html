@@ -28,7 +28,7 @@
 </header>
 <main class="my-1 mx-auto text-left main-container">
   <h3>Trainers</h3>
-  <a th:href="@{/trainers/save}" class="btn btn-primary my-1">Save</a>
+  <a th:href="@{/trainers/save/-1}" class="btn btn-primary my-1">Save</a>
   <table class="table table-striped table-bordered">
     <thead class="thead-dark">
     <tr>
@@ -62,7 +62,7 @@
       <td>[[${trainer.nrTrainees}]]</td>
       <td>[[${trainer.maxTrainees}]]</td>
       <td>
-        <a th:href="@{'/trainers/update/' + ${trainer.id}}" class="btn btn-secondary">Update</a>
+        <a th:href="@{'/trainers/save/' + ${trainer.id}}" class="btn btn-secondary">Update</a>
         <a th:href="@{'/trainers/disable/' + ${trainer.id}}" class="btn btn-danger">Remove</a>
         <a th:href="@{'/trainers/' + ${trainer.id}}" class="btn btn-info">View details</a>
       </td>
