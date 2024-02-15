@@ -36,12 +36,14 @@ class TrainerRestControllerTest {
     private TrainerDto trainerDto1;
     private TrainerDto trainerDto2;
     private List<TrainerDto> trainerDtos;
+    private List<TrainerDto> activeTrainerDtos;
 
     @BeforeEach
     void setUp() {
         trainerDto1 = getMockedTrainerDto1();
         trainerDto2 = getMockedTrainerDto2();
         trainerDtos = getMockedTrainerDtos();
+        activeTrainerDtos = getMockedActiveTrainerDtos();
     }
 
     @Test
@@ -51,6 +53,15 @@ class TrainerRestControllerTest {
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         then(response.getBody()).isEqualTo(trainerDtos);
+    }
+
+    @Test
+    void findAllActive_test() {
+        given(trainerService.findAllActive()).willReturn(activeTrainerDtos);
+        ResponseEntity<List<TrainerDto>> response = trainerRestController.findAllActive();
+        then(response).isNotNull();
+        then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        then(response.getBody()).isEqualTo(activeTrainerDtos);
     }
 
     @Test

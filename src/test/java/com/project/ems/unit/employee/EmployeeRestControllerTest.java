@@ -36,12 +36,14 @@ class EmployeeRestControllerTest {
     private EmployeeDto employeeDto1;
     private EmployeeDto employeeDto2;
     private List<EmployeeDto> employeeDtos;
+    private List<EmployeeDto> activeEmployeeDtos;
 
     @BeforeEach
     void setUp() {
         employeeDto1 = getMockedEmployeeDto1();
         employeeDto2 = getMockedEmployeeDto2();
         employeeDtos = getMockedEmployeeDtos();
+        activeEmployeeDtos = getMockedActiveEmployeeDtos();
     }
 
     @Test
@@ -51,6 +53,15 @@ class EmployeeRestControllerTest {
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         then(response.getBody()).isEqualTo(employeeDtos);
+    }
+
+    @Test
+    void findAllActive_test() {
+        given(employeeService.findAllActive()).willReturn(activeEmployeeDtos);
+        ResponseEntity<List<EmployeeDto>> response = employeeRestController.findAllActive();
+        then(response).isNotNull();
+        then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        then(response.getBody()).isEqualTo(activeEmployeeDtos);
     }
 
     @Test

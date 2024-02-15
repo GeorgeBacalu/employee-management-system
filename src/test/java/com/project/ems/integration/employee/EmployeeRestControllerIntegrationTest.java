@@ -32,12 +32,14 @@ class EmployeeRestControllerIntegrationTest {
     private EmployeeDto employeeDto1;
     private EmployeeDto employeeDto2;
     private List<EmployeeDto> employeeDtos;
+    private List<EmployeeDto> activeEmployeeDtos;
 
     @BeforeEach
     void setUp() {
         employeeDto1 = getMockedEmployeeDto1();
         employeeDto2 = getMockedEmployeeDto2();
         employeeDtos = getMockedEmployeeDtos();
+        activeEmployeeDtos = getMockedActiveEmployeeDtos();
     }
 
     @Test
@@ -47,6 +49,15 @@ class EmployeeRestControllerIntegrationTest {
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         List<EmployeeDto> result = objectMapper.readValue(response.getBody(), new TypeReference<>() {});
         then(result).isEqualTo(employeeDtos);
+    }
+
+    @Test
+    void findAllActive_test() throws Exception {
+        ResponseEntity<String> response = template.getForEntity(API_EMPLOYEES + "/active", String.class);
+        then(response).isNotNull();
+        then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        List<EmployeeDto> result = objectMapper.readValue(response.getBody(), new TypeReference<>() {});
+        then(result).isEqualTo(activeEmployeeDtos);
     }
 
     @Test

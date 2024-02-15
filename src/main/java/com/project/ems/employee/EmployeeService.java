@@ -6,6 +6,8 @@ public interface EmployeeService {
 
     List<EmployeeDto> findAll();
 
+    List<EmployeeDto> findAllActive();
+
     EmployeeDto findById(Integer id);
 
     EmployeeDto save(EmployeeDto employeeDto);

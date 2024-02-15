@@ -32,12 +32,14 @@ class TrainerRestControllerIntegrationTest {
     private TrainerDto trainerDto1;
     private TrainerDto trainerDto2;
     private List<TrainerDto> trainerDtos;
+    private List<TrainerDto> activeTrainerDtos;
 
     @BeforeEach
     void setUp() {
         trainerDto1 = getMockedTrainerDto1();
         trainerDto2 = getMockedTrainerDto2();
         trainerDtos = getMockedTrainerDtos();
+        activeTrainerDtos = getMockedActiveTrainerDtos();
     }
 
     @Test
@@ -47,6 +49,15 @@ class TrainerRestControllerIntegrationTest {
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         List<TrainerDto> result = objectMapper.readValue(response.getBody(), new TypeReference<>() {});
         then(result).isEqualTo(trainerDtos);
+    }
+
+    @Test
+    void findAllActive_test() throws Exception {
+        ResponseEntity<String> response = template.getForEntity(API_TRAINERS + "/active", String.class);
+        then(response).isNotNull();
+        then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        List<TrainerDto> result = objectMapper.readValue(response.getBody(), new TypeReference<>() {});
+        then(result).isEqualTo(activeTrainerDtos);
     }
 
     @Test

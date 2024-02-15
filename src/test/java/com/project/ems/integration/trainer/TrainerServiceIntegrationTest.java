@@ -66,9 +66,11 @@ class TrainerServiceIntegrationTest {
     private Trainer trainer1;
     private Trainer trainer2;
     private List<Trainer> trainers;
+    private List<Trainer> activeTrainers;
     private TrainerDto trainerDto1;
     private TrainerDto trainerDto2;
     private List<TrainerDto> trainerDtos;
+    private List<TrainerDto> activeTrainerDtos;
     private Role role;
     private List<Authority> authorities;
     private List<Experience> experiences;
@@ -79,9 +81,11 @@ class TrainerServiceIntegrationTest {
         trainer1 = getMockedTrainer1();
         trainer2 = getMockedTrainer2();
         trainers = getMockedTrainers();
+        activeTrainers = getMockedActiveTrainers();
         trainerDto1 = getMockedTrainerDto1();
         trainerDto2 = getMockedTrainerDto2();
         trainerDtos = getMockedTrainerDtos();
+        activeTrainerDtos = getMockedActiveTrainerDtos();
         role = getMockedRole1();
         authorities = getMockedAuthorities1();
         experiences = getMockedExperiences1();
@@ -93,6 +97,13 @@ class TrainerServiceIntegrationTest {
         given(trainerRepository.findAll()).willReturn(trainers);
         List<TrainerDto> result = trainerService.findAll();
         then(result).isEqualTo(trainerDtos);
+    }
+
+    @Test
+    void findAllActive_test() {
+        given(trainerRepository.findAllByIsActiveTrue()).willReturn(activeTrainers);
+        List<TrainerDto> result = trainerService.findAllActive();
+        then(result).isEqualTo(activeTrainerDtos);
     }
 
     @Test

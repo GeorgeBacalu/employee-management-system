@@ -14,6 +14,10 @@ public interface TrainerApi {
           @ApiResponse(responseCode = "200", description = "Successful operation")})
     ResponseEntity<List<TrainerDto>> findAll();
 
+    @Operation(summary = "Find all active trainers", description = "Return list with all active trainers", tags = "trainer", responses = {
+          @ApiResponse(responseCode = "200", description = "Successful operation")})
+    ResponseEntity<List<TrainerDto>> findAllActive();
+
     @Operation(summary = "Find trainer by ID", description = "Return trainer with given ID", tags = "trainer", responses = {
           @ApiResponse(responseCode = "200", description = "Successful operation"),
           @ApiResponse(responseCode = "404", description = "Trainer not found")})

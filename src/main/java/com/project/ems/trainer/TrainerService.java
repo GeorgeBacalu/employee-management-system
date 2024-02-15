@@ -6,6 +6,8 @@ public interface TrainerService {
 
     List<TrainerDto> findAll();
 
+    List<TrainerDto> findAllActive();
+
     TrainerDto findById(Integer id);
 
     TrainerDto save(TrainerDto trainerDto);

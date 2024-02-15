@@ -54,9 +54,11 @@ class UserServiceIntegrationTest {
     private User user1;
     private User user2;
     private List<User> users;
+    private List<User> activeUsers;
     private UserDto userDto1;
     private UserDto userDto2;
     private List<UserDto> userDtos;
+    private List<UserDto> activeUserDtos;
     private Role role;
     private List<Authority> authorities;
 
@@ -65,9 +67,11 @@ class UserServiceIntegrationTest {
         user1 = getMockedUser1();
         user2 = getMockedUser2();
         users = getMockedUsers();
+        activeUsers = getMockedActiveUsers();
         userDto1 = getMockedUserDto1();
         userDto2 = getMockedUserDto2();
         userDtos = getMockedUserDtos();
+        activeUserDtos = getMockedActiveUserDtos();
         role = getMockedRole1();
         authorities = getMockedAuthorities1();
     }
@@ -77,6 +81,13 @@ class UserServiceIntegrationTest {
         given(userRepository.findAll()).willReturn(users);
         List<UserDto> result = userService.findAll();
         then(result).isEqualTo(userDtos);
+    }
+
+    @Test
+    void findAllActive_test() {
+        given(userRepository.findAllByIsActiveTrue()).willReturn(activeUsers);
+        List<UserDto> result = userService.findAllActive();
+        then(result).isEqualTo(activeUserDtos);
     }
 
     @Test

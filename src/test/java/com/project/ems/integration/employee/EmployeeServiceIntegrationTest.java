@@ -72,9 +72,11 @@ class EmployeeServiceIntegrationTest {
     private Employee employee1;
     private Employee employee2;
     private List<Employee> employees;
+    private List<Employee> activeEmployees;
     private EmployeeDto employeeDto1;
     private EmployeeDto employeeDto2;
     private List<EmployeeDto> employeeDtos;
+    private List<EmployeeDto> activeEmployeeDtos;
     private Role role;
     private List<Authority> authorities;
     private List<Experience> experiences;
@@ -86,9 +88,11 @@ class EmployeeServiceIntegrationTest {
         employee1 = getMockedEmployee1();
         employee2 = getMockedEmployee2();
         employees = getMockedEmployees();
+        activeEmployees = getMockedActiveEmployees();
         employeeDto1 = getMockedEmployeeDto1();
         employeeDto2 = getMockedEmployeeDto2();
         employeeDtos = getMockedEmployeeDtos();
+        activeEmployeeDtos = getMockedActiveEmployeeDtos();
         role = getMockedRole1();
         authorities = getMockedAuthorities1();
         experiences = getMockedExperiences1();
@@ -101,6 +105,13 @@ class EmployeeServiceIntegrationTest {
         given(employeeRepository.findAll()).willReturn(employees);
         List<EmployeeDto> result = employeeService.findAll();
         then(result).isEqualTo(employeeDtos);
+    }
+
+    @Test
+    void findAllActive_test() {
+        given(employeeRepository.findAllByIsActiveTrue()).willReturn(activeEmployees);
+        List<EmployeeDto> result = employeeService.findAllActive();
+        then(result).isEqualTo(activeEmployeeDtos);
     }
 
     @Test

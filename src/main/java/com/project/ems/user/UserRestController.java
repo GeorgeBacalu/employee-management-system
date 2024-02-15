@@ -20,6 +20,11 @@ public class UserRestController implements UserApi {
         return ResponseEntity.ok(userService.findAll());
     }
 
+    @Override @GetMapping("/active")
+    public ResponseEntity<List<UserDto>> findAllActive() {
+        return ResponseEntity.ok(userService.findAllActive());
+    }
+
     @Override @GetMapping("/{id}")
     public ResponseEntity<UserDto> findById(@PathVariable Integer id) {
         return ResponseEntity.ok(userService.findById(id));

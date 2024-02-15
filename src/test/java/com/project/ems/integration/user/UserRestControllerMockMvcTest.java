@@ -42,12 +42,14 @@ class UserRestControllerMockMvcTest {
     private UserDto userDto1;
     private UserDto userDto2;
     private List<UserDto> userDtos;
+    private List<UserDto> activeUserDtos;
 
     @BeforeEach
     void setUp() {
         userDto1 = getMockedUserDto1();
         userDto2 = getMockedUserDto2();
         userDtos = getMockedUserDtos();
+        activeUserDtos = getMockedActiveUserDtos();
     }
 
     @Test
@@ -59,6 +61,17 @@ class UserRestControllerMockMvcTest {
         }
         List<UserDto> result = objectMapper.readValue(actions.andReturn().getResponse().getContentAsString(), new TypeReference<>() {});
         then(result).isEqualTo(userDtos);
+    }
+
+    @Test
+    void findAllActive_test() throws Exception {
+        given(userService.findAllActive()).willReturn(activeUserDtos);
+        ResultActions actions = mockMvc.perform(get(API_USERS + "/active")).andExpect(status().isOk());
+        for (int i = 0; i < activeUserDtos.size(); ++i) {
+            assertUserDto(actions, "$[" + i + "]", activeUserDtos.get(i));
+        }
+        List<UserDto> result = objectMapper.readValue(actions.andReturn().getResponse().getContentAsString(), new TypeReference<>() {});
+        then(result).isEqualTo(activeUserDtos);
     }
 
     @Test

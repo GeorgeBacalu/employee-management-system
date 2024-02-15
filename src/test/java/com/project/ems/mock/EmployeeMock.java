@@ -29,8 +29,16 @@ public class EmployeeMock {
         return List.of(getMockedEmployee1(), getMockedEmployee2());
     }
 
+    public static List<Employee> getMockedActiveEmployees() {
+        return getMockedEmployees().stream().filter(Employee::getIsActive).toList();
+    }
+
     public static List<EmployeeDto> getMockedEmployeeDtos() {
         return List.of(getMockedEmployeeDto1(), getMockedEmployeeDto2());
+    }
+
+    public static List<EmployeeDto> getMockedActiveEmployeeDtos() {
+        return getMockedEmployeeDtos().stream().filter(EmployeeDto::getIsActive).toList();
     }
 
     public static Employee getMockedEmployee1() {

@@ -14,6 +14,10 @@ public interface EmployeeApi {
           @ApiResponse(responseCode = "200", description = "Successful operation")})
     ResponseEntity<List<EmployeeDto>> findAll();
 
+    @Operation(summary = "Find all active employees", description = "Return list with all active employees", tags = "employee", responses = {
+          @ApiResponse(responseCode = "200", description = "Successful operation")})
+    ResponseEntity<List<EmployeeDto>> findAllActive();
+
     @Operation(summary = "Find employee by ID", description = "Return employee with given ID", tags = "employee", responses = {
           @ApiResponse(responseCode = "200", description = "Successful operation"),
           @ApiResponse(responseCode = "404", description = "Employee not found")})

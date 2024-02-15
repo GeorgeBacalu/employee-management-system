@@ -36,12 +36,14 @@ class UserRestControllerTest {
     private UserDto userDto1;
     private UserDto userDto2;
     private List<UserDto> userDtos;
+    private List<UserDto> activeUserDtos;
 
     @BeforeEach
     void setUp() {
         userDto1 = getMockedUserDto1();
         userDto2 = getMockedUserDto2();
         userDtos = getMockedUserDtos();
+        activeUserDtos = getMockedActiveUserDtos();
     }
 
     @Test
@@ -51,6 +53,15 @@ class UserRestControllerTest {
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         then(response.getBody()).isEqualTo(userDtos);
+    }
+
+    @Test
+    void findAllActive_test() {
+        given(userService.findAllActive()).willReturn(activeUserDtos);
+        ResponseEntity<List<UserDto>> response = userRestController.findAllActive();
+        then(response).isNotNull();
+        then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        then(response.getBody()).isEqualTo(activeUserDtos);
     }
 
     @Test

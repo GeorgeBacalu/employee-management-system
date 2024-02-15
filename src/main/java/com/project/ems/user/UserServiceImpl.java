@@ -28,6 +28,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserDto> findAllActive() {
+        return convertToDtos(userRepository.findAllByIsActiveTrue());
+    }
+
+    @Override
     public UserDto findById(Integer id) {
         return convertToDto(findEntityById(id));
     }

@@ -20,8 +20,16 @@ public class UserMock {
         return List.of(getMockedUser1(), getMockedUser2());
     }
 
+    public static List<User> getMockedActiveUsers() {
+        return getMockedUsers().stream().filter(User::getIsActive).toList();
+    }
+
     public static List<UserDto> getMockedUserDtos() {
         return List.of(getMockedUserDto1(), getMockedUserDto2());
+    }
+
+    public static List<UserDto> getMockedActiveUserDtos() {
+        return getMockedUserDtos().stream().filter(UserDto::getIsActive).toList();
     }
 
     public static User getMockedUser1() {

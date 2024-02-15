@@ -36,6 +36,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<EmployeeDto> findAllActive() {
+        return convertToDtos(employeeRepository.findAllByIsActiveTrue());
+    }
+
+    @Override
     public EmployeeDto findById(Integer id) {
         return convertToDto(findEntityById(id));
     }

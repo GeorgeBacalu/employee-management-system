@@ -6,6 +6,8 @@ public interface UserService {
 
     List<UserDto> findAll();
 
+    List<UserDto> findAllActive();
+
     UserDto findById(Integer id);
 
     UserDto save(UserDto userDto);

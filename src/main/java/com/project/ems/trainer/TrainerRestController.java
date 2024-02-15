@@ -20,6 +20,11 @@ public class TrainerRestController implements TrainerApi {
         return ResponseEntity.ok(trainerService.findAll());
     }
 
+    @Override @GetMapping("/active")
+    public ResponseEntity<List<TrainerDto>> findAllActive() {
+        return ResponseEntity.ok(trainerService.findAllActive());
+    }
+
     @Override @GetMapping("/{id}")
     public ResponseEntity<TrainerDto> findById(@PathVariable Integer id) {
         return ResponseEntity.ok(trainerService.findById(id));

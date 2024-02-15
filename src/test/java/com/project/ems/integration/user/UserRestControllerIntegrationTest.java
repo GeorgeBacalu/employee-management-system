@@ -32,12 +32,14 @@ class UserRestControllerIntegrationTest {
     private UserDto userDto1;
     private UserDto userDto2;
     private List<UserDto> userDtos;
+    private List<UserDto> activeUserDtos;
 
     @BeforeEach
     void setUp() {
         userDto1 = getMockedUserDto1();
         userDto2 = getMockedUserDto2();
         userDtos = getMockedUserDtos();
+        activeUserDtos = getMockedActiveUserDtos();
     }
 
     @Test
@@ -47,6 +49,15 @@ class UserRestControllerIntegrationTest {
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         List<UserDto> result = objectMapper.readValue(response.getBody(), new TypeReference<>() {});
         then(result).isEqualTo(userDtos);
+    }
+
+    @Test
+    void findAllActive_test() throws Exception {
+        ResponseEntity<String> response = template.getForEntity(API_USERS + "/active", String.class);
+        then(response).isNotNull();
+        then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        List<UserDto> result = objectMapper.readValue(response.getBody(), new TypeReference<>() {});
+        then(result).isEqualTo(activeUserDtos);
     }
 
     @Test

@@ -34,6 +34,11 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
+    public List<TrainerDto> findAllActive() {
+        return convertToDtos(trainerRepository.findAllByIsActiveTrue());
+    }
+
+    @Override
     public TrainerDto findById(Integer id) {
         return convertToDto(findEntityById(id));
     }

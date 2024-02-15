@@ -14,6 +14,10 @@ public interface UserApi {
           @ApiResponse(responseCode = "200", description = "Successful operation")})
     ResponseEntity<List<UserDto>> findAll();
 
+    @Operation(summary = "Find all active users", description = "Return list with all active users", tags = "user", responses = {
+          @ApiResponse(responseCode = "200", description = "Successful operation")})
+    ResponseEntity<List<UserDto>> findAllActive();
+
     @Operation(summary = "Find user by ID", description = "Return user with given ID", tags = "user", responses = {
           @ApiResponse(responseCode = "200", description = "Successful operation"),
           @ApiResponse(responseCode = "404", description = "User not found")})

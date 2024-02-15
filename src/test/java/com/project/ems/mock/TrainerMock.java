@@ -27,8 +27,16 @@ public class TrainerMock {
         return List.of(getMockedTrainer1(), getMockedTrainer2());
     }
 
+    public static List<Trainer> getMockedActiveTrainers() {
+        return getMockedTrainers().stream().filter(Trainer::getIsActive).toList();
+    }
+
     public static List<TrainerDto> getMockedTrainerDtos() {
         return List.of(getMockedTrainerDto1(), getMockedTrainerDto2());
+    }
+
+    public static List<TrainerDto> getMockedActiveTrainerDtos() {
+        return getMockedTrainerDtos().stream().filter(TrainerDto::getIsActive).toList();
     }
 
     public static Trainer getMockedTrainer1() {

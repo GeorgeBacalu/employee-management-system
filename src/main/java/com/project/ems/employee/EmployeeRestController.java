@@ -20,6 +20,11 @@ public class EmployeeRestController implements EmployeeApi {
         return ResponseEntity.ok(employeeService.findAll());
     }
 
+    @Override @GetMapping("/active")
+    public ResponseEntity<List<EmployeeDto>> findAllActive() {
+        return ResponseEntity.ok(employeeService.findAllActive());
+    }
+
     @Override @GetMapping("/{id}")
     public ResponseEntity<EmployeeDto> findById(@PathVariable Integer id) {
         return ResponseEntity.ok(employeeService.findById(id));
