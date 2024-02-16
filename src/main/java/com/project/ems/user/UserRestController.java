@@ -2,6 +2,9 @@ package com.project.ems.user;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +26,16 @@ public class UserRestController implements UserApi {
     @Override @GetMapping("/active")
     public ResponseEntity<List<UserDto>> findAllActive() {
         return ResponseEntity.ok(userService.findAllActive());
+    }
+
+    @Override @GetMapping("/pagination")
+    public ResponseEntity<Page<UserDto>> findAllByKey(@PageableDefault(sort = "id") Pageable pageable, @RequestParam(required = false, defaultValue = "") String key) {
+        return ResponseEntity.ok(userService.findAllByKey(pageable, key));
+    }
+
+    @Override @GetMapping("/active/pagination")
+    public ResponseEntity<Page<UserDto>> findAllActiveByKey(@PageableDefault(sort = "id") Pageable pageable, @RequestParam(required = false, defaultValue = "") String key) {
+        return ResponseEntity.ok(userService.findAllActiveByKey(pageable, key));
     }
 
     @Override @GetMapping("/{id}")

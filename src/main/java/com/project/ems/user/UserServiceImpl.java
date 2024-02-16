@@ -6,6 +6,8 @@ import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.role.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +32,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> findAllActive() {
         return convertToDtos(userRepository.findAllByIsActiveTrue());
+    }
+
+    @Override
+    public Page<UserDto> findAllByKey(Pageable pageable, String key) {
+        Page<User> usersPage = key.trim().isEmpty() ? userRepository.findAll(pageable) : userRepository.findAllByKey(pageable, key.toLowerCase());
+        return usersPage.hasContent() ? usersPage.map(this::convertToDto) : Page.empty();
+    }
+
+    @Override
+    public Page<UserDto> findAllActiveByKey(Pageable pageable, String key) {
+        Page<User> activeUsersPage = key.trim().isEmpty() ? userRepository.findAllByIsActiveTrue(pageable) : userRepository.findAllActiveByKey(pageable, key.toLowerCase());
+        return activeUsersPage.hasContent() ? activeUsersPage.map(this::convertToDto) : Page.empty();
     }
 
     @Override

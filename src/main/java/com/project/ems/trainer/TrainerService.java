@@ -1,5 +1,8 @@
 package com.project.ems.trainer;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 public interface TrainerService {
@@ -7,6 +10,10 @@ public interface TrainerService {
     List<TrainerDto> findAll();
 
     List<TrainerDto> findAllActive();
+
+    Page<TrainerDto> findAllByKey(Pageable pageable, String key);
+
+    Page<TrainerDto> findAllActiveByKey(Pageable pageable, String key);
 
     TrainerDto findById(Integer id);
 

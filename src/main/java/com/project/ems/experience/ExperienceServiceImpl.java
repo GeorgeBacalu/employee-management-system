@@ -5,6 +5,8 @@ import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.trainer.TrainerRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +25,12 @@ public class ExperienceServiceImpl implements ExperienceService {
     @Override
     public List<ExperienceDto> findAll() {
         return convertToDtos(experienceRepository.findAll());
+    }
+
+    @Override
+    public Page<ExperienceDto> findAllByKey(Pageable pageable, String key) {
+        Page<Experience> experiencesPage = key.trim().isEmpty() ? experienceRepository.findAll(pageable) : experienceRepository.findAllByKey(pageable, key.toLowerCase());
+        return experiencesPage.hasContent() ? experiencesPage.map(this::convertToDto) : Page.empty();
     }
 
     @Override

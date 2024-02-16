@@ -2,6 +2,9 @@ package com.project.ems.employee;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +26,16 @@ public class EmployeeRestController implements EmployeeApi {
     @Override @GetMapping("/active")
     public ResponseEntity<List<EmployeeDto>> findAllActive() {
         return ResponseEntity.ok(employeeService.findAllActive());
+    }
+
+    @Override @GetMapping("/pagination")
+    public ResponseEntity<Page<EmployeeDto>> findAllByKey(@PageableDefault(sort = "id") Pageable pageable, @RequestParam(required = false, defaultValue = "") String key) {
+        return ResponseEntity.ok(employeeService.findAllByKey(pageable, key));
+    }
+
+    @Override @GetMapping("/active/pagination")
+    public ResponseEntity<Page<EmployeeDto>> findAllActiveByKey(@PageableDefault(sort = "id") Pageable pageable, @RequestParam(required = false, defaultValue = "") String key) {
+        return ResponseEntity.ok(employeeService.findAllActiveByKey(pageable, key));
     }
 
     @Override @GetMapping("/{id}")
