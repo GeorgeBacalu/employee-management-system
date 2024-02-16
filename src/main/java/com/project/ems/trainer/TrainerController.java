@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import static com.project.ems.constants.Constants.*;
+
 @Controller
 @RequestMapping("/trainers")
 @RequiredArgsConstructor
@@ -14,21 +16,21 @@ public class TrainerController {
 
     @GetMapping
     public String findAllActivePage(Model model) {
-        model.addAttribute("trainers", trainerService.convertToEntities(trainerService.findAllActive()));
-        return "trainer/trainers";
+        model.addAttribute(TRAINERS_ATTRIBUTE, trainerService.convertToEntities(trainerService.findAllActive()));
+        return TRAINERS_VIEW;
     }
 
     @GetMapping("/{id}")
     public String findByIdPage(Model model, @PathVariable Integer id) {
-        model.addAttribute("trainer", trainerService.findEntityById(id));
-        return "trainer/trainer-details";
+        model.addAttribute(TRAINER_ATTRIBUTE, trainerService.findEntityById(id));
+        return TRAINER_DETAILS_VIEW;
     }
 
     @GetMapping("/save/{id}")
     public String getSavePage(Model model, @PathVariable Integer id) {
         model.addAttribute("id", id);
-        model.addAttribute("trainerDto", id == -1 ? new TrainerDto() : trainerService.findById(id));
-        return "trainer/save-trainer";
+        model.addAttribute(TRAINER_DTO_ATTRIBUTE, id == -1 ? new TrainerDto() : trainerService.findById(id));
+        return SAVE_TRAINER_VIEW;
     }
 
     @PostMapping("/save/{id}")
@@ -38,12 +40,12 @@ public class TrainerController {
         } else {
             trainerService.updateById(trainerDto, id);
         }
-        return "redirect:/trainers";
+        return REDIRECT_TRAINERS_VIEW;
     }
 
     @GetMapping("/delete/{id}")
     public String disableById(@PathVariable Integer id) {
         trainerService.disableById(id);
-        return "redirect:/trainers";
+        return REDIRECT_TRAINERS_VIEW;
     }
 }

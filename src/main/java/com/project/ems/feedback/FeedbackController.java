@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import static com.project.ems.constants.Constants.*;
+
 @Controller
 @RequestMapping("/feedbacks")
 @RequiredArgsConstructor
@@ -14,21 +16,21 @@ public class FeedbackController {
 
     @GetMapping
     public String findAllPage(Model model) {
-        model.addAttribute("feedbacks", feedbackService.convertToEntities(feedbackService.findAll()));
-        return "feedback/feedbacks";
+        model.addAttribute(FEEDBACKS_ATTRIBUTE, feedbackService.convertToEntities(feedbackService.findAll()));
+        return FEEDBACKS_VIEW;
     }
 
     @GetMapping("/{id}")
-    public String finByIdPage(Model model, @PathVariable Integer id) {
-        model.addAttribute("feedback", feedbackService.findEntityById(id));
-        return "feedback/feedback-details";
+    public String findByIdPage(Model model, @PathVariable Integer id) {
+        model.addAttribute(FEEDBACK_ATTRIBUTE, feedbackService.findEntityById(id));
+        return FEEDBACK_DETAILS_VIEW;
     }
 
     @GetMapping("/save/{id}")
     public String getSavePage(Model model, @PathVariable Integer id) {
         model.addAttribute("id", id);
-        model.addAttribute("feedbackDto", id == -1 ? new FeedbackDto() : feedbackService.findById(id));
-        return "feedback/save-feedback";
+        model.addAttribute(FEEDBACK_DTO_ATTRIBUTE, id == -1 ? new FeedbackDto() : feedbackService.findById(id));
+        return SAVE_FEEDBACK_VIEW;
     }
 
     @PostMapping("/save/{id}")
@@ -38,12 +40,12 @@ public class FeedbackController {
         } else {
             feedbackService.updateById(feedbackDto, id);
         }
-        return "redirect:/feedbacks";
+        return REDIRECT_FEEDBACKS_VIEW;
     }
 
     @GetMapping("/delete/{id}")
     public String deleteById(@PathVariable Integer id) {
         feedbackService.deleteById(id);
-        return "redirect:/feedbacks";
+        return REDIRECT_FEEDBACKS_VIEW;
     }
 }

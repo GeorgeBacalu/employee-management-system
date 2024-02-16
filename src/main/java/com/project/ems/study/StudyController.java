@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import static com.project.ems.constants.Constants.*;
+
 @Controller
 @RequestMapping("/studies")
 @RequiredArgsConstructor
@@ -14,21 +16,21 @@ public class StudyController {
 
     @GetMapping
     public String findAllPage(Model model) {
-        model.addAttribute("studies", studyService.convertToEntities(studyService.findAll()));
-        return "study/studies";
+        model.addAttribute(STUDIES_ATTRIBUTE, studyService.convertToEntities(studyService.findAll()));
+        return STUDIES_VIEW;
     }
 
     @GetMapping("/{id}")
-    public String finByIdPage(Model model, @PathVariable Integer id) {
-        model.addAttribute("study", studyService.findEntityById(id));
-        return "study/study-details";
+    public String findByIdPage(Model model, @PathVariable Integer id) {
+        model.addAttribute(STUDY_ATTRIBUTE, studyService.findEntityById(id));
+        return STUDY_DETAILS_VIEW;
     }
 
     @GetMapping("/save/{id}")
     public String getSavePage(Model model, @PathVariable Integer id) {
         model.addAttribute("id", id);
-        model.addAttribute("studyDto", id == -1 ? new StudyDto() : studyService.findById(id));
-        return "study/save-study";
+        model.addAttribute(STUDY_DTO_ATTRIBUTE, id == -1 ? new StudyDto() : studyService.findById(id));
+        return SAVE_STUDY_VIEW;
     }
 
     @PostMapping("/save/{id}")
@@ -38,12 +40,12 @@ public class StudyController {
         } else {
             studyService.updateById(studyDto, id);
         }
-        return "redirect:/studies";
+        return REDIRECT_STUDIES_VIEW;
     }
 
     @GetMapping("/delete/{id}")
     public String deleteById(@PathVariable Integer id) {
         studyService.deleteById(id);
-        return "redirect:/studies";
+        return REDIRECT_STUDIES_VIEW;
     }
 }

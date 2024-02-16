@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import static com.project.ems.constants.Constants.*;
+
 @Controller
 @RequestMapping("/employees")
 @RequiredArgsConstructor
@@ -14,21 +16,21 @@ public class EmployeeController {
 
     @GetMapping
     public String findAllActivePage(Model model) {
-        model.addAttribute("employees", employeeService.convertToEntities(employeeService.findAllActive()));
-        return "employee/employees";
+        model.addAttribute(EMPLOYEES_ATTRIBUTE, employeeService.convertToEntities(employeeService.findAllActive()));
+        return EMPLOYEES_VIEW;
     }
 
     @GetMapping("/{id}")
     public String findByIdPage(Model model, @PathVariable Integer id) {
-        model.addAttribute("employee", employeeService.findEntityById(id));
-        return "employee/employee-details";
+        model.addAttribute(EMPLOYEE_ATTRIBUTE, employeeService.findEntityById(id));
+        return EMPLOYEE_DETAILS_VIEW;
     }
 
     @GetMapping("/save/{id}")
     public String getSavePage(Model model, @PathVariable Integer id) {
         model.addAttribute("id", id);
-        model.addAttribute("employeeDto", id == -1 ? new EmployeeDto() : employeeService.findById(id));
-        return "employee/save-employee";
+        model.addAttribute(EMPLOYEE_DTO_ATTRIBUTE, id == -1 ? new EmployeeDto() : employeeService.findById(id));
+        return SAVE_EMPLOYEE_VIEW;
     }
 
     @PostMapping("/save/{id}")
@@ -38,12 +40,12 @@ public class EmployeeController {
         } else {
             employeeService.updateById(employeeDto, id);
         }
-        return "redirect:/employees";
+        return REDIRECT_EMPLOYEES_VIEW;
     }
 
     @GetMapping("/delete/{id}")
     public String disableById(@PathVariable Integer id) {
         employeeService.disableById(id);
-        return "redirect:/employees";
+        return REDIRECT_EMPLOYEES_VIEW;
     }
 }
