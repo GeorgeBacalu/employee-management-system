@@ -30,6 +30,15 @@ public class Constants {
     public static final String API_TRAINERS = "/api/trainers";
     public static final String API_USERS = "/api/users";
 
+    public static final String AUTHORITIES = "/authorities";
+    public static final String EMPLOYEES = "/employees";
+    public static final String EXPERIENCES = "/experiences";
+    public static final String FEEDBACKS = "/feedbacks";
+    public static final String ROLES = "/roles";
+    public static final String STUDIES = "/studies";
+    public static final String TRAINERS = "/trainers";
+    public static final String USERS = "/users";
+
     public static final String AUTHORITIES_VIEW = "authority/authorities";
     public static final String AUTHORITY_DETAILS_VIEW = "authority/authority-details";
     public static final String SAVE_AUTHORITY_VIEW = "authority/save-authority";
@@ -101,4 +110,6 @@ public class Constants {
     public static final String USERS_ATTRIBUTE = "users";
     public static final String USER_ATTRIBUTE = "user";
     public static final String USER_DTO_ATTRIBUTE = "userDto";
+
+    public static final String TEXT_HTML_UTF8 = "text/html;charset=UTF-8";
 }
