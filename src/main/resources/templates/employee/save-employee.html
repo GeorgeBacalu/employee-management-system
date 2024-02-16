@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{/_fragments/layout::head(${id == -1 ? 'Save' : 'Update'} + ' Employee')}"></head>
+<body>
+<header th:replace="~{/_fragments/layout::header}"></header>
+<main class="container my-1">
+  <div class="card px-3">
+    <h3 class="text-center">[[${id == -1 ? 'Save' : 'Update'}]] Employee</h3>
+    <div class="card-body">
+      <form th:action="@{'/employees/save/' + ${id}}" method="post" th:object="${employeeDto}">
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label for="name">Name <span class="text-danger font-weight-bold">*</span></label>
+            <input type="text" id="name" th:field="*{name}" placeholder="Enter name" class="form-control" required>
+            <label for="email" class="mt-2">Email <span class="text-danger font-weight-bold">*</span></label>
+            <input type="email" id="email" th:field="*{email}" placeholder="Enter email" class="form-control" required>
+            <label for="password" class="mt-2">Password <span class="text-danger font-weight-bold">*</span></label>
+            <input type="password" id="password" th:field="*{password}" placeholder="Enter password" class="form-control" required>
+            <label for="mobile" class="mt-2">Mobile <span class="text-danger font-weight-bold">*</span></label>
+            <input type="text" id="mobile" th:field="*{mobile}" placeholder="Enter mobile" class="form-control" required>
+            <label for="address" class="mt-2">Address <span class="text-danger font-weight-bold">*</span></label>
+            <input type="text" id="address" th:field="*{address}" placeholder="Enter address" class="form-control" required>
+            <label for="birthday" class="mt-2">Birthday <span class="text-danger font-weight-bold">*</span></label>
+            <input type="date" id="birthday" th:field="*{birthday}" placeholder="Enter birthday" class="form-control" required>
+            <label for="role-id" class="mt-2">Role ID <span class="text-danger font-weight-bold">*</span></label>
+            <input type="number" id="role-id" th:field="*{roleId}" placeholder="Enter role ID" class="form-control" required>
+            <label for="authorities-ids" class="mt-2">Authorities IDs <span class="text-danger font-weight-bold">*</span></label>
+            <input type="text" id="authorities-ids" th:field="*{authoritiesIds}" placeholder="Enter authorities IDs" class="form-control" required>
+          </div>
+          <div class="col-md-6 form-group">
+            <label for="employment-type">Employment type <span class="text-danger font-weight-bold">*</span></label>
+            <select name="employment-type" id="employment-type" th:field="*{employmentType}" class="custom-select form-control" required>
+              <option value="" hidden>--Choose employment type--</option>
+              <option th:each="type : ${T(com.project.ems.employee.enums.EmploymentType).values()}" th:value="${type}">[[${type}]]</option>
+            </select>
+            <label for="position" class="mt-2">Position <span class="text-danger font-weight-bold">*</span></label>
+            <select name="position" id="position" th:field="*{position}" class="custom-select form-control" required>
+              <option value="" hidden>--Choose position--</option>
+              <option th:each="position : ${T(com.project.ems.employee.enums.Position).values()}" th:value="${position}">[[${position}]]</option>
+            </select>
+            <label for="grade" class="mt-2">Grade <span class="text-danger font-weight-bold">*</span></label>
+            <select name="grade" id="grade" th:field="*{grade}" class="custom-select form-control" required>
+              <option value="" hidden>--Choose grade--</option>
+              <option th:each="grade : ${T(com.project.ems.employee.enums.Grade).values()}" th:value="${grade}">[[${grade}]]</option>
+            </select>
+            <label for="salary" class="mt-2">Salary <span class="text-danger font-weight-bold">*</span></label>
+            <input type="text" id="salary" th:field="*{salary}" placeholder="Enter salary" class="form-control" required>
+            <label for="hire-date" class="mt-2">Hire date <span class="text-danger font-weight-bold">*</span></label>
+            <input type="date" id="hire-date" th:field="*{hiredAt}" placeholder="Enter hire date" class="form-control" required>
+            <label for="studies-ids" class="mt-2">Studies IDs <span class="text-danger font-weight-bold">*</span></label>
+            <input type="text" id="studies-ids" th:field="*{studiesIds}" placeholder="Enter studies IDs" class="form-control" required>
+            <label for="experiences-ids" class="mt-2">Experiences IDs <span class="text-danger font-weight-bold">*</span></label>
+            <input type="text" id="experiences-ids" th:field="*{experiencesIds}" placeholder="Enter experiences IDs" class="form-control" required>
+            <label for="trainer-id" class="mt-2">Trainer ID <span class="text-danger font-weight-bold">*</span></label>
+            <input type="number" id="trainer-id" th:field="*{trainerId}" placeholder="Enter trainer ID" class="form-control" required>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success btn-container"><i class="fa fa-save"></i> [[${id == -1 ? 'Save' : 'Update'}]]</button>
+        <a th:href="@{/employees}" type="button" class="btn btn-danger btn-container ml-2"><i class="fa fa-times"></i> Cancel</a>
+      </form>
+    </div>
+  </div>
+</main>
+<footer th:replace="~{/_fragments/layout::footer}"></footer>
+</body>
+</html>

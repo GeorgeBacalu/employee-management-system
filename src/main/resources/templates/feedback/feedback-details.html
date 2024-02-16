@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{/_fragments/layout::head('Feedback Details')}"></head>
+<body>
+<header th:replace="~{/_fragments/layout::header}"></header>
+<main class="container my-1">
+  <div class="card px-3">
+    <h3 class="text-center">Feedback Details</h3>
+    <div class="card-body">
+      <div class="details">
+        <p>Feedback type: [[${feedback.type}]]</p>
+        <p>Description: [[${feedback.description}]]</p>
+        <p>Sent at: [[${feedback.sentAt}]]</p>
+        <p>User: [[${feedback.user.name}]]</p>
+      </div>
+      <a th:href="@{/feedbacks}" type="button" class="btn btn-secondary btn-container"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+  </div>
+</main>
+<footer th:replace="~{/_fragments/layout::footer}"></footer>
+</body>
+</html>

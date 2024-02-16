@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{/_fragments/layout::head('Employee Details')}"></head>
+<body>
+<header th:replace="~{/_fragments/layout::header}"></header>
+<main class="container my-1">
+  <div class="card px-3">
+    <h3 class="text-center">Employee Details</h3>
+    <div class="card-body">
+      <div class="row details">
+        <div class="col-md-6">
+          <p>Name: [[${employee.name}]]</p>
+          <p>Email: [[${employee.email}]]</p>
+          <p>Mobile: [[${employee.mobile}]]</p>
+          <p>Address: [[${employee.address}]]</p>
+          <p>Birthday: [[${employee.birthday}]]</p>
+          <p>Role: [[${employee.role.type}]]</p>
+          <p>Authorities: <th:block th:each="authority : ${employee.authorities}">[[${authority.type}]]  </th:block></p>
+          <p>Studies:</p>
+          <ul th:each="study : ${employee.studies}">
+            <li>
+              <p>Title: [[${study.title}]]</p>
+              <p>Institution: [[${study.institution}]]</p>
+              <p>Description: [[${study.description}]]</p>
+              <p>Study type: [[${study.type}]]</p>
+              <p>Start date: [[${study.startedAt}]]</p>
+              <p>Finish date: [[${study.finishedAt}]]</p>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <p>Employment type: [[${employee.employmentType}]]</p>
+          <p>Position: [[${employee.position}]]</p>
+          <p>Grade: [[${employee.grade}]]</p>
+          <p>Salary: [[${employee.salary}]]</p>
+          <p>Hire date: [[${employee.hiredAt}]]</p>
+          <p>Trainer: [[${employee.trainer.name}]]</p>
+          <p>Experiences:</p>
+          <ul th:each="experience : ${employee.experiences}">
+            <li>
+              <p>Title: [[${experience.title}]]</p>
+              <p>Organization: [[${experience.organization}]]</p>
+              <p>Description: [[${experience.description}]]</p>
+              <p>Study type: [[${experience.type}]]</p>
+              <p>Start date: [[${experience.startedAt}]]</p>
+              <p>Finish date: [[${experience.finishedAt}]]</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <a th:href="@{/employees}" type="button" class="btn btn-secondary btn-container"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+  </div>
+</main>
+<footer th:replace="~{/_fragments/layout::footer}"></footer>
+</body>
+</html>

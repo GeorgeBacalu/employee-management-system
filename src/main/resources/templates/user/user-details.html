@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{/_fragments/layout::head('User Details')}"></head>
+<body>
+<header th:replace="~{/_fragments/layout::header}"></header>
+<main class="container my-1">
+  <div class="card px-3">
+    <h3 class="text-center">User Details</h3>
+    <div class="card-body">
+      <div class="details">
+        <p>Name: [[${user.name}]]</p>
+        <p>Email: [[${user.email}]]</p>
+        <p>Mobile: [[${user.mobile}]]</p>
+        <p>Mobile: [[${user.mobile}]]</p>
+        <p>Address: [[${user.address}]]</p>
+        <p>Birthday: [[${user.birthday}]]</p>
+        <p>Role: [[${user.role.type}]]</p>
+        <p>Authorities: <th:block th:each="authority : ${user.authorities}">[[${authority.type}]]  </th:block></p>
+      </div>
+      <a th:href="@{/users}" type="button" class="btn btn-secondary btn-container"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+  </div>
+</main>
+<footer th:replace="~{/_fragments/layout::footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{/_fragments/layout::head('Study Details')}"></head>
+<body>
+<header th:replace="~{/_fragments/layout::header}"></header>
+<main class="container my-1">
+  <div class="card px-3">
+    <h3 class="text-center">Study Details</h3>
+    <div class="card-body">
+      <div class="details">
+        <p>Title: [[${study.title}]]</p>
+        <p>Institution: [[${study.institution}]]</p>
+        <p>Description: [[${study.description}]]</p>
+        <p>Experience type: [[${study.type}]]</p>
+        <p>Start date: [[${study.startedAt}]]</p>
+        <p>Finish date: [[${study.finishedAt}]]</p>
+      </div>
+      <a th:href="@{/studies}" type="button" class="btn btn-secondary btn-container"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+  </div>
+</main>
+<footer th:replace="~{/_fragments/layout::footer}"></footer>
+</body>
+</html>
