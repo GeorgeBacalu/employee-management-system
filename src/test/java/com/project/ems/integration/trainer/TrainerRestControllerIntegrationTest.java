@@ -128,7 +128,9 @@ class TrainerRestControllerIntegrationTest {
         List<TrainerDto> result = objectMapper.readValue(findAllResponse.getBody(), new TypeReference<>() {});
         List<TrainerDto> trainerDtosCopy = new ArrayList<>(trainerDtos);
         trainerDtosCopy.getFirst().setIsActive(false);
-        trainerDtosCopy.get(1).setSupervisingTrainerId(null);
+        for (int i = 6; i < 12; ++i) {
+            trainerDtosCopy.get(i).setSupervisingTrainerId(null);
+        }
         then(result).containsAll(trainerDtosCopy);
     }
 

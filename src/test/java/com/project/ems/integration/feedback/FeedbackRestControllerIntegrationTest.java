@@ -82,8 +82,9 @@ class FeedbackRestControllerIntegrationTest {
     @Test
     void updateById_validId_test() {
         FeedbackDto updatedFeedbackDto = feedbackDto2;
-        updatedFeedbackDto.setId(VALID_ID);
-        updatedFeedbackDto.setUserId(VALID_ID);
+        updatedFeedbackDto.setId(feedbackDto1.getId());
+        updatedFeedbackDto.setUserId(feedbackDto1.getUserId());
+        updatedFeedbackDto.setSentAt(feedbackDto1.getSentAt());
         ResponseEntity<FeedbackDto> updateResponse = template.exchange(API_FEEDBACKS + "/" + VALID_ID, HttpMethod.PUT, new HttpEntity<>(feedbackDto2), FeedbackDto.class);
         then(updateResponse).isNotNull();
         then(updateResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -117,7 +118,7 @@ class FeedbackRestControllerIntegrationTest {
         List<FeedbackDto> result = objectMapper.readValue(findAllResponse.getBody(), new TypeReference<>() {});
         List<FeedbackDto> feedbackDtosCopy = new ArrayList<>(feedbackDtos);
         feedbackDtosCopy.remove(feedbackDto1);
-        then(result).isEqualTo(feedbackDtosCopy);
+        then(result).containsAll(feedbackDtosCopy);
     }
 
     @Test

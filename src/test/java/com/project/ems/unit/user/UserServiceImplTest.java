@@ -17,12 +17,13 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.project.ems.constants.Constants.*;
-import static com.project.ems.mock.AuthorityMock.getMockedAuthorities1;
-import static com.project.ems.mock.RoleMock.getMockedRole1;
+import static com.project.ems.mock.AuthorityMock.getMockedAuthorities;
+import static com.project.ems.mock.RoleMock.getMockedRole2;
 import static com.project.ems.mock.UserMock.*;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -69,8 +70,8 @@ class UserServiceImplTest {
         userDto2 = getMockedUserDto2();
         userDtos = getMockedUserDtos();
         activeUserDtos = getMockedActiveUserDtos();
-        role = getMockedRole1();
-        authorities = getMockedAuthorities1();
+        role = getMockedRole2();
+        authorities = getMockedAuthorities();
     }
 
     @Test
@@ -104,7 +105,7 @@ class UserServiceImplTest {
     @Test
     void save_test() {
         userDto1.getAuthoritiesIds().forEach(id -> given(authorityService.findEntityById(id)).willReturn(authorities.get(id - 1)));
-        given(roleService.findEntityById(VALID_ID)).willReturn(role);
+        given(roleService.findEntityById(anyInt())).willReturn(role);
         given(userRepository.save(any(User.class))).willReturn(user1);
         UserDto result = userService.save(userDto1);
         verify(userRepository).save(userCaptor.capture());

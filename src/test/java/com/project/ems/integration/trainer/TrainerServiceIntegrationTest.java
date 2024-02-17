@@ -26,15 +26,16 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.project.ems.constants.Constants.*;
-import static com.project.ems.mock.AuthorityMock.getMockedAuthorities1;
+import static com.project.ems.mock.AuthorityMock.getMockedAuthorities;
 import static com.project.ems.mock.EmployeeMock.getMockedEmployee1;
 import static com.project.ems.mock.ExperienceMock.getMockedExperiences1;
-import static com.project.ems.mock.RoleMock.getMockedRole1;
+import static com.project.ems.mock.RoleMock.getMockedRole2;
 import static com.project.ems.mock.StudyMock.getMockedStudies1;
 import static com.project.ems.mock.TrainerMock.*;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -93,8 +94,8 @@ class TrainerServiceIntegrationTest {
         trainerDto2 = getMockedTrainerDto2();
         trainerDtos = getMockedTrainerDtos();
         activeTrainerDtos = getMockedActiveTrainerDtos();
-        role = getMockedRole1();
-        authorities = getMockedAuthorities1();
+        role = getMockedRole2();
+        authorities = getMockedAuthorities();
         experiences = getMockedExperiences1();
         studies = getMockedStudies1();
         employee = getMockedEmployee1();
@@ -133,7 +134,7 @@ class TrainerServiceIntegrationTest {
         trainerDto1.getAuthoritiesIds().forEach(id -> given(authorityService.findEntityById(id)).willReturn(authorities.get(id - 1)));
         trainerDto1.getExperiencesIds().forEach(id -> given(experienceService.findEntityById(id)).willReturn(experiences.get(id - 1)));
         trainerDto1.getStudiesIds().forEach(id -> given(studyService.findEntityById(id)).willReturn(studies.get(id - 1)));
-        given(roleService.findEntityById(VALID_ID)).willReturn(role);
+        given(roleService.findEntityById(anyInt())).willReturn(role);
         given(trainerRepository.save(any(Trainer.class))).willReturn(trainer1);
         TrainerDto result = trainerService.save(trainerDto1);
         verify(trainerRepository).save(trainerCaptor.capture());

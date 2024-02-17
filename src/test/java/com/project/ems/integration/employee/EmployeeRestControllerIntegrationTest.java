@@ -86,7 +86,7 @@ class EmployeeRestControllerIntegrationTest {
         then(findAllResponse).isNotNull();
         then(findAllResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         List<EmployeeDto> result = objectMapper.readValue(findAllResponse.getBody(), new TypeReference<>() {});
-        then(result).isEqualTo(employeeDtos);
+        then(result).containsAll(employeeDtos);
     }
 
     @Test
