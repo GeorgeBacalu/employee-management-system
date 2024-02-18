@@ -8,15 +8,16 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+import static com.project.ems.constants.Constants.USER_ACTIVE_FILTER_QUERY;
+import static com.project.ems.constants.Constants.USER_FILTER_QUERY;
+
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     List<User> findAllByIsActiveTrue();
 
     Page<User> findAllByIsActiveTrue(Pageable pageable);
 
-    @Query("SELECT u FROM User u JOIN u.authorities a WHERE LOWER(CONCAT(u.name, ' ', u.email, ' ', u.mobile, ' ', u.address, ' ', u.birthday, ' ', u.role.type, ' ', a.type)) LIKE %:key%")
-    Page<User> findAllByKey(Pageable pageable, @Param("key") String key);
+    @Query(USER_FILTER_QUERY) Page<User> findAllByKey(Pageable pageable, @Param("key") String key);
 
-    @Query("SELECT u FROM User u JOIN u.authorities a WHERE LOWER(CONCAT(u.name, ' ', u.email, ' ', u.mobile, ' ', u.address, ' ', u.birthday, ' ', u.role.type, ' ', a.type)) LIKE %:key% AND u.isActive = true")
-    Page<User> findAllActiveByKey(Pageable pageable, @Param("key") String key);
+    @Query(USER_ACTIVE_FILTER_QUERY) Page<User> findAllActiveByKey(Pageable pageable, @Param("key") String key);
 }

@@ -86,6 +86,30 @@ public class ExperienceMock {
         return new ArrayList<>(List.of(getMockedExperienceDto15(), getMockedExperienceDto16()));
     }
 
+    public static List<Experience> getMockedExperiencesPage1() {
+        return List.of(getMockedExperience1(), getMockedExperience2());
+    }
+
+    public static List<Experience> getMockedExperiencesPage2() {
+        return List.of(getMockedExperience3(), getMockedExperience4());
+    }
+
+    public static List<Experience> getMockedExperiencesPage3() {
+        return List.of(getMockedExperience5(), getMockedExperience6());
+    }
+
+    public static List<ExperienceDto> getMockedExperienceDtosPage1() {
+        return List.of(getMockedExperienceDto1(), getMockedExperienceDto2());
+    }
+
+    public static List<ExperienceDto> getMockedExperienceDtosPage2() {
+        return List.of(getMockedExperienceDto3(), getMockedExperienceDto4());
+    }
+
+    public static List<ExperienceDto> getMockedExperienceDtosPage3() {
+        return List.of(getMockedExperienceDto5(), getMockedExperienceDto6());
+    }
+
     public static Experience getMockedExperience1() {
         return Experience.builder()
               .id(1)

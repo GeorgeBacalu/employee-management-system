@@ -10,6 +10,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+import static com.project.ems.constants.Constants.TRAINER_ACTIVE_FILTER_QUERY;
+import static com.project.ems.constants.Constants.TRAINER_FILTER_QUERY;
+
 public interface TrainerRepository extends JpaRepository<Trainer, Integer> {
 
     List<Trainer> findAllByIsActiveTrue();
@@ -22,9 +25,7 @@ public interface TrainerRepository extends JpaRepository<Trainer, Integer> {
 
     List<Trainer> findAllBySupervisingTrainer(Trainer trainer);
 
-    @Query("SELECT t FROM Trainer t JOIN t.authorities a JOIN t.experiences ex JOIN t.studies s WHERE LOWER(CONCAT(t.name, ' ', t.email, ' ', t.mobile, ' ', t.address, ' ', t.birthday, ' ', t.role.type, ' ', a.type, ' ', t.employmentType, ' ', t.position, ' ', t.grade, ' ', t.salary, ' ', t.hiredAt, ' ', ex.title, ' ', s.title, ' ', t.supervisingTrainer.name)) LIKE %:key%")
-    Page<Trainer> findAllByKey(Pageable pageable, @Param("key") String key);
+    @Query(TRAINER_FILTER_QUERY) Page<Trainer> findAllByKey(Pageable pageable, @Param("key") String key);
 
-    @Query("SELECT t FROM Trainer t JOIN t.authorities a JOIN t.experiences ex JOIN t.studies s WHERE LOWER(CONCAT(t.name, ' ', t.email, ' ', t.mobile, ' ', t.address, ' ', t.birthday, ' ', t.role.type, ' ', a.type, ' ', t.employmentType, ' ', t.position, ' ', t.grade, ' ', t.salary, ' ', t.hiredAt, ' ', ex.title, ' ', s.title, ' ', t.supervisingTrainer.name)) LIKE %:key% AND t.isActive = true")
-    Page<Trainer> findAllActiveByKey(Pageable pageable, @Param("key") String key);
+    @Query(TRAINER_ACTIVE_FILTER_QUERY) Page<Trainer> findAllActiveByKey(Pageable pageable, @Param("key") String key);
 }

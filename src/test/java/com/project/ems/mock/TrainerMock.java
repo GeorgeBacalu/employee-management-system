@@ -43,6 +43,30 @@ public class TrainerMock {
         return getMockedTrainerDtos().stream().filter(TrainerDto::getIsActive).toList();
     }
 
+    public static List<Trainer> getMockedTrainersPage1() {
+        return List.of(getMockedTrainer1(), getMockedTrainer2());
+    }
+
+    public static List<Trainer> getMockedTrainersPage2() {
+        return List.of(getMockedTrainer3(), getMockedTrainer4());
+    }
+
+    public static List<Trainer> getMockedTrainersPage3() {
+        return List.of(getMockedTrainer5(), getMockedTrainer6());
+    }
+
+    public static List<TrainerDto> getMockedTrainerDtosPage1() {
+        return List.of(getMockedTrainerDto1(), getMockedTrainerDto2());
+    }
+
+    public static List<TrainerDto> getMockedTrainerDtosPage2() {
+        return List.of(getMockedTrainerDto3(), getMockedTrainerDto4());
+    }
+
+    public static List<TrainerDto> getMockedTrainerDtosPage3() {
+        return List.of(getMockedTrainerDto5(), getMockedTrainerDto6());
+    }
+
     public static Trainer getMockedTrainer1() {
         return Trainer.builder()
               .id(1)

@@ -46,6 +46,30 @@ public class UserMock {
         return getMockedUserDtos().stream().filter(UserDto::getIsActive).toList();
     }
 
+    public static List<User> getMockedUsersPage1() {
+        return List.of(getMockedUser1(), getMockedUser2());
+    }
+
+    public static List<User> getMockedUsersPage2() {
+        return List.of(getMockedUser3(), getMockedUser4());
+    }
+
+    public static List<User> getMockedUsersPage3() {
+        return List.of(getMockedUser5(), getMockedUser6());
+    }
+
+    public static List<UserDto> getMockedUserDtosPage1() {
+        return List.of(getMockedUserDto1(), getMockedUserDto2());
+    }
+
+    public static List<UserDto> getMockedUserDtosPage2() {
+        return List.of(getMockedUserDto3(), getMockedUserDto4());
+    }
+
+    public static List<UserDto> getMockedUserDtosPage3() {
+        return List.of(getMockedUserDto5(), getMockedUserDto6());
+    }
+
     public static User getMockedUser1() {
         return User.builder()
               .id(1)

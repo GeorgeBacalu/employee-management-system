@@ -22,6 +22,30 @@ public class FeedbackMock {
         return List.of(getMockedFeedbackDto1(), getMockedFeedbackDto2(), getMockedFeedbackDto3(), getMockedFeedbackDto4(), getMockedFeedbackDto5(), getMockedFeedbackDto6(), getMockedFeedbackDto7(), getMockedFeedbackDto8(), getMockedFeedbackDto9(), getMockedFeedbackDto10(), getMockedFeedbackDto11(), getMockedFeedbackDto12());
     }
 
+    public static List<Feedback> getMockedFeedbacksPage1() {
+        return List.of(getMockedFeedback1(), getMockedFeedback2());
+    }
+
+    public static List<Feedback> getMockedFeedbacksPage2() {
+        return List.of(getMockedFeedback3(), getMockedFeedback4());
+    }
+
+    public static List<Feedback> getMockedFeedbacksPage3() {
+        return List.of(getMockedFeedback5(), getMockedFeedback6());
+    }
+
+    public static List<FeedbackDto> getMockedFeedbackDtosPage1() {
+        return List.of(getMockedFeedbackDto1(), getMockedFeedbackDto2());
+    }
+
+    public static List<FeedbackDto> getMockedFeedbackDtosPage2() {
+        return List.of(getMockedFeedbackDto3(), getMockedFeedbackDto4());
+    }
+
+    public static List<FeedbackDto> getMockedFeedbackDtosPage3() {
+        return List.of(getMockedFeedbackDto5(), getMockedFeedbackDto6());
+    }
+
     public static Feedback getMockedFeedback1() {
         return Feedback.builder()
               .id(1)

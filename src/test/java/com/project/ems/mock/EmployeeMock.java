@@ -42,6 +42,30 @@ public class EmployeeMock {
         return getMockedEmployeeDtos().stream().filter(EmployeeDto::getIsActive).toList();
     }
 
+    public static List<Employee> getMockedEmployeesPage1() {
+        return List.of(getMockedEmployee1(), getMockedEmployee2());
+    }
+
+    public static List<Employee> getMockedEmployeesPage2() {
+        return List.of(getMockedEmployee3(), getMockedEmployee4());
+    }
+
+    public static List<Employee> getMockedEmployeesPage3() {
+        return List.of(getMockedEmployee5(), getMockedEmployee6());
+    }
+
+    public static List<EmployeeDto> getMockedEmployeeDtosPage1() {
+        return List.of(getMockedEmployeeDto1(), getMockedEmployeeDto2());
+    }
+
+    public static List<EmployeeDto> getMockedEmployeeDtosPage2() {
+        return List.of(getMockedEmployeeDto3(), getMockedEmployeeDto4());
+    }
+
+    public static List<EmployeeDto> getMockedEmployeeDtosPage3() {
+        return List.of(getMockedEmployeeDto5(), getMockedEmployeeDto6());
+    }
+
     public static Employee getMockedEmployee1() {
         return Employee.builder()
               .id(1)

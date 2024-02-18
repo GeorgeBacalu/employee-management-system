@@ -70,6 +70,30 @@ public class StudyMock {
         return new ArrayList<>(List.of(getMockedStudyDto11(), getMockedStudyDto12()));
     }
 
+    public static List<Study> getMockedStudiesPage1() {
+        return List.of(getMockedStudy1(), getMockedStudy2());
+    }
+
+    public static List<Study> getMockedStudiesPage2() {
+        return List.of(getMockedStudy3(), getMockedStudy4());
+    }
+
+    public static List<Study> getMockedStudiesPage3() {
+        return List.of(getMockedStudy5(), getMockedStudy6());
+    }
+
+    public static List<StudyDto> getMockedStudyDtosPage1() {
+        return List.of(getMockedStudyDto1(), getMockedStudyDto2());
+    }
+
+    public static List<StudyDto> getMockedStudyDtosPage2() {
+        return List.of(getMockedStudyDto3(), getMockedStudyDto4());
+    }
+
+    public static List<StudyDto> getMockedStudyDtosPage3() {
+        return List.of(getMockedStudyDto5(), getMockedStudyDto6());
+    }
+
     public static Study getMockedStudy1() {
         return Study.builder()
               .id(1)

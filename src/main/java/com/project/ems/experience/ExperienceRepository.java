@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import static com.project.ems.constants.Constants.EXPERIENCE_FILTER_QUERY;
+
 public interface ExperienceRepository extends JpaRepository<Experience, Integer> {
 
-    @Query("SELECT e FROM Experience e WHERE LOWER(CONCAT(e.title, ' ', e.organization, ' ', e.description, ' ', e.type, ' ', e.startedAt, ' ', e.finishedAt)) LIKE %:key%")
-    Page<Experience> findAllByKey(Pageable pageable, @Param("key") String key);
+    @Query(EXPERIENCE_FILTER_QUERY) Page<Experience> findAllByKey(Pageable pageable, @Param("key") String key);
 }
