@@ -1,5 +1,8 @@
 package com.project.ems.user;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 public interface UserService {
@@ -7,6 +10,10 @@ public interface UserService {
     List<UserDto> findAll();
 
     List<UserDto> findAllActive();
+
+    Page<UserDto> findAllByKey(Pageable pageable, String key);
+
+    Page<UserDto> findAllActiveByKey(Pageable pageable, String key);
 
     UserDto findById(Integer id);
 

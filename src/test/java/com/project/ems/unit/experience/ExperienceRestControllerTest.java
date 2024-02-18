@@ -1,24 +1,35 @@
 package com.project.ems.unit.experience;
 
+import com.project.ems.exception.InvalidRequestException;
 import com.project.ems.experience.ExperienceDto;
 import com.project.ems.experience.ExperienceRestController;
 import com.project.ems.experience.ExperienceService;
+import com.project.ems.wrapper.PageWrapper;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Collections;
 import java.util.List;
 
-import static com.project.ems.constants.Constants.VALID_ID;
+import static com.project.ems.constants.Constants.*;
 import static com.project.ems.mock.ExperienceMock.*;
 import static org.assertj.core.api.BDDAssertions.then;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,12 +47,18 @@ class ExperienceRestControllerTest {
     private ExperienceDto experienceDto1;
     private ExperienceDto experienceDto2;
     private List<ExperienceDto> experienceDtos;
+    private List<ExperienceDto> experienceDtosPage1;
+    private List<ExperienceDto> experienceDtosPage2;
+    private List<ExperienceDto> experienceDtosPage3;
 
     @BeforeEach
     void setUp() {
         experienceDto1 = getMockedExperienceDto1();
         experienceDto2 = getMockedExperienceDto2();
         experienceDtos = getMockedExperienceDtos();
+        experienceDtosPage1 = getMockedExperienceDtosPage1();
+        experienceDtosPage2 = getMockedExperienceDtosPage2();
+        experienceDtosPage3 = getMockedExperienceDtosPage3();
     }
 
     @Test
@@ -85,5 +102,22 @@ class ExperienceRestControllerTest {
         ResponseEntity<Void> response = experienceRestController.deleteById(VALID_ID);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, ${EXPERIENCE_FILTER_KEY}", "1, ${EXPERIENCE_FILTER_KEY}", "2, ${EXPERIENCE_FILTER_KEY}", "0, ''", "1, ''", "2, ''"})
+    void findAllByKey_test(int page, String key) {
+        Pair<Pageable, List<ExperienceDto>> pageableExperienceDtosPair = switch (page) {
+            case 0 -> Pair.of(PAGEABLE_PAGE1, experienceDtosPage1);
+            case 1 -> Pair.of(PAGEABLE_PAGE2, experienceDtosPage2);
+            case 2 -> Pair.of(PAGEABLE_PAGE3, key.trim().isEmpty() ? experienceDtosPage3 : Collections.emptyList());
+            default -> throw new InvalidRequestException(INVALID_PAGE_NUMBER + page);
+        };
+        Page<ExperienceDto> filteredExperienceDtosPage = new PageImpl<>(pageableExperienceDtosPair.getRight());
+        given(experienceService.findAllByKey(any(Pageable.class), eq(key))).willReturn(filteredExperienceDtosPage);
+        ResponseEntity<PageWrapper<ExperienceDto>> response = experienceRestController.findAllByKey(pageableExperienceDtosPair.getLeft(), key);
+        then(response).isNotNull();
+        then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        then(response.getBody().getContent()).isEqualTo(filteredExperienceDtosPage.getContent());
     }
 }

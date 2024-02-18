@@ -15,11 +15,11 @@ import java.util.stream.Stream;
 public class ExperienceMock {
 
     public static List<Experience> getMockedExperiences() {
-        return Stream.of(getMockedExperiences1(), getMockedExperiences2()).flatMap(List::stream).toList();
+        return Stream.of(getMockedExperiences1(), getMockedExperiences2(), getMockedExperiences3(), getMockedExperiences4(), getMockedExperiences5(), getMockedExperiences6(), getMockedExperiences7(), getMockedExperiences8()).flatMap(List::stream).toList();
     }
 
     public static List<ExperienceDto> getMockedExperienceDtos() {
-        return Stream.of(getMockedExperienceDtos1(), getMockedExperienceDtos2()).flatMap(List::stream).toList();
+        return Stream.of(getMockedExperienceDtos1(), getMockedExperienceDtos2(), getMockedExperienceDtos3(), getMockedExperienceDtos4(), getMockedExperienceDtos5(), getMockedExperienceDtos6(), getMockedExperienceDtos7(), getMockedExperienceDtos8()).flatMap(List::stream).toList();
     }
 
     public static List<Experience> getMockedExperiences1() {
@@ -30,6 +30,30 @@ public class ExperienceMock {
         return new ArrayList<>(List.of(getMockedExperience3(), getMockedExperience4()));
     }
 
+    public static List<Experience> getMockedExperiences3() {
+        return new ArrayList<>(List.of(getMockedExperience5(), getMockedExperience6()));
+    }
+
+    public static List<Experience> getMockedExperiences4() {
+        return new ArrayList<>(List.of(getMockedExperience7(), getMockedExperience8()));
+    }
+
+    public static List<Experience> getMockedExperiences5() {
+        return new ArrayList<>(List.of(getMockedExperience9(), getMockedExperience10()));
+    }
+
+    public static List<Experience> getMockedExperiences6() {
+        return new ArrayList<>(List.of(getMockedExperience11(), getMockedExperience12()));
+    }
+
+    public static List<Experience> getMockedExperiences7() {
+        return new ArrayList<>(List.of(getMockedExperience13(), getMockedExperience14()));
+    }
+
+    public static List<Experience> getMockedExperiences8() {
+        return new ArrayList<>(List.of(getMockedExperience15(), getMockedExperience16()));
+    }
+
     public static List<ExperienceDto> getMockedExperienceDtos1() {
         return new ArrayList<>(List.of(getMockedExperienceDto1(), getMockedExperienceDto2()));
     }
@@ -38,99 +62,435 @@ public class ExperienceMock {
         return new ArrayList<>(List.of(getMockedExperienceDto3(), getMockedExperienceDto4()));
     }
 
+    public static List<ExperienceDto> getMockedExperienceDtos3() {
+        return new ArrayList<>(List.of(getMockedExperienceDto5(), getMockedExperienceDto6()));
+    }
+
+    public static List<ExperienceDto> getMockedExperienceDtos4() {
+        return new ArrayList<>(List.of(getMockedExperienceDto7(), getMockedExperienceDto8()));
+    }
+
+    public static List<ExperienceDto> getMockedExperienceDtos5() {
+        return new ArrayList<>(List.of(getMockedExperienceDto9(), getMockedExperienceDto10()));
+    }
+
+    public static List<ExperienceDto> getMockedExperienceDtos6() {
+        return new ArrayList<>(List.of(getMockedExperienceDto11(), getMockedExperienceDto12()));
+    }
+
+    public static List<ExperienceDto> getMockedExperienceDtos7() {
+        return new ArrayList<>(List.of(getMockedExperienceDto13(), getMockedExperienceDto14()));
+    }
+
+    public static List<ExperienceDto> getMockedExperienceDtos8() {
+        return new ArrayList<>(List.of(getMockedExperienceDto15(), getMockedExperienceDto16()));
+    }
+
+    public static List<Experience> getMockedExperiencesPage1() {
+        return List.of(getMockedExperience1(), getMockedExperience2());
+    }
+
+    public static List<Experience> getMockedExperiencesPage2() {
+        return List.of(getMockedExperience3(), getMockedExperience4());
+    }
+
+    public static List<Experience> getMockedExperiencesPage3() {
+        return List.of(getMockedExperience5(), getMockedExperience6());
+    }
+
+    public static List<ExperienceDto> getMockedExperienceDtosPage1() {
+        return List.of(getMockedExperienceDto1(), getMockedExperienceDto2());
+    }
+
+    public static List<ExperienceDto> getMockedExperienceDtosPage2() {
+        return List.of(getMockedExperienceDto3(), getMockedExperienceDto4());
+    }
+
+    public static List<ExperienceDto> getMockedExperienceDtosPage3() {
+        return List.of(getMockedExperienceDto5(), getMockedExperienceDto6());
+    }
+
     public static Experience getMockedExperience1() {
         return Experience.builder()
               .id(1)
-              .title("test_title1")
-              .organization("test_organization1")
-              .description("test_description1")
-              .type(ExperienceType.APPRENTICESHIP)
-              .startedAt(LocalDate.of(2020, 1, 1))
-              .finishedAt(LocalDate.of(2021, 1, 1))
+              .title("Software Engineering Intern")
+              .organization("Google")
+              .description("Worked as a Software Engineering Intern at Google, gaining hands-on experience in developing scalable software solutions.")
+              .type(ExperienceType.INTERNSHIP)
+              .startedAt(LocalDate.of(2019, 6, 1))
+              .finishedAt(LocalDate.of(2019, 8, 31))
               .build();
     }
 
     public static Experience getMockedExperience2() {
         return Experience.builder()
               .id(2)
-              .title("test_title2")
-              .organization("test_organization2")
-              .description("test_description2")
+              .title("Data Science Intern")
+              .organization("Facebook")
+              .description("Completed a Data Science Internship at Facebook, working on data analysis and machine learning projects to gain insights and drive business decisions.")
               .type(ExperienceType.INTERNSHIP)
-              .startedAt(LocalDate.of(2020, 1, 2))
-              .finishedAt(LocalDate.of(2021, 1, 2))
+              .startedAt(LocalDate.of(2020, 6, 1))
+              .finishedAt(LocalDate.of(2020, 8, 31))
               .build();
     }
 
     public static Experience getMockedExperience3() {
         return Experience.builder()
               .id(3)
-              .title("test_title3")
-              .organization("test_organization3")
-              .description("test_description3")
-              .type(ExperienceType.TRAINING)
-              .startedAt(LocalDate.of(2020, 1, 3))
-              .finishedAt(LocalDate.of(2021, 1, 3))
+              .title("Backend Developer Intern")
+              .organization("Amazon")
+              .description("Interned as a Backend Developer at Amazon, contributing to the development of high-performance backend systems for e-commerce applications.")
+              .type(ExperienceType.INTERNSHIP)
+              .startedAt(LocalDate.of(2019, 5, 1))
+              .finishedAt(LocalDate.of(2019, 7, 31))
               .build();
     }
 
     public static Experience getMockedExperience4() {
         return Experience.builder()
               .id(4)
-              .title("test_title4")
-              .organization("test_organization4")
-              .description("test_description4")
+              .title("Frontend Developer Intern")
+              .organization("Microsoft")
+              .description("Participated in a Frontend Developer Internship at Microsoft, collaborating on the development of user-friendly and responsive web interfaces.")
+              .type(ExperienceType.INTERNSHIP)
+              .startedAt(LocalDate.of(2020, 5, 15))
+              .finishedAt(LocalDate.of(2020, 8, 15))
+              .build();
+    }
+
+    public static Experience getMockedExperience5() {
+        return Experience.builder()
+              .id(5)
+              .title("Machine Learning Trainee")
+              .organization("Apple")
+              .description("Underwent comprehensive training in Machine Learning at Apple, exploring advanced algorithms and applying them to real-world data analysis challenges.")
+              .type(ExperienceType.TRAINING)
+              .startedAt(LocalDate.of(2018, 6, 15))
+              .finishedAt(LocalDate.of(2018, 9, 15))
+              .build();
+    }
+
+    public static Experience getMockedExperience6() {
+        return Experience.builder()
+              .id(6)
+              .title("Web Development Trainee")
+              .organization("IBM")
+              .description("Completed a rigorous training program in Web Development at IBM, acquiring skills in front-end and back-end development and working on industry projects.")
+              .type(ExperienceType.TRAINING)
+              .startedAt(LocalDate.of(2017, 6, 1))
+              .finishedAt(LocalDate.of(2017, 12, 31))
+              .build();
+    }
+
+    public static Experience getMockedExperience7() {
+        return Experience.builder()
+              .id(7)
+              .title("Software Developer Trainee")
+              .organization("Intel")
+              .description("Engaged in a Software Developer Training program at Intel, learning best practices in software engineering and gaining practical experience in the software development lifecycle.")
+              .type(ExperienceType.TRAINING)
+              .startedAt(LocalDate.of(2018, 6, 1))
+              .finishedAt(LocalDate.of(2018, 8, 31))
+              .build();
+    }
+
+    public static Experience getMockedExperience8() {
+        return Experience.builder()
+              .id(8)
+              .title("Mobile Application Developer Trainee")
+              .organization("Uber")
+              .description("Participated in a Mobile Application Development Training program at Uber, learning mobile development frameworks and building innovative mobile applications.")
+              .type(ExperienceType.TRAINING)
+              .startedAt(LocalDate.of(2019, 9, 1))
+              .finishedAt(LocalDate.of(2019, 11, 30))
+              .build();
+    }
+
+    public static Experience getMockedExperience9() {
+        return Experience.builder()
+              .id(9)
+              .title("Cloud Computing Apprentice")
+              .organization("Oracle")
+              .description("Completed an apprenticeship program in Cloud Computing at Oracle, gaining expertise in cloud infrastructure and deploying scalable solutions.")
+              .type(ExperienceType.APPRENTICESHIP)
+              .startedAt(LocalDate.of(2019, 1, 1))
+              .finishedAt(LocalDate.of(2019, 6, 30))
+              .build();
+    }
+
+    public static Experience getMockedExperience10() {
+        return Experience.builder()
+              .id(10)
+              .title("Full Stack Developer Apprentice")
+              .organization("Airbnb")
+              .description("Engaged in an apprenticeship program as a Full Stack Developer at Airbnb, developing end-to-end web applications and learning agile development methodologies.")
+              .type(ExperienceType.APPRENTICESHIP)
+              .startedAt(LocalDate.of(2018, 1, 15))
+              .finishedAt(LocalDate.of(2018, 7, 15))
+              .build();
+    }
+
+    public static Experience getMockedExperience11() {
+        return Experience.builder()
+              .id(11)
+              .title("Cyber-security Apprentice")
+              .organization("Cisco")
+              .description("Participated in an apprenticeship program in Cyber-security at Cisco, learning about network security, vulnerability assessments, and threat mitigation strategies.")
+              .type(ExperienceType.APPRENTICESHIP)
+              .startedAt(LocalDate.of(2019, 2, 1))
+              .finishedAt(LocalDate.of(2019, 8, 31))
+              .build();
+    }
+
+    public static Experience getMockedExperience12() {
+        return Experience.builder()
+              .id(12)
+              .title("Database Administration Apprentice")
+              .organization("Salesforce")
+              .description("Completed an apprenticeship program in Database Administration at Salesforce, gaining expertise in managing and optimizing database systems.")
+              .type(ExperienceType.APPRENTICESHIP)
+              .startedAt(LocalDate.of(2020, 3, 1))
+              .finishedAt(LocalDate.of(2020, 9, 30))
+              .build();
+    }
+
+    public static Experience getMockedExperience13() {
+        return Experience.builder()
+              .id(13)
+              .title("Open Source Contributor")
+              .organization("Mozilla")
+              .description("Contributed to open source projects at Mozilla, collaborating with developers worldwide to enhance software functionality and address issues.")
               .type(ExperienceType.VOLUNTEERING)
-              .startedAt(LocalDate.of(2020, 1, 4))
-              .finishedAt(LocalDate.of(2021, 1, 4))
+              .startedAt(LocalDate.of(2017, 9, 1))
+              .finishedAt(LocalDate.of(2018, 3, 31))
+              .build();
+    }
+
+    public static Experience getMockedExperience14() {
+        return Experience.builder()
+              .id(14)
+              .title("Code Mentor")
+              .organization("Codecademy")
+              .description("Volunteered as a Code Mentor at Codecademy, providing guidance and support to individuals learning to code and helping them overcome programming challenges.")
+              .type(ExperienceType.VOLUNTEERING)
+              .startedAt(LocalDate.of(2020, 2, 1))
+              .finishedAt(LocalDate.of(2020, 6, 30))
+              .build();
+    }
+
+    public static Experience getMockedExperience15() {
+        return Experience.builder()
+              .id(15)
+              .title("Hackathon Organizer")
+              .organization("TechCrunch")
+              .description("Organized hackathons at TechCrunch, bringing together developers, designers, and innovators to collaborate and create innovative solutions within a limited timeframe.")
+              .type(ExperienceType.VOLUNTEERING)
+              .startedAt(LocalDate.of(2019, 1, 1))
+              .finishedAt(LocalDate.of(2019, 6, 30))
+              .build();
+    }
+
+    public static Experience getMockedExperience16() {
+        return Experience.builder()
+              .id(16)
+              .title("Teaching Assistant")
+              .organization("Coursera")
+              .description("Served as a Teaching Assistant for online courses on Coursera, providing guidance and support to learners, grading assignments, and facilitating discussions.")
+              .type(ExperienceType.VOLUNTEERING)
+              .startedAt(LocalDate.of(2018, 9, 1))
+              .finishedAt(LocalDate.of(2018, 12, 31))
               .build();
     }
 
     public static ExperienceDto getMockedExperienceDto1() {
         return ExperienceDto.builder()
               .id(1)
-              .title("test_title1")
-              .organization("test_organization1")
-              .description("test_description1")
-              .type(ExperienceType.APPRENTICESHIP)
-              .startedAt(LocalDate.of(2020, 1, 1))
-              .finishedAt(LocalDate.of(2021, 1, 1))
+              .title("Software Engineering Intern")
+              .organization("Google")
+              .description("Worked as a Software Engineering Intern at Google, gaining hands-on experience in developing scalable software solutions.")
+              .type(ExperienceType.INTERNSHIP)
+              .startedAt(LocalDate.of(2019, 6, 1))
+              .finishedAt(LocalDate.of(2019, 8, 31))
               .build();
     }
 
     public static ExperienceDto getMockedExperienceDto2() {
         return ExperienceDto.builder()
               .id(2)
-              .title("test_title2")
-              .organization("test_organization2")
-              .description("test_description2")
+              .title("Data Science Intern")
+              .organization("Facebook")
+              .description("Completed a Data Science Internship at Facebook, working on data analysis and machine learning projects to gain insights and drive business decisions.")
               .type(ExperienceType.INTERNSHIP)
-              .startedAt(LocalDate.of(2020, 1, 2))
-              .finishedAt(LocalDate.of(2021, 1, 2))
+              .startedAt(LocalDate.of(2020, 6, 1))
+              .finishedAt(LocalDate.of(2020, 8, 31))
               .build();
     }
 
     public static ExperienceDto getMockedExperienceDto3() {
         return ExperienceDto.builder()
               .id(3)
-              .title("test_title3")
-              .organization("test_organization3")
-              .description("test_description3")
-              .type(ExperienceType.TRAINING)
-              .startedAt(LocalDate.of(2020, 1, 3))
-              .finishedAt(LocalDate.of(2021, 1, 3))
+              .title("Backend Developer Intern")
+              .organization("Amazon")
+              .description("Interned as a Backend Developer at Amazon, contributing to the development of high-performance backend systems for e-commerce applications.")
+              .type(ExperienceType.INTERNSHIP)
+              .startedAt(LocalDate.of(2019, 5, 1))
+              .finishedAt(LocalDate.of(2019, 7, 31))
               .build();
     }
 
     public static ExperienceDto getMockedExperienceDto4() {
         return ExperienceDto.builder()
               .id(4)
-              .title("test_title4")
-              .organization("test_organization4")
-              .description("test_description4")
+              .title("Frontend Developer Intern")
+              .organization("Microsoft")
+              .description("Participated in a Frontend Developer Internship at Microsoft, collaborating on the development of user-friendly and responsive web interfaces.")
+              .type(ExperienceType.INTERNSHIP)
+              .startedAt(LocalDate.of(2020, 5, 15))
+              .finishedAt(LocalDate.of(2020, 8, 15))
+              .build();
+    }
+
+    public static ExperienceDto getMockedExperienceDto5() {
+        return ExperienceDto.builder()
+              .id(5)
+              .title("Machine Learning Trainee")
+              .organization("Apple")
+              .description("Underwent comprehensive training in Machine Learning at Apple, exploring advanced algorithms and applying them to real-world data analysis challenges.")
+              .type(ExperienceType.TRAINING)
+              .startedAt(LocalDate.of(2018, 6, 15))
+              .finishedAt(LocalDate.of(2018, 9, 15))
+              .build();
+    }
+
+    public static ExperienceDto getMockedExperienceDto6() {
+        return ExperienceDto.builder()
+              .id(6)
+              .title("Web Development Trainee")
+              .organization("IBM")
+              .description("Completed a rigorous training program in Web Development at IBM, acquiring skills in front-end and back-end development and working on industry projects.")
+              .type(ExperienceType.TRAINING)
+              .startedAt(LocalDate.of(2017, 6, 1))
+              .finishedAt(LocalDate.of(2017, 12, 31))
+              .build();
+    }
+
+    public static ExperienceDto getMockedExperienceDto7() {
+        return ExperienceDto.builder()
+              .id(7)
+              .title("Software Developer Trainee")
+              .organization("Intel")
+              .description("Engaged in a Software Developer Training program at Intel, learning best practices in software engineering and gaining practical experience in the software development lifecycle.")
+              .type(ExperienceType.TRAINING)
+              .startedAt(LocalDate.of(2018, 6, 1))
+              .finishedAt(LocalDate.of(2018, 8, 31))
+              .build();
+    }
+
+    public static ExperienceDto getMockedExperienceDto8() {
+        return ExperienceDto.builder()
+              .id(8)
+              .title("Mobile Application Developer Trainee")
+              .organization("Uber")
+              .description("Participated in a Mobile Application Development Training program at Uber, learning mobile development frameworks and building innovative mobile applications.")
+              .type(ExperienceType.TRAINING)
+              .startedAt(LocalDate.of(2019, 9, 1))
+              .finishedAt(LocalDate.of(2019, 11, 30))
+              .build();
+    }
+
+    public static ExperienceDto getMockedExperienceDto9() {
+        return ExperienceDto.builder()
+              .id(9)
+              .title("Cloud Computing Apprentice")
+              .organization("Oracle")
+              .description("Completed an apprenticeship program in Cloud Computing at Oracle, gaining expertise in cloud infrastructure and deploying scalable solutions.")
+              .type(ExperienceType.APPRENTICESHIP)
+              .startedAt(LocalDate.of(2019, 1, 1))
+              .finishedAt(LocalDate.of(2019, 6, 30))
+              .build();
+    }
+
+    public static ExperienceDto getMockedExperienceDto10() {
+        return ExperienceDto.builder()
+              .id(10)
+              .title("Full Stack Developer Apprentice")
+              .organization("Airbnb")
+              .description("Engaged in an apprenticeship program as a Full Stack Developer at Airbnb, developing end-to-end web applications and learning agile development methodologies.")
+              .type(ExperienceType.APPRENTICESHIP)
+              .startedAt(LocalDate.of(2018, 1, 15))
+              .finishedAt(LocalDate.of(2018, 7, 15))
+              .build();
+    }
+
+    public static ExperienceDto getMockedExperienceDto11() {
+        return ExperienceDto.builder()
+              .id(11)
+              .title("Cyber-security Apprentice")
+              .organization("Cisco")
+              .description("Participated in an apprenticeship program in Cyber-security at Cisco, learning about network security, vulnerability assessments, and threat mitigation strategies.")
+              .type(ExperienceType.APPRENTICESHIP)
+              .startedAt(LocalDate.of(2019, 2, 1))
+              .finishedAt(LocalDate.of(2019, 8, 31))
+              .build();
+    }
+
+    public static ExperienceDto getMockedExperienceDto12() {
+        return ExperienceDto.builder()
+              .id(12)
+              .title("Database Administration Apprentice")
+              .organization("Salesforce")
+              .description("Completed an apprenticeship program in Database Administration at Salesforce, gaining expertise in managing and optimizing database systems.")
+              .type(ExperienceType.APPRENTICESHIP)
+              .startedAt(LocalDate.of(2020, 3, 1))
+              .finishedAt(LocalDate.of(2020, 9, 30))
+              .build();
+    }
+
+    public static ExperienceDto getMockedExperienceDto13() {
+        return ExperienceDto.builder()
+              .id(13)
+              .title("Open Source Contributor")
+              .organization("Mozilla")
+              .description("Contributed to open source projects at Mozilla, collaborating with developers worldwide to enhance software functionality and address issues.")
               .type(ExperienceType.VOLUNTEERING)
-              .startedAt(LocalDate.of(2020, 1, 4))
-              .finishedAt(LocalDate.of(2021, 1, 4))
+              .startedAt(LocalDate.of(2017, 9, 1))
+              .finishedAt(LocalDate.of(2018, 3, 31))
+              .build();
+    }
+
+    public static ExperienceDto getMockedExperienceDto14() {
+        return ExperienceDto.builder()
+              .id(14)
+              .title("Code Mentor")
+              .organization("Codecademy")
+              .description("Volunteered as a Code Mentor at Codecademy, providing guidance and support to individuals learning to code and helping them overcome programming challenges.")
+              .type(ExperienceType.VOLUNTEERING)
+              .startedAt(LocalDate.of(2020, 2, 1))
+              .finishedAt(LocalDate.of(2020, 6, 30))
+              .build();
+    }
+
+    public static ExperienceDto getMockedExperienceDto15() {
+        return ExperienceDto.builder()
+              .id(15)
+              .title("Hackathon Organizer")
+              .organization("TechCrunch")
+              .description("Organized hackathons at TechCrunch, bringing together developers, designers, and innovators to collaborate and create innovative solutions within a limited timeframe.")
+              .type(ExperienceType.VOLUNTEERING)
+              .startedAt(LocalDate.of(2019, 1, 1))
+              .finishedAt(LocalDate.of(2019, 6, 30))
+              .build();
+    }
+
+    public static ExperienceDto getMockedExperienceDto16() {
+        return ExperienceDto.builder()
+              .id(16)
+              .title("Teaching Assistant")
+              .organization("Coursera")
+              .description("Served as a Teaching Assistant for online courses on Coursera, providing guidance and support to learners, grading assignments, and facilitating discussions.")
+              .type(ExperienceType.VOLUNTEERING)
+              .startedAt(LocalDate.of(2018, 9, 1))
+              .finishedAt(LocalDate.of(2018, 12, 31))
               .build();
     }
 }

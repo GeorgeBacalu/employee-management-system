@@ -1,12 +1,17 @@
 package com.project.ems.feedback;
 
+import com.project.ems.wrapper.PageWrapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.project.ems.converter.PageWrapperConverter.convertToWrapper;
 
 @RestController
 @RequestMapping("/api/feedbacks")
@@ -18,6 +23,11 @@ public class FeedbackRestController implements FeedbackApi {
     @Override @GetMapping
     public ResponseEntity<List<FeedbackDto>> findAll() {
         return ResponseEntity.ok(feedbackService.findAll());
+    }
+
+    @Override @GetMapping("/pagination")
+    public ResponseEntity<PageWrapper<FeedbackDto>> findAllByKey(@PageableDefault(sort = "id") Pageable pageable, @RequestParam(required = false, defaultValue = "") String key) {
+        return ResponseEntity.ok(convertToWrapper(feedbackService.findAllByKey(pageable, key)));
     }
 
     @Override @GetMapping("/{id}")

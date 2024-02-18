@@ -1,10 +1,15 @@
 package com.project.ems.feedback;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 public interface FeedbackService {
 
     List<FeedbackDto> findAll();
+
+    Page<FeedbackDto> findAllByKey(Pageable pageable, String key);
 
     FeedbackDto findById(Integer id);
 

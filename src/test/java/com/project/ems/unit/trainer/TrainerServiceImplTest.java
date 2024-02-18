@@ -4,6 +4,7 @@ import com.project.ems.authority.Authority;
 import com.project.ems.authority.AuthorityService;
 import com.project.ems.employee.Employee;
 import com.project.ems.employee.EmployeeRepository;
+import com.project.ems.exception.InvalidRequestException;
 import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.experience.Experience;
 import com.project.ems.experience.ExperienceService;
@@ -12,26 +13,33 @@ import com.project.ems.role.RoleService;
 import com.project.ems.study.Study;
 import com.project.ems.study.StudyService;
 import com.project.ems.trainer.*;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static com.project.ems.constants.Constants.*;
-import static com.project.ems.mock.AuthorityMock.getMockedAuthorities1;
+import static com.project.ems.mock.AuthorityMock.getMockedAuthorities;
 import static com.project.ems.mock.EmployeeMock.getMockedEmployee1;
 import static com.project.ems.mock.ExperienceMock.getMockedExperiences1;
-import static com.project.ems.mock.RoleMock.getMockedRole1;
+import static com.project.ems.mock.RoleMock.getMockedRole2;
 import static com.project.ems.mock.StudyMock.getMockedStudies1;
 import static com.project.ems.mock.TrainerMock.*;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -70,10 +78,16 @@ class TrainerServiceImplTest {
     private Trainer trainer2;
     private List<Trainer> trainers;
     private List<Trainer> activeTrainers;
+    private List<Trainer> trainersPage1;
+    private List<Trainer> trainersPage2;
+    private List<Trainer> trainersPage3;
     private TrainerDto trainerDto1;
     private TrainerDto trainerDto2;
     private List<TrainerDto> trainerDtos;
     private List<TrainerDto> activeTrainerDtos;
+    private List<TrainerDto> trainerDtosPage1;
+    private List<TrainerDto> trainerDtosPage2;
+    private List<TrainerDto> trainerDtosPage3;
     private Role role;
     private List<Authority> authorities;
     private List<Experience> experiences;
@@ -86,12 +100,18 @@ class TrainerServiceImplTest {
         trainer2 = getMockedTrainer2();
         trainers = getMockedTrainers();
         activeTrainers = getMockedActiveTrainers();
+        trainersPage1 = getMockedTrainersPage1();
+        trainersPage2 = getMockedTrainersPage2();
+        trainersPage3 = getMockedTrainersPage3();
         trainerDto1 = getMockedTrainerDto1();
         trainerDto2 = getMockedTrainerDto2();
         trainerDtos = getMockedTrainerDtos();
         activeTrainerDtos = getMockedActiveTrainerDtos();
-        role = getMockedRole1();
-        authorities = getMockedAuthorities1();
+        trainerDtosPage1 = getMockedTrainerDtosPage1();
+        trainerDtosPage2 = getMockedTrainerDtosPage2();
+        trainerDtosPage3 = getMockedTrainerDtosPage3();
+        role = getMockedRole2();
+        authorities = getMockedAuthorities();
         experiences = getMockedExperiences1();
         studies = getMockedStudies1();
         employee = getMockedEmployee1();
@@ -130,7 +150,7 @@ class TrainerServiceImplTest {
         trainerDto1.getAuthoritiesIds().forEach(id -> given(authorityService.findEntityById(id)).willReturn(authorities.get(id - 1)));
         trainerDto1.getExperiencesIds().forEach(id -> given(experienceService.findEntityById(id)).willReturn(experiences.get(id - 1)));
         trainerDto1.getStudiesIds().forEach(id -> given(studyService.findEntityById(id)).willReturn(studies.get(id - 1)));
-        given(roleService.findEntityById(VALID_ID)).willReturn(role);
+        given(roleService.findEntityById(anyInt())).willReturn(role);
         given(trainerRepository.save(any(Trainer.class))).willReturn(trainer1);
         TrainerDto result = trainerService.save(trainerDto1);
         verify(trainerRepository).save(trainerCaptor.capture());
@@ -175,5 +195,42 @@ class TrainerServiceImplTest {
               .isInstanceOf(ResourceNotFoundException.class)
               .hasMessage(String.format(TRAINER_NOT_FOUND, INVALID_ID));
         verify(trainerRepository, never()).save(any(Trainer.class));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, ${TRAINER_FILTER_KEY}", "1, ${TRAINER_FILTER_KEY}", "2, ${TRAINER_FILTER_KEY}", "0, ''", "1, ''", "2, ''"})
+    void findAllByKey_test(int page, String key) {
+        Pair<Pageable, List<Trainer>> pageableTrainersPair = switch (page) {
+            case 0 -> Pair.of(PAGEABLE_PAGE1, trainersPage1);
+            case 1 -> Pair.of(PAGEABLE_PAGE2, trainersPage2);
+            case 2 -> Pair.of(PAGEABLE_PAGE3, key.trim().isEmpty() ? trainersPage3 : Collections.emptyList());
+            default -> throw new InvalidRequestException(INVALID_PAGE_NUMBER + page);
+        };
+        Page<Trainer> filteredTrainersPage = new PageImpl<>(pageableTrainersPair.getRight());
+        if (key.trim().isEmpty()) {
+            given(trainerRepository.findAll(any(Pageable.class))).willReturn(filteredTrainersPage);
+        } else {
+            given(trainerRepository.findAllByKey(any(Pageable.class), eq(key.toLowerCase()))).willReturn(filteredTrainersPage);
+        }
+        Page<TrainerDto> result = trainerService.findAllByKey(pageableTrainersPair.getLeft(), key);
+        then(result.getContent()).isEqualTo(trainerService.convertToDtos(pageableTrainersPair.getRight()));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, ${TRAINER_FILTER_KEY}", "1, ${TRAINER_FILTER_KEY}", "0, ''", "1, ''"})
+    void findAllActiveByKey_test(int page, String key) {
+        Pair<Pageable, List<Trainer>> pageableActiveTrainersPair = switch (page) {
+            case 0 -> Pair.of(PAGEABLE_PAGE1, trainersPage1);
+            case 1 -> Pair.of(PAGEABLE_PAGE2, key.trim().isEmpty() ? trainersPage2 : Collections.emptyList());
+            default -> throw new InvalidRequestException(INVALID_PAGE_NUMBER + page);
+        };
+        Page<Trainer> filteredActiveTrainersPage = new PageImpl<>(pageableActiveTrainersPair.getRight());
+        if (key.trim().isEmpty()) {
+            given(trainerRepository.findAllByIsActiveTrue(any(Pageable.class))).willReturn(filteredActiveTrainersPage);
+        } else {
+            given(trainerRepository.findAllActiveByKey(any(Pageable.class), eq(key.toLowerCase()))).willReturn(filteredActiveTrainersPage);
+        }
+        Page<TrainerDto> result = trainerService.findAllActiveByKey(pageableActiveTrainersPair.getLeft(), key);
+        then(result.getContent()).isEqualTo(trainerService.convertToDtos(pageableActiveTrainersPair.getRight()));
     }
 }

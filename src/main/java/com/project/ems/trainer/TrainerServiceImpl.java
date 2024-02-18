@@ -11,6 +11,8 @@ import com.project.ems.study.Study;
 import com.project.ems.study.StudyService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,6 +40,18 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     public List<TrainerDto> findAllActive() {
         return convertToDtos(trainerRepository.findAllByIsActiveTrue());
+    }
+
+    @Override
+    public Page<TrainerDto> findAllByKey(Pageable pageable, String key) {
+        Page<Trainer> trainersPage = key.trim().isEmpty() ? trainerRepository.findAll(pageable) : trainerRepository.findAllByKey(pageable, key.toLowerCase());
+        return trainersPage.hasContent() ? trainersPage.map(this::convertToDto) : Page.empty();
+    }
+
+    @Override
+    public Page<TrainerDto> findAllActiveByKey(Pageable pageable, String key) {
+        Page<Trainer> activeTrainersPage = key.trim().isEmpty() ? trainerRepository.findAllByIsActiveTrue(pageable) : trainerRepository.findAllActiveByKey(pageable, key.toLowerCase());
+        return activeTrainersPage.hasContent() ? activeTrainersPage.map(this::convertToDto) : Page.empty();
     }
 
     @Override

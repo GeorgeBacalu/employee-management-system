@@ -2,6 +2,9 @@ package com.project.ems.constants;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Constants {
@@ -17,6 +20,7 @@ public class Constants {
     public static final String STUDY_NOT_FOUND = "Study with id %d not found";
     public static final String TRAINER_NOT_FOUND = "Trainer with id %d not found";
     public static final String USER_NOT_FOUND = "User with id %d not found";
+    public static final String INVALID_PAGE_NUMBER = "Invalid page number: ";
 
     public static final Integer VALID_ID = 1;
     public static final Integer INVALID_ID = 999;
@@ -29,6 +33,11 @@ public class Constants {
     public static final String API_STUDIES = "/api/studies";
     public static final String API_TRAINERS = "/api/trainers";
     public static final String API_USERS = "/api/users";
+
+    public static final String API_PAGINATION = "/pagination?page={page}&size={size}&sort={field},{direction}&key={key}";
+    public static final String API_ACTIVE_PAGINATION = "/active/pagination?page={page}&size={size}&sort={field},{direction}&key={key}";
+    public static final String API_PAGINATION2 = "/pagination?page=%s&size=%s&sort=%s,%s&key=%s";
+    public static final String API_ACTIVE_PAGINATION2 = "/active/pagination?page=%s&size=%s&sort=%s,%s&key=%s";
 
     public static final String AUTHORITIES = "/authorities";
     public static final String EMPLOYEES = "/employees";
@@ -112,4 +121,25 @@ public class Constants {
     public static final String USER_DTO_ATTRIBUTE = "userDto";
 
     public static final String TEXT_HTML_UTF8 = "text/html;charset=UTF-8";
+
+    public static final String EMPLOYEE_FILTER_QUERY = "SELECT e FROM Employee e WHERE LOWER(CONCAT(e.name, ' ', e.email, ' ', e.mobile, ' ', e.address, ' ', e.birthday, ' ', e.role.type, ' ', e.employmentType, ' ', e.position, ' ', e.grade, ' ', e.salary, ' ', e.hiredAt, ' ', e.trainer.name)) LIKE %:key%";
+    public static final String EXPERIENCE_FILTER_QUERY = "SELECT e FROM Experience e WHERE LOWER(CONCAT(e.title, ' ', e.organization, ' ', e.description, ' ', e.type, ' ', e.startedAt, ' ', e.finishedAt)) LIKE %:key%";
+    public static final String FEEDBACK_FILTER_QUERY = "SELECT f FROM Feedback f WHERE LOWER(CONCAT(f.type, ' ', f.description, ' ', f.sentAt, ' ', f.user.name)) LIKE %:key%";
+    public static final String STUDY_FILTER_QUERY = "SELECT s FROM Study s WHERE LOWER(CONCAT(s.title, ' ', s.institution, ' ', s.description, ' ', s.type, ' ', s.startedAt, ' ', s.finishedAt)) LIKE %:key%";
+    public static final String TRAINER_FILTER_QUERY = "SELECT t FROM Trainer t LEFT JOIN Trainer st ON t.supervisingTrainer.id = st.id WHERE LOWER(CONCAT(t.name, ' ', t.email, ' ', t.mobile, ' ', t.address, ' ', t.birthday, ' ', t.role.type, ' ', t.employmentType, ' ', t.position, ' ', t.grade, ' ', t.salary, ' ', t.hiredAt, ' ', COALESCE(st.name, ''))) LIKE %:key%";
+    public static final String USER_FILTER_QUERY = "SELECT u FROM User u WHERE LOWER(CONCAT(u.name, ' ', u.email, ' ', u.mobile, ' ', u.address, ' ', u.birthday, ' ', u.role.type)) LIKE %:key%";
+    public static final String EMPLOYEE_ACTIVE_FILTER_QUERY = EMPLOYEE_FILTER_QUERY + " AND e.isActive = true";
+    public static final String TRAINER_ACTIVE_FILTER_QUERY = TRAINER_FILTER_QUERY + " AND t.isActive = true";
+    public static final String USER_ACTIVE_FILTER_QUERY = USER_FILTER_QUERY + " AND u.isActive = true";
+
+    public static final String EMPLOYEE_FILTER_KEY = "front";
+    public static final String EXPERIENCE_FILTER_KEY = "intern";
+    public static final String FEEDBACK_FILTER_KEY = "optim";
+    public static final String TRAINER_FILTER_KEY = "front";
+    public static final String STUDY_FILTER_KEY = "special";
+    public static final String USER_FILTER_KEY = "admin";
+
+    public static final Pageable PAGEABLE_PAGE1 = PageRequest.of(0, 2, Sort.Direction.ASC, "id");
+    public static final Pageable PAGEABLE_PAGE2 = PageRequest.of(1, 2, Sort.Direction.ASC, "id");
+    public static final Pageable PAGEABLE_PAGE3 = PageRequest.of(2, 2, Sort.Direction.ASC, "id");
 }

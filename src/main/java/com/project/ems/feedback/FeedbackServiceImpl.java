@@ -4,6 +4,8 @@ import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;
@@ -24,6 +26,12 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public List<FeedbackDto> findAll() {
         return convertToDtos(feedbackRepository.findAll());
+    }
+
+    @Override
+    public Page<FeedbackDto> findAllByKey(Pageable pageable, String key) {
+        Page<Feedback> feedbacksPage = key.trim().isEmpty() ? feedbackRepository.findAll(pageable) : feedbackRepository.findAllByKey(pageable, key.toLowerCase());
+        return feedbacksPage.hasContent() ? feedbacksPage.map(this::convertToDto) : Page.empty();
     }
 
     @Override

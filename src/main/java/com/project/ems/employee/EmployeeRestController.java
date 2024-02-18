@@ -1,12 +1,17 @@
 package com.project.ems.employee;
 
+import com.project.ems.wrapper.PageWrapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.project.ems.converter.PageWrapperConverter.convertToWrapper;
 
 @RestController
 @RequestMapping("/api/employees")
@@ -23,6 +28,16 @@ public class EmployeeRestController implements EmployeeApi {
     @Override @GetMapping("/active")
     public ResponseEntity<List<EmployeeDto>> findAllActive() {
         return ResponseEntity.ok(employeeService.findAllActive());
+    }
+
+    @Override @GetMapping("/pagination")
+    public ResponseEntity<PageWrapper<EmployeeDto>> findAllByKey(@PageableDefault(sort = "id") Pageable pageable, @RequestParam(required = false, defaultValue = "") String key) {
+        return ResponseEntity.ok(convertToWrapper(employeeService.findAllByKey(pageable, key)));
+    }
+
+    @Override @GetMapping("/active/pagination")
+    public ResponseEntity<PageWrapper<EmployeeDto>> findAllActiveByKey(@PageableDefault(sort = "id") Pageable pageable, @RequestParam(required = false, defaultValue = "") String key) {
+        return ResponseEntity.ok(convertToWrapper(employeeService.findAllActiveByKey(pageable, key)));
     }
 
     @Override @GetMapping("/{id}")

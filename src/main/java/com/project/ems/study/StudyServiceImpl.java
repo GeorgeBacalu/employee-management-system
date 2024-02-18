@@ -5,6 +5,8 @@ import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.trainer.TrainerRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +25,12 @@ public class StudyServiceImpl implements StudyService {
     @Override
     public List<StudyDto> findAll() {
         return convertToDtos(studyRepository.findAll());
+    }
+
+    @Override
+    public Page<StudyDto> findAllByKey(Pageable pageable, String key) {
+        Page<Study> studiesPage = key.trim().isEmpty() ? studyRepository.findAll(pageable) : studyRepository.findAllByKey(pageable, key.toLowerCase());
+        return studiesPage.hasContent() ? studiesPage.map(this::convertToDto) : Page.empty();
     }
 
     @Override
