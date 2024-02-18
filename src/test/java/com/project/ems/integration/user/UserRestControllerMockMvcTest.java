@@ -16,7 +16,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -195,10 +197,10 @@ class UserRestControllerMockMvcTest {
     }
 
     private Stream<Arguments> paginationArguments() {
-        PageImpl<UserDto> userDtosPage1 = new PageImpl<>(userDtosListPage1);
-        PageImpl<UserDto> userDtosPage2 = new PageImpl<>(userDtosListPage2);
-        PageImpl<UserDto> userDtosPage3 = new PageImpl<>(userDtosListPage3);
-        PageImpl<UserDto> emptyPage = new PageImpl<>(Collections.emptyList(), PageRequest.of(2, 2), 4);
+        Page<UserDto> userDtosPage1 = new PageImpl<>(userDtosListPage1);
+        Page<UserDto> userDtosPage2 = new PageImpl<>(userDtosListPage2);
+        Page<UserDto> userDtosPage3 = new PageImpl<>(userDtosListPage3);
+        Page<UserDto> emptyPage = new PageImpl<>(Collections.emptyList());
         return Stream.of(Arguments.of(0, 2, "id", "asc", USER_FILTER_KEY, userDtosPage1),
                          Arguments.of(1, 2, "id", "asc", USER_FILTER_KEY, userDtosPage2),
                          Arguments.of(2, 2, "id", "asc", USER_FILTER_KEY, emptyPage),

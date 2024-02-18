@@ -1,10 +1,14 @@
 package com.project.ems.integration.feedback;
 
+import com.project.ems.exception.InvalidRequestException;
 import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.feedback.*;
 import com.project.ems.user.UserService;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.modelmapper.ModelMapper;
@@ -12,10 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.time.Clock;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +32,7 @@ import static com.project.ems.mock.FeedbackMock.*;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -54,18 +63,30 @@ class FeedbackServiceIntegrationTest {
     private Feedback feedback1;
     private Feedback feedback2;
     private List<Feedback> feedbacks;
+    private List<Feedback> feedbacksPage1;
+    private List<Feedback> feedbacksPage2;
+    private List<Feedback> feedbacksPage3;
     private FeedbackDto feedbackDto1;
     private FeedbackDto feedbackDto2;
     private List<FeedbackDto> feedbackDtos;
+    private List<FeedbackDto> feedbackDtosPage1;
+    private List<FeedbackDto> feedbackDtosPage2;
+    private List<FeedbackDto> feedbackDtosPage3;
 
     @BeforeEach
     void setUp() {
         feedback1 = getMockedFeedback1();
         feedback2 = getMockedFeedback2();
         feedbacks = getMockedFeedbacks();
+        feedbacksPage1 = getMockedFeedbacksPage1();
+        feedbacksPage2 = getMockedFeedbacksPage2();
+        feedbacksPage3 = getMockedFeedbacksPage3();
         feedbackDto1 = getMockedFeedbackDto1();
         feedbackDto2 = getMockedFeedbackDto2();
         feedbackDtos = getMockedFeedbackDtos();
+        feedbackDtosPage1 = getMockedFeedbackDtosPage1();
+        feedbackDtosPage2 = getMockedFeedbackDtosPage2();
+        feedbackDtosPage3 = getMockedFeedbackDtosPage3();
     }
 
     @Test
@@ -133,5 +154,24 @@ class FeedbackServiceIntegrationTest {
               .isInstanceOf(ResourceNotFoundException.class)
               .hasMessage(String.format(FEEDBACK_NOT_FOUND, INVALID_ID));
         verify(feedbackRepository, never()).delete(any(Feedback.class));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, ${FEEDBACK_FILTER_KEY}", "1, ${FEEDBACK_FILTER_KEY}", "2, ${FEEDBACK_FILTER_KEY}", "0, ''", "1, ''", "2, ''"})
+    void findAllByKey_test(int page, String key) {
+        Pair<Pageable, List<Feedback>> pageableFeedbacksPair = switch (page) {
+            case 0 -> Pair.of(PAGEABLE_PAGE1, feedbacksPage1);
+            case 1 -> Pair.of(PAGEABLE_PAGE2, feedbacksPage2);
+            case 2 -> Pair.of(PAGEABLE_PAGE3, key.trim().isEmpty() ? feedbacksPage3 : Collections.emptyList());
+            default -> throw new InvalidRequestException(INVALID_PAGE_NUMBER + page);
+        };
+        Page<Feedback> filteredFeedbacksPage = new PageImpl<>(pageableFeedbacksPair.getRight());
+        if (key.trim().isEmpty()) {
+            given(feedbackRepository.findAll(any(Pageable.class))).willReturn(filteredFeedbacksPage);
+        } else {
+            given(feedbackRepository.findAllByKey(any(Pageable.class), eq(key.toLowerCase()))).willReturn(filteredFeedbacksPage);
+        }
+        Page<FeedbackDto> result = feedbackService.findAllByKey(pageableFeedbacksPair.getLeft(), key);
+        then(result.getContent()).isEqualTo(feedbackService.convertToDtos(pageableFeedbacksPair.getRight()));
     }
 }

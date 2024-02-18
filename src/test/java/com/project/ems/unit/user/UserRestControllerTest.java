@@ -4,6 +4,7 @@ import com.project.ems.exception.InvalidRequestException;
 import com.project.ems.user.UserDto;
 import com.project.ems.user.UserRestController;
 import com.project.ems.user.UserService;
+import com.project.ems.wrapper.PageWrapper;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -127,10 +128,10 @@ class UserRestControllerTest {
         };
         Page<UserDto> filteredUserDtosPage = new PageImpl<>(pageableUserDtosPair.getRight());
         given(userService.findAllByKey(any(Pageable.class), eq(key))).willReturn(filteredUserDtosPage);
-        ResponseEntity<Page<UserDto>> response = userRestController.findAllByKey(pageableUserDtosPair.getLeft(), key);
+        ResponseEntity<PageWrapper<UserDto>> response = userRestController.findAllByKey(pageableUserDtosPair.getLeft(), key);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        then(response.getBody()).isEqualTo(filteredUserDtosPage);
+        then(response.getBody().getContent()).isEqualTo(filteredUserDtosPage.getContent());
     }
 
     @ParameterizedTest
@@ -143,9 +144,9 @@ class UserRestControllerTest {
         };
         Page<UserDto> filteredActiveUserDtosPage = new PageImpl<>(pageableActiveUserDtosPair.getRight());
         given(userService.findAllActiveByKey(any(Pageable.class), eq(key))).willReturn(filteredActiveUserDtosPage);
-        ResponseEntity<Page<UserDto>> response = userRestController.findAllActiveByKey(pageableActiveUserDtosPair.getLeft(), key);
+        ResponseEntity<PageWrapper<UserDto>> response = userRestController.findAllActiveByKey(pageableActiveUserDtosPair.getLeft(), key);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        then(response.getBody()).isEqualTo(filteredActiveUserDtosPage);
+        then(response.getBody().getContent()).isEqualTo(filteredActiveUserDtosPage.getContent());
     }
 }

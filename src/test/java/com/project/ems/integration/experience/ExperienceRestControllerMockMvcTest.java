@@ -6,21 +6,32 @@ import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.experience.ExperienceDto;
 import com.project.ems.experience.ExperienceRestController;
 import com.project.ems.experience.ExperienceService;
+import com.project.ems.wrapper.PageWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import static com.project.ems.constants.Constants.*;
 import static com.project.ems.mock.ExperienceMock.*;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
@@ -29,6 +40,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @WebMvcTest(ExperienceRestController.class)
 class ExperienceRestControllerMockMvcTest {
 
@@ -44,12 +56,18 @@ class ExperienceRestControllerMockMvcTest {
     private ExperienceDto experienceDto1;
     private ExperienceDto experienceDto2;
     private List<ExperienceDto> experienceDtos;
+    private List<ExperienceDto> experienceDtoListPage1;
+    private List<ExperienceDto> experienceDtoListPage2;
+    private List<ExperienceDto> experienceDtoListPage3;
 
     @BeforeEach
     void setUp() {
         experienceDto1 = getMockedExperienceDto1();
         experienceDto2 = getMockedExperienceDto2();
         experienceDtos = getMockedExperienceDtos();
+        experienceDtoListPage1 = getMockedExperienceDtosPage1();
+        experienceDtoListPage2 = getMockedExperienceDtosPage2();
+        experienceDtoListPage3 = getMockedExperienceDtosPage3();
     }
 
     @Test
@@ -134,6 +152,32 @@ class ExperienceRestControllerMockMvcTest {
               .andExpect(status().isNotFound())
               .andExpect(result -> then(result.getResolvedException() instanceof ResourceNotFoundException).isTrue())
               .andExpect(result -> then(Objects.requireNonNull(result.getResolvedException()).getMessage()).isEqualTo(message));
+    }
+
+    @ParameterizedTest
+    @MethodSource("paginationArguments")
+    void findAllByKey_test(int page, int size, String sortField, String sortDirection, String key, Page<ExperienceDto> expectedPage) throws Exception {
+        given(experienceService.findAllByKey(any(Pageable.class), eq(key))).willReturn(expectedPage);
+        ResultActions actions = mockMvc.perform(get(API_EXPERIENCES + API_PAGINATION, page, size, sortField, sortDirection, key)).andExpect(status().isOk());
+        List<ExperienceDto> expectedPageContent = expectedPage.getContent();
+        for (int i = 0; i < expectedPageContent.size(); ++i) {
+            assertExperienceDto(actions, "$.content[" + i + "]", expectedPageContent.get(i));
+        }
+        PageWrapper<ExperienceDto> response = objectMapper.readValue(actions.andReturn().getResponse().getContentAsString(), new TypeReference<>() {});
+        then(response.getContent()).isEqualTo(expectedPageContent);
+    }
+
+    private Stream<Arguments> paginationArguments() {
+        Page<ExperienceDto> experienceDtosPage1 = new PageImpl<>(experienceDtoListPage1);
+        Page<ExperienceDto> experienceDtosPage2 = new PageImpl<>(experienceDtoListPage2);
+        Page<ExperienceDto> experienceDtosPage3 = new PageImpl<>(experienceDtoListPage3);
+        Page<ExperienceDto> emptyPage = new PageImpl<>(Collections.emptyList());
+        return Stream.of(Arguments.of(0, 2, "id", "asc", EXPERIENCE_FILTER_KEY, experienceDtosPage1),
+                         Arguments.of(1, 2, "id", "asc", EXPERIENCE_FILTER_KEY, experienceDtosPage2),
+                         Arguments.of(2, 2, "id", "asc", EXPERIENCE_FILTER_KEY, emptyPage),
+                         Arguments.of(0, 2, "id", "asc", "", experienceDtosPage1),
+                         Arguments.of(1, 2, "id", "asc", "", experienceDtosPage2),
+                         Arguments.of(2, 2, "id", "asc", "", experienceDtosPage3));
     }
 
     private void assertExperienceDto(ResultActions actions, String prefix, ExperienceDto experienceDto) throws Exception {

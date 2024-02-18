@@ -6,21 +6,32 @@ import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.feedback.FeedbackDto;
 import com.project.ems.feedback.FeedbackRestController;
 import com.project.ems.feedback.FeedbackService;
+import com.project.ems.wrapper.PageWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import static com.project.ems.constants.Constants.*;
 import static com.project.ems.mock.FeedbackMock.*;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
@@ -29,6 +40,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @WebMvcTest(FeedbackRestController.class)
 class FeedbackRestControllerMockMvcTest {
 
@@ -44,12 +56,18 @@ class FeedbackRestControllerMockMvcTest {
     private FeedbackDto feedbackDto1;
     private FeedbackDto feedbackDto2;
     private List<FeedbackDto> feedbackDtos;
+    private List<FeedbackDto> feedbackDtoListPage1;
+    private List<FeedbackDto> feedbackDtoListPage2;
+    private List<FeedbackDto> feedbackDtoListPage3;
 
     @BeforeEach
     void setUp() {
         feedbackDto1 = getMockedFeedbackDto1();
         feedbackDto2 = getMockedFeedbackDto2();
         feedbackDtos = getMockedFeedbackDtos();
+        feedbackDtoListPage1 = getMockedFeedbackDtosPage1();
+        feedbackDtoListPage2 = getMockedFeedbackDtosPage2();
+        feedbackDtoListPage3 = getMockedFeedbackDtosPage3();
     }
 
     @Test
@@ -134,6 +152,32 @@ class FeedbackRestControllerMockMvcTest {
               .andExpect(status().isNotFound())
               .andExpect(result -> then(result.getResolvedException() instanceof ResourceNotFoundException).isTrue())
               .andExpect(result -> then(Objects.requireNonNull(result.getResolvedException()).getMessage()).isEqualTo(message));
+    }
+
+    @ParameterizedTest
+    @MethodSource("paginationArguments")
+    void findAllByKey_test(int page, int size, String sortField, String sortDirection, String key, Page<FeedbackDto> expectedPage) throws Exception {
+        given(feedbackService.findAllByKey(any(Pageable.class), eq(key))).willReturn(expectedPage);
+        ResultActions actions = mockMvc.perform(get(API_FEEDBACKS + API_PAGINATION, page, size, sortField, sortDirection, key)).andExpect(status().isOk());
+        List<FeedbackDto> expectedPageContent = expectedPage.getContent();
+        for (int i = 0; i < expectedPageContent.size(); ++i) {
+            assertFeedbackDto(actions, "$.content[" + i + "]", expectedPageContent.get(i));
+        }
+        PageWrapper<FeedbackDto> response = objectMapper.readValue(actions.andReturn().getResponse().getContentAsString(), new TypeReference<>() {});
+        then(response.getContent()).isEqualTo(expectedPageContent);
+    }
+
+    private Stream<Arguments> paginationArguments() {
+        Page<FeedbackDto> feedbackDtosPage1 = new PageImpl<>(feedbackDtoListPage1);
+        Page<FeedbackDto> feedbackDtosPage2 = new PageImpl<>(feedbackDtoListPage2);
+        Page<FeedbackDto> feedbackDtosPage3 = new PageImpl<>(feedbackDtoListPage3);
+        Page<FeedbackDto> emptyPage = new PageImpl<>(Collections.emptyList());
+        return Stream.of(Arguments.of(0, 2, "id", "asc", FEEDBACK_FILTER_KEY, feedbackDtosPage1),
+                         Arguments.of(1, 2, "id", "asc", FEEDBACK_FILTER_KEY, feedbackDtosPage2),
+                         Arguments.of(2, 2, "id", "asc", FEEDBACK_FILTER_KEY, emptyPage),
+                         Arguments.of(0, 2, "id", "asc", "", feedbackDtosPage1),
+                         Arguments.of(1, 2, "id", "asc", "", feedbackDtosPage2),
+                         Arguments.of(2, 2, "id", "asc", "", feedbackDtosPage3));
     }
 
     private void assertFeedbackDto(ResultActions actions, String prefix, FeedbackDto feedbackDto) throws Exception {

@@ -118,6 +118,6 @@ class ExperienceRestControllerTest {
         ResponseEntity<PageWrapper<ExperienceDto>> response = experienceRestController.findAllByKey(pageableExperienceDtosPair.getLeft(), key);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        then(response.getBody()).isEqualTo(filteredExperienceDtosPage);
+        then(response.getBody().getContent()).isEqualTo(filteredExperienceDtosPage.getContent());
     }
 }

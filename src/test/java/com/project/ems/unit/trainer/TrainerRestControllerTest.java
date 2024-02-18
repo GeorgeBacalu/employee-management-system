@@ -131,7 +131,7 @@ class TrainerRestControllerTest {
         ResponseEntity<PageWrapper<TrainerDto>> response = trainerRestController.findAllByKey(pageableTrainerDtosPair.getLeft(), key);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        then(response.getBody()).isEqualTo(filteredTrainerDtosPage);
+        then(response.getBody().getContent()).isEqualTo(filteredTrainerDtosPage.getContent());
     }
 
     @ParameterizedTest
@@ -147,6 +147,6 @@ class TrainerRestControllerTest {
         ResponseEntity<PageWrapper<TrainerDto>> response = trainerRestController.findAllActiveByKey(pageableActiveTrainerDtosPair.getLeft(), key);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        then(response.getBody()).isEqualTo(filteredActiveTrainerDtosPage);
+        then(response.getBody().getContent()).isEqualTo(filteredActiveTrainerDtosPage.getContent());
     }
 }

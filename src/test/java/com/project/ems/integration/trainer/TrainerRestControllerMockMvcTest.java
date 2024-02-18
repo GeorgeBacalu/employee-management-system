@@ -6,27 +6,39 @@ import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.trainer.TrainerDto;
 import com.project.ems.trainer.TrainerRestController;
 import com.project.ems.trainer.TrainerService;
+import com.project.ems.wrapper.PageWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import static com.project.ems.constants.Constants.*;
 import static com.project.ems.mock.TrainerMock.*;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @WebMvcTest(TrainerRestController.class)
 class TrainerRestControllerMockMvcTest {
 
@@ -43,6 +55,9 @@ class TrainerRestControllerMockMvcTest {
     private TrainerDto trainerDto2;
     private List<TrainerDto> trainerDtos;
     private List<TrainerDto> activeTrainerDtos;
+    private List<TrainerDto> trainerDtosListPage1;
+    private List<TrainerDto> trainerDtosListPage2;
+    private List<TrainerDto> trainerDtosListPage3;
 
     @BeforeEach
     void setUp() {
@@ -50,6 +65,9 @@ class TrainerRestControllerMockMvcTest {
         trainerDto2 = getMockedTrainerDto2();
         trainerDtos = getMockedTrainerDtos();
         activeTrainerDtos = getMockedActiveTrainerDtos();
+        trainerDtosListPage1 = getMockedTrainerDtosPage1();
+        trainerDtosListPage2 = getMockedTrainerDtosPage2();
+        trainerDtosListPage3 = getMockedTrainerDtosPage3();
     }
 
     @Test
@@ -150,6 +168,45 @@ class TrainerRestControllerMockMvcTest {
               .andExpect(status().isNotFound())
               .andExpect(result -> then(result.getResolvedException() instanceof ResourceNotFoundException).isTrue())
               .andExpect(result -> then(Objects.requireNonNull(result.getResolvedException()).getMessage()).isEqualTo(message));
+    }
+
+    @ParameterizedTest
+    @MethodSource("paginationArguments")
+    void findAllByKey_test(int page, int size, String sortField, String sortDirection, String key, Page<TrainerDto> expectedPage) throws Exception {
+        given(trainerService.findAllByKey(any(Pageable.class), eq(key))).willReturn(expectedPage);
+        ResultActions actions = mockMvc.perform(get(API_TRAINERS + API_PAGINATION, page, size, sortField, sortDirection, key)).andExpect(status().isOk());
+        List<TrainerDto> expectedPageContent = expectedPage.getContent();
+        for (int i = 0; i < expectedPageContent.size(); ++i) {
+            assertTrainerDto(actions, "$.content[" + i + "]", expectedPageContent.get(i));
+        }
+        PageWrapper<TrainerDto> response = objectMapper.readValue(actions.andReturn().getResponse().getContentAsString(), new TypeReference<>() {});
+        then(response.getContent()).isEqualTo(expectedPageContent);
+    }
+
+    @ParameterizedTest
+    @MethodSource("paginationArguments")
+    void findAllActiveByKey_test(int page, int size, String sortField, String sortDirection, String key, Page<TrainerDto> expectedPage) throws Exception {
+        given(trainerService.findAllActiveByKey(any(Pageable.class), eq(key))).willReturn(expectedPage);
+        ResultActions actions = mockMvc.perform(get(API_TRAINERS + API_ACTIVE_PAGINATION, page, size, sortField, sortDirection, key)).andExpect(status().isOk());
+        List<TrainerDto> expectedPageActiveContent = expectedPage.getContent();
+        for (int i = 0; i < expectedPageActiveContent.size(); ++i) {
+            assertTrainerDto(actions, "$.content[" + i + "]", expectedPageActiveContent.get(i));
+        }
+        PageWrapper<TrainerDto> response = objectMapper.readValue(actions.andReturn().getResponse().getContentAsString(), new TypeReference<>() {});
+        then(response.getContent()).isEqualTo(expectedPageActiveContent);
+    }
+
+    private Stream<Arguments> paginationArguments() {
+        Page<TrainerDto> trainerDtosPage1 = new PageImpl<>(trainerDtosListPage1);
+        Page<TrainerDto> trainerDtosPage2 = new PageImpl<>(trainerDtosListPage2);
+        Page<TrainerDto> trainerDtosPage3 = new PageImpl<>(trainerDtosListPage3);
+        Page<TrainerDto> emptyPage = new PageImpl<>(Collections.emptyList());
+        return Stream.of(Arguments.of(0, 2, "id", "asc", TRAINER_FILTER_KEY, trainerDtosPage1),
+                         Arguments.of(1, 2, "id", "asc", TRAINER_FILTER_KEY, trainerDtosPage2),
+                         Arguments.of(2, 2, "id", "asc", TRAINER_FILTER_KEY, emptyPage),
+                         Arguments.of(0, 2, "id", "asc", "", trainerDtosPage1),
+                         Arguments.of(1, 2, "id", "asc", "", trainerDtosPage2),
+                         Arguments.of(2, 2, "id", "asc", "", trainerDtosPage3));
     }
 
     private void assertTrainerDto(ResultActions actions, String prefix, TrainerDto trainerDto) throws Exception {

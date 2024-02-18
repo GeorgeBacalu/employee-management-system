@@ -118,6 +118,6 @@ class StudyRestControllerTest {
         ResponseEntity<PageWrapper<StudyDto>> response = studyRestController.findAllByKey(pageableStudyDtosPair.getLeft(), key);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        then(response.getBody()).isEqualTo(filteredStudyDtosPage);
+        then(response.getBody().getContent()).isEqualTo(filteredStudyDtosPage.getContent());
     }
 }

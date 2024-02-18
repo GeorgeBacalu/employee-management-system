@@ -131,7 +131,7 @@ class EmployeeRestControllerTest {
         ResponseEntity<PageWrapper<EmployeeDto>> response = employeeRestController.findAllByKey(pageableEmployeeDtosPair.getLeft(), key);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        then(response.getBody()).isEqualTo(filteredEmployeeDtosPage);
+        then(response.getBody().getContent()).isEqualTo(filteredEmployeeDtosPage.getContent());
     }
 
     @ParameterizedTest
@@ -139,7 +139,7 @@ class EmployeeRestControllerTest {
     void findAllActiveByKey_test(int page, String key) {
         Pair<Pageable, List<EmployeeDto>> pageableActiveEmployeeDtosPair = switch (page) {
             case 0 -> Pair.of(PAGEABLE_PAGE1, employeeDtosPage1);
-            case 1 -> Pair.of(PAGEABLE_PAGE3, key.trim().isEmpty() ? employeeDtosPage2 : Collections.emptyList());
+            case 1 -> Pair.of(PAGEABLE_PAGE2, key.trim().isEmpty() ? employeeDtosPage2 : Collections.emptyList());
             default -> throw new InvalidRequestException(INVALID_PAGE_NUMBER + page);
         };
         Page<EmployeeDto> filteredActiveEmployeeDtosPage = new PageImpl<>(pageableActiveEmployeeDtosPair.getRight());
@@ -147,6 +147,6 @@ class EmployeeRestControllerTest {
         ResponseEntity<PageWrapper<EmployeeDto>> response = employeeRestController.findAllActiveByKey(pageableActiveEmployeeDtosPair.getLeft(), key);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        then(response.getBody()).isEqualTo(filteredActiveEmployeeDtosPage);
+        then(response.getBody().getContent()).isEqualTo(filteredActiveEmployeeDtosPage.getContent());
     }
 }

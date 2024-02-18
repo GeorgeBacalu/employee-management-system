@@ -34,6 +34,11 @@ public class Constants {
     public static final String API_TRAINERS = "/api/trainers";
     public static final String API_USERS = "/api/users";
 
+    public static final String API_PAGINATION = "/pagination?page={page}&size={size}&sort={field},{direction}&key={key}";
+    public static final String API_ACTIVE_PAGINATION = "/active/pagination?page={page}&size={size}&sort={field},{direction}&key={key}";
+    public static final String API_PAGINATION2 = "/pagination?page=%s&size=%s&sort=%s,%s&key=%s";
+    public static final String API_ACTIVE_PAGINATION2 = "/active/pagination?page=%s&size=%s&sort=%s,%s&key=%s";
+
     public static final String AUTHORITIES = "/authorities";
     public static final String EMPLOYEES = "/employees";
     public static final String EXPERIENCES = "/experiences";
@@ -123,9 +128,9 @@ public class Constants {
     public static final String STUDY_FILTER_QUERY = "SELECT s FROM Study s WHERE LOWER(CONCAT(s.title, ' ', s.institution, ' ', s.description, ' ', s.type, ' ', s.startedAt, ' ', s.finishedAt)) LIKE %:key%";
     public static final String TRAINER_FILTER_QUERY = "SELECT t FROM Trainer t LEFT JOIN Trainer st ON t.supervisingTrainer.id = st.id WHERE LOWER(CONCAT(t.name, ' ', t.email, ' ', t.mobile, ' ', t.address, ' ', t.birthday, ' ', t.role.type, ' ', t.employmentType, ' ', t.position, ' ', t.grade, ' ', t.salary, ' ', t.hiredAt, ' ', COALESCE(st.name, ''))) LIKE %:key%";
     public static final String USER_FILTER_QUERY = "SELECT u FROM User u WHERE LOWER(CONCAT(u.name, ' ', u.email, ' ', u.mobile, ' ', u.address, ' ', u.birthday, ' ', u.role.type)) LIKE %:key%";
-    public static final String EMPLOYEE_ACTIVE_FILTER_QUERY = "SELECT e FROM Employee e WHERE LOWER(CONCAT(e.name, ' ', e.email, ' ', e.mobile, ' ', e.address, ' ', e.birthday, ' ', e.role.type, ' ', e.employmentType, ' ', e.position, ' ', e.grade, ' ', e.salary, ' ', e.hiredAt, ' ', e.trainer.name)) LIKE %:key% AND e.isActive = true";
-    public static final String TRAINER_ACTIVE_FILTER_QUERY = "SELECT t FROM Trainer t LEFT JOIN Trainer st ON t.supervisingTrainer.id = st.id WHERE LOWER(CONCAT(t.name, ' ', t.email, ' ', t.mobile, ' ', t.address, ' ', t.birthday, ' ', t.role.type, ' ', t.employmentType, ' ', t.position, ' ', t.grade, ' ', t.salary, ' ', t.hiredAt, ' ', COALESCE(st.name, ''))) LIKE %:key% AND t.isActive = true";
-    public static final String USER_ACTIVE_FILTER_QUERY = "SELECT u FROM User u WHERE LOWER(CONCAT(u.name, ' ', u.email, ' ', u.mobile, ' ', u.address, ' ', u.birthday, ' ', u.role.type)) LIKE %:key% AND u.isActive = true";
+    public static final String EMPLOYEE_ACTIVE_FILTER_QUERY = EMPLOYEE_FILTER_QUERY + " AND e.isActive = true";
+    public static final String TRAINER_ACTIVE_FILTER_QUERY = TRAINER_FILTER_QUERY + " AND t.isActive = true";
+    public static final String USER_ACTIVE_FILTER_QUERY = USER_FILTER_QUERY + " AND u.isActive = true";
 
     public static final String EMPLOYEE_FILTER_KEY = "front";
     public static final String EXPERIENCE_FILTER_KEY = "intern";

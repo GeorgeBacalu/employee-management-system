@@ -118,6 +118,6 @@ class FeedbackRestControllerTest {
         ResponseEntity<PageWrapper<FeedbackDto>> response = feedbackRestController.findAllByKey(pageableFeedbackDtosPair.getLeft(), key);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        then(response.getBody()).isEqualTo(filteredFeedbackDtosPage);
+        then(response.getBody().getContent()).isEqualTo(filteredFeedbackDtosPage.getContent());
     }
 }
