@@ -101,21 +101,21 @@ class EmployeeServiceImplTest {
         employee2 = getMockedEmployee2();
         employees = getMockedEmployees();
         activeEmployees = getMockedActiveEmployees();
+        employeesPage1 = getMockedEmployeesPage1();
+        employeesPage2 = getMockedEmployeesPage2();
+        employeesPage3 = getMockedEmployeesPage3();
         employeeDto1 = getMockedEmployeeDto1();
         employeeDto2 = getMockedEmployeeDto2();
         employeeDtos = getMockedEmployeeDtos();
         activeEmployeeDtos = getMockedActiveEmployeeDtos();
-        employeesPage1 = getMockedEmployeesPage1();
-        employeesPage2 = getMockedEmployeesPage2();
-        employeesPage3 = getMockedEmployeesPage3();
+        employeeDtosPage1 = getMockedEmployeeDtosPage1();
+        employeeDtosPage2 = getMockedEmployeeDtosPage2();
+        employeeDtosPage3 = getMockedEmployeeDtosPage3();
         role = getMockedRole1();
         authorities = getMockedAuthorities1();
         experiences = getMockedExperiences1();
         studies = getMockedStudies1();
         trainer = getMockedTrainer1();
-        employeeDtosPage1 = getMockedEmployeeDtosPage1();
-        employeeDtosPage2 = getMockedEmployeeDtosPage2();
-        employeeDtosPage3 = getMockedEmployeeDtosPage3();
     }
 
     @Test

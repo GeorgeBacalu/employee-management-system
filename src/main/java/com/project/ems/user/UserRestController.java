@@ -1,8 +1,8 @@
 package com.project.ems.user;
 
+import com.project.ems.wrapper.PageWrapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.project.ems.converter.PageWrapperConverter.convertToWrapper;
 
 @RestController
 @RequestMapping("/api/users")
@@ -29,13 +31,13 @@ public class UserRestController implements UserApi {
     }
 
     @Override @GetMapping("/pagination")
-    public ResponseEntity<Page<UserDto>> findAllByKey(@PageableDefault(sort = "id") Pageable pageable, @RequestParam(required = false, defaultValue = "") String key) {
-        return ResponseEntity.ok(userService.findAllByKey(pageable, key));
+    public ResponseEntity<PageWrapper<UserDto>> findAllByKey(@PageableDefault(sort = "id") Pageable pageable, @RequestParam(required = false, defaultValue = "") String key) {
+        return ResponseEntity.ok(convertToWrapper(userService.findAllByKey(pageable, key)));
     }
 
     @Override @GetMapping("/active/pagination")
-    public ResponseEntity<Page<UserDto>> findAllActiveByKey(@PageableDefault(sort = "id") Pageable pageable, @RequestParam(required = false, defaultValue = "") String key) {
-        return ResponseEntity.ok(userService.findAllActiveByKey(pageable, key));
+    public ResponseEntity<PageWrapper<UserDto>> findAllActiveByKey(@PageableDefault(sort = "id") Pageable pageable, @RequestParam(required = false, defaultValue = "") String key) {
+        return ResponseEntity.ok(convertToWrapper(userService.findAllActiveByKey(pageable, key)));
     }
 
     @Override @GetMapping("/{id}")

@@ -4,6 +4,7 @@ import com.project.ems.exception.InvalidRequestException;
 import com.project.ems.experience.ExperienceDto;
 import com.project.ems.experience.ExperienceRestController;
 import com.project.ems.experience.ExperienceService;
+import com.project.ems.wrapper.PageWrapper;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -114,7 +115,7 @@ class ExperienceRestControllerTest {
         };
         Page<ExperienceDto> filteredExperienceDtosPage = new PageImpl<>(pageableExperienceDtosPair.getRight());
         given(experienceService.findAllByKey(any(Pageable.class), eq(key))).willReturn(filteredExperienceDtosPage);
-        ResponseEntity<Page<ExperienceDto>> response = experienceRestController.findAllByKey(pageableExperienceDtosPair.getLeft(), key);
+        ResponseEntity<PageWrapper<ExperienceDto>> response = experienceRestController.findAllByKey(pageableExperienceDtosPair.getLeft(), key);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         then(response.getBody()).isEqualTo(filteredExperienceDtosPage);

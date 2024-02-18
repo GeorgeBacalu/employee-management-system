@@ -1,10 +1,10 @@
 package com.project.ems.study;
 
+import com.project.ems.wrapper.PageWrapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
@@ -18,8 +18,8 @@ public interface StudyApi {
 
     @Operation(summary = "Find studies paginated, sorted and filtered", description = "Return list with studies paginated, sorted and filtered", tags = "study", responses = {
           @ApiResponse(responseCode = "200", description = "Successful operation")})
-    ResponseEntity<Page<StudyDto>> findAllByKey(@Parameter(name = "pageable", description = "Pageable object for paging and sorting") Pageable pageable,
-                                                @Parameter(name = "key", description = "Filtering key") String key);
+    ResponseEntity<PageWrapper<StudyDto>> findAllByKey(@Parameter(name = "pageable", description = "Pageable object for paging and sorting") Pageable pageable,
+                                                       @Parameter(name = "key", description = "Filtering key") String key);
 
     @Operation(summary = "Find study by ID", description = "Return study with given ID", tags = "study", responses = {
           @ApiResponse(responseCode = "200", description = "Successful operation"),

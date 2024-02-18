@@ -4,6 +4,7 @@ import com.project.ems.exception.InvalidRequestException;
 import com.project.ems.trainer.TrainerDto;
 import com.project.ems.trainer.TrainerRestController;
 import com.project.ems.trainer.TrainerService;
+import com.project.ems.wrapper.PageWrapper;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -127,7 +128,7 @@ class TrainerRestControllerTest {
         };
         Page<TrainerDto> filteredTrainerDtosPage = new PageImpl<>(pageableTrainerDtosPair.getRight());
         given(trainerService.findAllByKey(any(Pageable.class), eq(key))).willReturn(filteredTrainerDtosPage);
-        ResponseEntity<Page<TrainerDto>> response = trainerRestController.findAllByKey(pageableTrainerDtosPair.getLeft(), key);
+        ResponseEntity<PageWrapper<TrainerDto>> response = trainerRestController.findAllByKey(pageableTrainerDtosPair.getLeft(), key);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         then(response.getBody()).isEqualTo(filteredTrainerDtosPage);
@@ -143,7 +144,7 @@ class TrainerRestControllerTest {
         };
         Page<TrainerDto> filteredActiveTrainerDtosPage = new PageImpl<>(pageableActiveTrainerDtosPair.getRight());
         given(trainerService.findAllActiveByKey(any(Pageable.class), eq(key))).willReturn(filteredActiveTrainerDtosPage);
-        ResponseEntity<Page<TrainerDto>> response = trainerRestController.findAllActiveByKey(pageableActiveTrainerDtosPair.getLeft(), key);
+        ResponseEntity<PageWrapper<TrainerDto>> response = trainerRestController.findAllActiveByKey(pageableActiveTrainerDtosPair.getLeft(), key);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         then(response.getBody()).isEqualTo(filteredActiveTrainerDtosPage);

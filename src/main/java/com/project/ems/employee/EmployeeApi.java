@@ -1,10 +1,10 @@
 package com.project.ems.employee;
 
+import com.project.ems.wrapper.PageWrapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
@@ -22,13 +22,13 @@ public interface EmployeeApi {
 
     @Operation(summary = "Find employees paginated, sorted and filtered", description = "Return list with employees paginated, sorted and filtered", tags = "employee", responses = {
           @ApiResponse(responseCode = "200", description = "Successful operation")})
-    ResponseEntity<Page<EmployeeDto>> findAllByKey(@Parameter(name = "pageable", description = "Pageable object for paging and sorting") Pageable pageable,
-                                                   @Parameter(name = "key", description = "Filtering key") String key);
+    ResponseEntity<PageWrapper<EmployeeDto>> findAllByKey(@Parameter(name = "pageable", description = "Pageable object for paging and sorting") Pageable pageable,
+                                                          @Parameter(name = "key", description = "Filtering key") String key);
 
     @Operation(summary = "Find active employees paginated, sorted and filtered", description = "Return list with active employees paginated, sorted and filtered", tags = "employee", responses = {
           @ApiResponse(responseCode = "200", description = "Successful operation")})
-    ResponseEntity<Page<EmployeeDto>> findAllActiveByKey(@Parameter(name = "pageable", description = "Pageable object for paging and sorting") Pageable pageable,
-                                                         @Parameter(name = "key", description = "Filtering key") String key);
+    ResponseEntity<PageWrapper<EmployeeDto>> findAllActiveByKey(@Parameter(name = "pageable", description = "Pageable object for paging and sorting") Pageable pageable,
+                                                                @Parameter(name = "key", description = "Filtering key") String key);
 
     @Operation(summary = "Find employee by ID", description = "Return employee with given ID", tags = "employee", responses = {
           @ApiResponse(responseCode = "200", description = "Successful operation"),

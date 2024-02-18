@@ -4,6 +4,7 @@ import com.project.ems.exception.InvalidRequestException;
 import com.project.ems.study.StudyDto;
 import com.project.ems.study.StudyRestController;
 import com.project.ems.study.StudyService;
+import com.project.ems.wrapper.PageWrapper;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -114,7 +115,7 @@ class StudyRestControllerTest {
         };
         Page<StudyDto> filteredStudyDtosPage = new PageImpl<>(pageableStudyDtosPair.getRight());
         given(studyService.findAllByKey(any(Pageable.class), eq(key))).willReturn(filteredStudyDtosPage);
-        ResponseEntity<Page<StudyDto>> response = studyRestController.findAllByKey(pageableStudyDtosPair.getLeft(), key);
+        ResponseEntity<PageWrapper<StudyDto>> response = studyRestController.findAllByKey(pageableStudyDtosPair.getLeft(), key);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         then(response.getBody()).isEqualTo(filteredStudyDtosPage);

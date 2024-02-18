@@ -1,10 +1,10 @@
 package com.project.ems.experience;
 
+import com.project.ems.wrapper.PageWrapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
@@ -18,8 +18,8 @@ public interface ExperienceApi {
 
     @Operation(summary = "Find experiences paginated, sorted and filtered", description = "Return list with experiences paginated, sorted and filtered", tags = "experience", responses = {
           @ApiResponse(responseCode = "200", description = "Successful operation")})
-    ResponseEntity<Page<ExperienceDto>> findAllByKey(@Parameter(name = "pageable", description = "Pageable object for paging and sorting") Pageable pageable,
-                                                     @Parameter(name = "key", description = "Filtering key") String key);
+    ResponseEntity<PageWrapper<ExperienceDto>> findAllByKey(@Parameter(name = "pageable", description = "Pageable object for paging and sorting") Pageable pageable,
+                                                            @Parameter(name = "key", description = "Filtering key") String key);
 
     @Operation(summary = "Find experience by ID", description = "Return experience with given ID", tags = "experience", responses = {
           @ApiResponse(responseCode = "200", description = "Successful operation"),

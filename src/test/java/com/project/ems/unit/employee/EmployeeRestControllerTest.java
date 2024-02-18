@@ -4,6 +4,7 @@ import com.project.ems.employee.EmployeeDto;
 import com.project.ems.employee.EmployeeRestController;
 import com.project.ems.employee.EmployeeService;
 import com.project.ems.exception.InvalidRequestException;
+import com.project.ems.wrapper.PageWrapper;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -127,7 +128,7 @@ class EmployeeRestControllerTest {
         };
         Page<EmployeeDto> filteredEmployeeDtosPage = new PageImpl<>(pageableEmployeeDtosPair.getRight());
         given(employeeService.findAllByKey(any(Pageable.class), eq(key))).willReturn(filteredEmployeeDtosPage);
-        ResponseEntity<Page<EmployeeDto>> response = employeeRestController.findAllByKey(pageableEmployeeDtosPair.getLeft(), key);
+        ResponseEntity<PageWrapper<EmployeeDto>> response = employeeRestController.findAllByKey(pageableEmployeeDtosPair.getLeft(), key);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         then(response.getBody()).isEqualTo(filteredEmployeeDtosPage);
@@ -143,7 +144,7 @@ class EmployeeRestControllerTest {
         };
         Page<EmployeeDto> filteredActiveEmployeeDtosPage = new PageImpl<>(pageableActiveEmployeeDtosPair.getRight());
         given(employeeService.findAllActiveByKey(any(Pageable.class), eq(key))).willReturn(filteredActiveEmployeeDtosPage);
-        ResponseEntity<Page<EmployeeDto>> response = employeeRestController.findAllActiveByKey(pageableActiveEmployeeDtosPair.getLeft(), key);
+        ResponseEntity<PageWrapper<EmployeeDto>> response = employeeRestController.findAllActiveByKey(pageableActiveEmployeeDtosPair.getLeft(), key);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         then(response.getBody()).isEqualTo(filteredActiveEmployeeDtosPage);

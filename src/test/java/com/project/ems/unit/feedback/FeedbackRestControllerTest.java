@@ -4,6 +4,7 @@ import com.project.ems.exception.InvalidRequestException;
 import com.project.ems.feedback.FeedbackDto;
 import com.project.ems.feedback.FeedbackRestController;
 import com.project.ems.feedback.FeedbackService;
+import com.project.ems.wrapper.PageWrapper;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -114,7 +115,7 @@ class FeedbackRestControllerTest {
         };
         Page<FeedbackDto> filteredFeedbackDtosPage = new PageImpl<>(pageableFeedbackDtosPair.getRight());
         given(feedbackService.findAllByKey(any(Pageable.class), eq(key))).willReturn(filteredFeedbackDtosPage);
-        ResponseEntity<Page<FeedbackDto>> response = feedbackRestController.findAllByKey(pageableFeedbackDtosPair.getLeft(), key);
+        ResponseEntity<PageWrapper<FeedbackDto>> response = feedbackRestController.findAllByKey(pageableFeedbackDtosPair.getLeft(), key);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         then(response.getBody()).isEqualTo(filteredFeedbackDtosPage);

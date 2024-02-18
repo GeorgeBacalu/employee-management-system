@@ -1,10 +1,10 @@
 package com.project.ems.feedback;
 
+import com.project.ems.wrapper.PageWrapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
@@ -18,8 +18,8 @@ public interface FeedbackApi {
 
     @Operation(summary = "Find feedbacks paginated, sorted and filtered", description = "Return list with feedbacks paginated, sorted and filtered", tags = "feedback", responses = {
           @ApiResponse(responseCode = "200", description = "Successful operation")})
-    ResponseEntity<Page<FeedbackDto>> findAllByKey(@Parameter(name = "pageable", description = "Pageable object for paging and sorting") Pageable pageable,
-                                                   @Parameter(name = "key", description = "Filtering key") String key);
+    ResponseEntity<PageWrapper<FeedbackDto>> findAllByKey(@Parameter(name = "pageable", description = "Pageable object for paging and sorting") Pageable pageable,
+                                                          @Parameter(name = "key", description = "Filtering key") String key);
 
     @Operation(summary = "Find feedback by ID", description = "Return feedback with given ID", tags = "feedback", responses = {
           @ApiResponse(responseCode = "200", description = "Successful operation"),
