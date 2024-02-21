@@ -142,4 +142,5 @@ public class Constants {
     public static final Pageable PAGEABLE_PAGE1 = PageRequest.of(0, 2, Sort.Direction.ASC, "id");
     public static final Pageable PAGEABLE_PAGE2 = PageRequest.of(1, 2, Sort.Direction.ASC, "id");
     public static final Pageable PAGEABLE_PAGE3 = PageRequest.of(2, 2, Sort.Direction.ASC, "id");
+    public static final Pageable PAGEABLE = PageRequest.of(0, 2, Sort.Direction.ASC, "id");
 }

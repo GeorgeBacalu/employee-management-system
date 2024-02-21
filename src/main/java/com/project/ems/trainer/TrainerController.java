@@ -46,7 +46,7 @@ public class TrainerController {
     }
 
     @PostMapping("/search")
-    public String findAllByKey(@ModelAttribute SearchRequest searchRequest, RedirectAttributes redirectAttributes) {
+    public String findAllActiveByKey(@ModelAttribute SearchRequest searchRequest, RedirectAttributes redirectAttributes) {
         redirectAttributes.addAttribute("page", searchRequest.getPage());
         redirectAttributes.addAttribute("size", searchRequest.getSize());
         redirectAttributes.addAttribute("sort", searchRequest.getSort());
