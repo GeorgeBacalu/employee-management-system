@@ -48,6 +48,8 @@ public class Constants {
     public static final String TRAINERS = "/trainers";
     public static final String USERS = "/users";
 
+    public static final String PAGINATION = "?page={page}&size={size}&sort={field},{direction}&key={key}";
+
     public static final String AUTHORITIES_VIEW = "authority/authorities";
     public static final String AUTHORITY_DETAILS_VIEW = "authority/authority-details";
     public static final String SAVE_AUTHORITY_VIEW = "authority/save-authority";

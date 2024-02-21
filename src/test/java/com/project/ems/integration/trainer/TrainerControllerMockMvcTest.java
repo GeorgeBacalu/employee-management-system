@@ -2,11 +2,14 @@ package com.project.ems.integration.trainer;
 
 import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.trainer.*;
+import com.project.ems.wrapper.SearchRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
 
 import static com.project.ems.constants.Constants.*;
 import static com.project.ems.mock.TrainerMock.*;
+import static com.project.ems.util.PageUtil.*;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -39,27 +43,59 @@ class TrainerControllerMockMvcTest {
     private TrainerService trainerService;
 
     private Trainer trainer;
-    private List<Trainer> activeTrainers;
+    private List<Trainer> activeTrainersPage1;
     private TrainerDto trainerDto;
-    private List<TrainerDto> activeTrainerDtos;
+    private List<TrainerDto> activeTrainerDtosPage1;
 
     @BeforeEach
     void setUp() {
         trainer = getMockedTrainer1();
-        activeTrainers = getMockedActiveTrainers();
+        activeTrainersPage1 = getMockedTrainersPage1();
         trainerDto = getMockedTrainerDto1();
-        activeTrainerDtos = getMockedActiveTrainerDtos();
+        activeTrainerDtosPage1 = getMockedTrainerDtosPage1();
     }
 
     @Test
     void findAllActivePage_test() throws Exception {
-        given(trainerService.findAllActive()).willReturn(activeTrainerDtos);
-        given(trainerService.convertToEntities(activeTrainerDtos)).willReturn(activeTrainers);
-        mockMvc.perform(get(TRAINERS).accept(TEXT_HTML))
+        Page<TrainerDto> trainerDtosPage = new PageImpl<>(activeTrainerDtosPage1);
+        given(trainerService.findAllActiveByKey(PAGEABLE, TRAINER_FILTER_KEY)).willReturn(trainerDtosPage);
+        given(trainerService.convertToEntities(trainerDtosPage.getContent())).willReturn(activeTrainersPage1);
+        int page = PAGEABLE.getPageNumber();
+        int size = PAGEABLE.getPageSize();
+        String field = getSortField(PAGEABLE);
+        String direction = getSortDirection(PAGEABLE);
+        long nrTrainers = trainerDtosPage.getTotalElements();
+        int nrPages = trainerDtosPage.getTotalPages();
+        mockMvc.perform(get(TRAINERS + PAGINATION, page, size, field, direction, TRAINER_FILTER_KEY).accept(TEXT_HTML))
               .andExpect(status().isOk())
               .andExpect(content().contentType(TEXT_HTML_UTF8))
               .andExpect(view().name(TRAINERS_VIEW))
-              .andExpect(model().attribute(TRAINERS_ATTRIBUTE, activeTrainers));
+              .andExpect(model().attribute(TRAINERS_ATTRIBUTE, activeTrainersPage1))
+              .andExpect(model().attribute("nrTrainers", nrTrainers))
+              .andExpect(model().attribute("nrPages", nrPages))
+              .andExpect(model().attribute("page", page))
+              .andExpect(model().attribute("size", size))
+              .andExpect(model().attribute("field", field))
+              .andExpect(model().attribute("direction", direction))
+              .andExpect(model().attribute("key", TRAINER_FILTER_KEY))
+              .andExpect(model().attribute("pageStartIndex", getPageStartIndex(page, size)))
+              .andExpect(model().attribute("pageEndIndex", getPageEndIndex(page, size, nrTrainers)))
+              .andExpect(model().attribute("pageNavigationStartIndex", getPageNavigationStartIndex(page, nrPages)))
+              .andExpect(model().attribute("pageNavigationEndIndex", getPageNavigationEndIndex(page, nrPages)))
+              .andExpect(model().attribute("searchRequest", new SearchRequest(page, size, field + ',' + direction, TRAINER_FILTER_KEY)));
+    }
+
+    @Test
+    void findAllActiveByKey_test() throws Exception {
+        Page<TrainerDto> trainerDtosPage = new PageImpl<>(activeTrainerDtosPage1);
+        int page = trainerDtosPage.getNumber();
+        int size = trainerDtosPage.getSize();
+        String field = getSortField(PAGEABLE);
+        String direction = getSortDirection(PAGEABLE);
+        mockMvc.perform(post(TRAINERS + "/search" + PAGINATION, page, size, field, direction, TRAINER_FILTER_KEY).accept(TEXT_HTML))
+              .andExpect(status().isFound())
+              .andExpect(view().name(REDIRECT_TRAINERS_VIEW))
+              .andExpect(redirectedUrlPattern(TRAINERS + "?page=*&size=*&sort=*&key=*"));
     }
 
     @Test
@@ -147,10 +183,16 @@ class TrainerControllerMockMvcTest {
 
     @Test
     void disableById_validId_test() throws Exception {
-        mockMvc.perform(get(TRAINERS + "/delete/{id}", VALID_ID).accept(TEXT_HTML))
+        Page<TrainerDto> trainerDtosPage = new PageImpl<>(activeTrainerDtosPage1);
+        given(trainerService.findAllActiveByKey(PAGEABLE, TRAINER_FILTER_KEY)).willReturn(trainerDtosPage);
+        int page = trainerDtosPage.getNumber();
+        int size = trainerDtosPage.getSize();
+        String field = getSortField(PAGEABLE);
+        String direction = getSortDirection(PAGEABLE);
+        mockMvc.perform(get(TRAINERS + "/delete/{id}" + PAGINATION, VALID_ID, page, size, field, direction, TRAINER_FILTER_KEY).accept(TEXT_HTML))
               .andExpect(status().isFound())
               .andExpect(view().name(REDIRECT_TRAINERS_VIEW))
-              .andExpect(redirectedUrl(TRAINERS));
+              .andExpect(redirectedUrlPattern(TRAINERS + "?page=*&size=*&sort=*&key=*"));
     }
 
     @Test

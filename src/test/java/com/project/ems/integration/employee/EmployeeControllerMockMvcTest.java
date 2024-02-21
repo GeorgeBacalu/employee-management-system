@@ -2,11 +2,14 @@ package com.project.ems.integration.employee;
 
 import com.project.ems.employee.*;
 import com.project.ems.exception.ResourceNotFoundException;
+import com.project.ems.wrapper.SearchRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
 
 import static com.project.ems.constants.Constants.*;
 import static com.project.ems.mock.EmployeeMock.*;
+import static com.project.ems.util.PageUtil.*;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -39,27 +43,59 @@ class EmployeeControllerMockMvcTest {
     private EmployeeService employeeService;
 
     private Employee employee;
-    private List<Employee> activeEmployees;
+    private List<Employee> activeEmployeesPage1;
     private EmployeeDto employeeDto;
-    private List<EmployeeDto> activeEmployeeDtos;
+    private List<EmployeeDto> activeEmployeeDtosPage1;
 
     @BeforeEach
     void setUp() {
         employee = getMockedEmployee1();
-        activeEmployees = getMockedActiveEmployees();
+        activeEmployeesPage1 = getMockedEmployeesPage1();
         employeeDto = getMockedEmployeeDto1();
-        activeEmployeeDtos = getMockedActiveEmployeeDtos();
+        activeEmployeeDtosPage1 = getMockedEmployeeDtosPage1();
     }
 
     @Test
     void findAllActivePage_test() throws Exception {
-        given(employeeService.findAllActive()).willReturn(activeEmployeeDtos);
-        given(employeeService.convertToEntities(activeEmployeeDtos)).willReturn(activeEmployees);
-        mockMvc.perform(get(EMPLOYEES).accept(TEXT_HTML))
+        Page<EmployeeDto> employeeDtosPage = new PageImpl<>(activeEmployeeDtosPage1);
+        given(employeeService.findAllActiveByKey(PAGEABLE, EMPLOYEE_FILTER_KEY)).willReturn(employeeDtosPage);
+        given(employeeService.convertToEntities(employeeDtosPage.getContent())).willReturn(activeEmployeesPage1);
+        int page = PAGEABLE.getPageNumber();
+        int size = PAGEABLE.getPageSize();
+        String field = getSortField(PAGEABLE);
+        String direction = getSortDirection(PAGEABLE);
+        long nrEmployees = employeeDtosPage.getTotalElements();
+        int nrPages = employeeDtosPage.getTotalPages();
+        mockMvc.perform(get(EMPLOYEES + PAGINATION, page, size, field, direction, EMPLOYEE_FILTER_KEY).accept(TEXT_HTML))
               .andExpect(status().isOk())
               .andExpect(content().contentType(TEXT_HTML_UTF8))
               .andExpect(view().name(EMPLOYEES_VIEW))
-              .andExpect(model().attribute(EMPLOYEES_ATTRIBUTE, activeEmployees));
+              .andExpect(model().attribute(EMPLOYEES_ATTRIBUTE, activeEmployeesPage1))
+              .andExpect(model().attribute("nrEmployees", nrEmployees))
+              .andExpect(model().attribute("nrPages", nrPages))
+              .andExpect(model().attribute("page", page))
+              .andExpect(model().attribute("size", size))
+              .andExpect(model().attribute("field", field))
+              .andExpect(model().attribute("direction", direction))
+              .andExpect(model().attribute("key", EMPLOYEE_FILTER_KEY))
+              .andExpect(model().attribute("pageStartIndex", getPageStartIndex(page, size)))
+              .andExpect(model().attribute("pageEndIndex", getPageEndIndex(page, size, nrEmployees)))
+              .andExpect(model().attribute("pageNavigationStartIndex", getPageNavigationStartIndex(page, nrPages)))
+              .andExpect(model().attribute("pageNavigationEndIndex", getPageNavigationEndIndex(page, nrPages)))
+              .andExpect(model().attribute("searchRequest", new SearchRequest(page, size, field + ',' + direction, EMPLOYEE_FILTER_KEY)));
+    }
+
+    @Test
+    void findAllActiveByKey_test() throws Exception {
+        Page<EmployeeDto> employeeDtosPage = new PageImpl<>(activeEmployeeDtosPage1);
+        int page = employeeDtosPage.getNumber();
+        int size = employeeDtosPage.getSize();
+        String field = getSortField(PAGEABLE);
+        String direction = getSortDirection(PAGEABLE);
+        mockMvc.perform(post(EMPLOYEES + "/search" + PAGINATION, page, size, field, direction, EMPLOYEE_FILTER_KEY).accept(TEXT_HTML))
+              .andExpect(status().isFound())
+              .andExpect(view().name(REDIRECT_EMPLOYEES_VIEW))
+              .andExpect(redirectedUrlPattern(EMPLOYEES + "?page=*&size=*&sort=*&key=*"));
     }
 
     @Test
@@ -147,10 +183,16 @@ class EmployeeControllerMockMvcTest {
 
     @Test
     void disableById_validId_test() throws Exception {
-        mockMvc.perform(get(EMPLOYEES + "/delete/{id}", VALID_ID).accept(TEXT_HTML))
+        Page<EmployeeDto> employeeDtosPage = new PageImpl<>(activeEmployeeDtosPage1);
+        given(employeeService.findAllActiveByKey(PAGEABLE, EMPLOYEE_FILTER_KEY)).willReturn(employeeDtosPage);
+        int page = employeeDtosPage.getNumber();
+        int size = employeeDtosPage.getSize();
+        String field = getSortField(PAGEABLE);
+        String direction = getSortDirection(PAGEABLE);
+        mockMvc.perform(get(EMPLOYEES + "/delete/{id}" + PAGINATION, VALID_ID, page, size, field, direction, EMPLOYEE_FILTER_KEY).accept(TEXT_HTML))
               .andExpect(status().isFound())
               .andExpect(view().name(REDIRECT_EMPLOYEES_VIEW))
-              .andExpect(redirectedUrl(EMPLOYEES));
+              .andExpect(redirectedUrlPattern(EMPLOYEES + "?page=*&size=*&sort=*&key=*"));
     }
 
     @Test

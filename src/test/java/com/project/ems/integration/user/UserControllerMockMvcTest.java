@@ -2,11 +2,14 @@ package com.project.ems.integration.user;
 
 import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.user.*;
+import com.project.ems.wrapper.SearchRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
 
 import static com.project.ems.constants.Constants.*;
 import static com.project.ems.mock.UserMock.*;
+import static com.project.ems.util.PageUtil.*;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -39,27 +43,59 @@ class UserControllerMockMvcTest {
     private UserService userService;
 
     private User user;
-    private List<User> activeUsers;
+    private List<User> activeUsersPage1;
     private UserDto userDto;
-    private List<UserDto> activeUserDtos;
+    private List<UserDto> activeUserDtosPage1;
 
     @BeforeEach
     void setUp() {
         user = getMockedUser1();
-        activeUsers = getMockedActiveUsers();
+        activeUsersPage1 = getMockedUsersPage1();
         userDto = getMockedUserDto1();
-        activeUserDtos = getMockedActiveUserDtos();
+        activeUserDtosPage1 = getMockedUserDtosPage1();
     }
 
     @Test
     void findAllActivePage_test() throws Exception {
-        given(userService.findAllActive()).willReturn(activeUserDtos);
-        given(userService.convertToEntities(activeUserDtos)).willReturn(activeUsers);
-        mockMvc.perform(get(USERS).accept(TEXT_HTML))
+        Page<UserDto> userDtosPage = new PageImpl<>(activeUserDtosPage1);
+        given(userService.findAllActiveByKey(PAGEABLE, USER_FILTER_KEY)).willReturn(userDtosPage);
+        given(userService.convertToEntities(userDtosPage.getContent())).willReturn(activeUsersPage1);
+        int page = PAGEABLE.getPageNumber();
+        int size = PAGEABLE.getPageSize();
+        String field = getSortField(PAGEABLE);
+        String direction = getSortDirection(PAGEABLE);
+        long nrUsers = userDtosPage.getTotalElements();
+        int nrPages = userDtosPage.getTotalPages();
+        mockMvc.perform(get(USERS + PAGINATION, page, size, field, direction, USER_FILTER_KEY).accept(TEXT_HTML))
               .andExpect(status().isOk())
               .andExpect(content().contentType(TEXT_HTML_UTF8))
               .andExpect(view().name(USERS_VIEW))
-              .andExpect(model().attribute(USERS_ATTRIBUTE, activeUsers));
+              .andExpect(model().attribute(USERS_ATTRIBUTE, activeUsersPage1))
+              .andExpect(model().attribute("nrUsers", nrUsers))
+              .andExpect(model().attribute("nrPages", nrPages))
+              .andExpect(model().attribute("page", page))
+              .andExpect(model().attribute("size", size))
+              .andExpect(model().attribute("field", field))
+              .andExpect(model().attribute("direction", direction))
+              .andExpect(model().attribute("key", USER_FILTER_KEY))
+              .andExpect(model().attribute("pageStartIndex", getPageStartIndex(page, size)))
+              .andExpect(model().attribute("pageEndIndex", getPageEndIndex(page, size, nrUsers)))
+              .andExpect(model().attribute("pageNavigationStartIndex", getPageNavigationStartIndex(page, nrPages)))
+              .andExpect(model().attribute("pageNavigationEndIndex", getPageNavigationEndIndex(page, nrPages)))
+              .andExpect(model().attribute("searchRequest", new SearchRequest(page, size, field + ',' + direction, USER_FILTER_KEY)));
+    }
+
+    @Test
+    void findAllActiveByKey_test() throws Exception {
+        Page<UserDto> userDtosPage = new PageImpl<>(activeUserDtosPage1);
+        int page = userDtosPage.getNumber();
+        int size = userDtosPage.getSize();
+        String field = getSortField(PAGEABLE);
+        String direction = getSortDirection(PAGEABLE);
+        mockMvc.perform(post(USERS + "/search" + PAGINATION, page, size, field, direction, USER_FILTER_KEY).accept(TEXT_HTML))
+              .andExpect(status().isFound())
+              .andExpect(view().name(REDIRECT_USERS_VIEW))
+              .andExpect(redirectedUrlPattern(USERS + "?page=*&size=*&sort=*&key=*"));
     }
 
     @Test
@@ -147,10 +183,16 @@ class UserControllerMockMvcTest {
 
     @Test
     void disableById_validId_test() throws Exception {
-        mockMvc.perform(get(USERS + "/delete/{id}", VALID_ID).accept(TEXT_HTML))
+        Page<UserDto> userDtosPage = new PageImpl<>(activeUserDtosPage1);
+        given(userService.findAllActiveByKey(PAGEABLE, USER_FILTER_KEY)).willReturn(userDtosPage);
+        int page = userDtosPage.getNumber();
+        int size = userDtosPage.getSize();
+        String field = getSortField(PAGEABLE);
+        String direction = getSortDirection(PAGEABLE);
+        mockMvc.perform(get(USERS + "/delete/{id}" + PAGINATION, VALID_ID, page, size, field, direction, USER_FILTER_KEY).accept(TEXT_HTML))
               .andExpect(status().isFound())
               .andExpect(view().name(REDIRECT_USERS_VIEW))
-              .andExpect(redirectedUrl(USERS));
+              .andExpect(redirectedUrlPattern(USERS + "?page=*&size=*&sort=*&key=*"));
     }
 
     @Test
