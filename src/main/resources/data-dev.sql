@@ -119,7 +119,7 @@ INSERT INTO study(title, institution, description, type, started_at, finished_at
 ('University of Cambridge', 'Faculty of Mathematics', 'Bachelor''s degree in Mathematics at University of Cambridge - Faculty of Mathematics', 'BACHELORS', '2019-10-01', '2022-06-30'),
 ('Stanford University', 'School of Engineering', 'Master''s degree in Computer Science at Stanford University - School of Engineering', 'MASTERS', '2016-08-31', '2019-06-01'),
 ('University College London', 'Faculty of Engineering', 'Master''s degree in Software Engineering at University College London - Faculty of Engineering', 'MASTERS', '2020-03-01', '2023-03-01'),
-('ETH Zurich', 'Department of Computer Science', 'Bachelor''s degree in Artificial Intelligence at ETH Zurich - Department of Computer Science', 'MASTERS', '2017-09-01', '2020-08-31'),
+('ETH Zurich', 'Department of Computer Science', 'Masters''s degree in Artificial Intelligence at ETH Zurich - Department of Computer Science', 'MASTERS', '2017-09-01', '2020-08-31'),
 ('California Institute of Technology', 'Division of Engineering and Applied Science', 'Master''s degree in Electrical Engineering at California Institute of Technology - Division of Engineering and Applied Science', 'MASTERS', '2018-09-01', '2021-05-31');
 
 INSERT INTO trainer(name, email, password, mobile, address, birthday, role_id, is_active, employment_type, position, grade, salary, hired_at, trainer_id, nr_trainees, max_trainees) VALUES

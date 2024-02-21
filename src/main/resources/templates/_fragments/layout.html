@@ -27,6 +27,22 @@
     </div>
   </nav>
 </header>
+<th:block th:fragment="tableHeader(url, field, direction, fieldValue, text)">
+  <th>
+    <a class="thead-link" th:unless="${field eq fieldValue}" th:href="@{${url} + '&sort=' + ${fieldValue} + '%2Casc'}">[[${text}]]</a>
+    <a class="thead-link" th:if="${field eq fieldValue and direction eq 'asc'}" th:href="@{${url} + '&sort=' + ${fieldValue} + '%2Cdesc'}">[[${text}]] <i class="fas fa-angle-down"></i></a>
+    <a class="thead-link" th:if="${field eq fieldValue and direction eq 'desc'}" th:href="@{${url} + '&sort=id%2Casc'}">[[${text}]] <i class="fas fa-angle-up"></i></a>
+  </th>
+</th:block>
+<th:block th:fragment="paginationLink(view, page, size, key, field, direction, text)">
+  <a class="page-link" th:href="@{'/' + ${view} + '?page=' + ${page} + '&size=' + ${size} + '&key=' + ${key} + '&sort=' + ${field} + '%2C' + ${direction}}">[[${text}]]</a>
+</th:block>
+<th:block>
+  <li class="page-item" th:fragment="paginationItem(view, page, size, key, field, direction, index)">
+    <a class="page-link" th:if="${page != index}" th:href="@{'/' + ${view} + '?page=' + ${index} + '&size=' + ${size} + '&key=' + ${key} + '&sort=' + ${field} + '%2C' + ${direction}}">[[${index + 1}]]</a>
+    <a class="page-link" th:if="${page == index}" th:disabled>[[${index + 1}]]</a>
+  </li>
+</th:block>
 <footer th:fragment="footer" class="text-center text-lg-start bg-dark position-absolute fixed-bottom">
   <div class="text-white p-3">[[${#dates.year(#dates.createNow())}]] - George Bacalu</div>
 </footer>

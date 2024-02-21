@@ -2,11 +2,14 @@ package com.project.ems.integration.experience;
 
 import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.experience.*;
+import com.project.ems.wrapper.SearchRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -16,6 +19,7 @@ import java.util.Objects;
 
 import static com.project.ems.constants.Constants.*;
 import static com.project.ems.mock.ExperienceMock.*;
+import static com.project.ems.util.PageUtil.*;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -38,27 +42,59 @@ class ExperienceControllerMockMvcTest {
     private ExperienceService experienceService;
 
     private Experience experience;
-    private List<Experience> experiences;
+    private List<Experience> experiencesPage1;
     private ExperienceDto experienceDto;
-    private List<ExperienceDto> experienceDtos;
+    private List<ExperienceDto> experienceDtosPage1;
 
     @BeforeEach
     void setUp() {
         experience = getMockedExperience1();
-        experiences = getMockedExperiences();
+        experiencesPage1 = getMockedExperiencesPage1();
         experienceDto = getMockedExperienceDto1();
-        experienceDtos = getMockedExperienceDtos();
+        experienceDtosPage1 = getMockedExperienceDtosPage1();
     }
 
     @Test
     void findAllPage_test() throws Exception {
-        given(experienceService.findAll()).willReturn(experienceDtos);
-        given(experienceService.convertToEntities(experienceDtos)).willReturn(experiences);
-        mockMvc.perform(get(EXPERIENCES).accept(TEXT_HTML))
+        Page<ExperienceDto> experienceDtosPage = new PageImpl<>(experienceDtosPage1);
+        given(experienceService.findAllByKey(PAGEABLE, EXPERIENCE_FILTER_KEY)).willReturn(experienceDtosPage);
+        given(experienceService.convertToEntities(experienceDtosPage.getContent())).willReturn(experiencesPage1);
+        int page = PAGEABLE.getPageNumber();
+        int size = PAGEABLE.getPageSize();
+        String field = getSortField(PAGEABLE);
+        String direction = getSortDirection(PAGEABLE);
+        long nrExperiences = experienceDtosPage.getTotalElements();
+        int nrPages = experienceDtosPage.getTotalPages();
+        mockMvc.perform(get(EXPERIENCES + PAGINATION, page, size, field, direction, EXPERIENCE_FILTER_KEY).accept(TEXT_HTML))
               .andExpect(status().isOk())
               .andExpect(content().contentType(TEXT_HTML_UTF8))
               .andExpect(view().name(EXPERIENCES_VIEW))
-              .andExpect(model().attribute(EXPERIENCES_ATTRIBUTE, experiences));
+              .andExpect(model().attribute(EXPERIENCES_ATTRIBUTE, experiencesPage1))
+              .andExpect(model().attribute("nrExperiences", nrExperiences))
+              .andExpect(model().attribute("nrPages", nrPages))
+              .andExpect(model().attribute("page", page))
+              .andExpect(model().attribute("size", size))
+              .andExpect(model().attribute("field", field))
+              .andExpect(model().attribute("direction", direction))
+              .andExpect(model().attribute("key", EXPERIENCE_FILTER_KEY))
+              .andExpect(model().attribute("pageStartIndex", getPageStartIndex(page, size)))
+              .andExpect(model().attribute("pageEndIndex", getPageEndIndex(page, size, nrExperiences)))
+              .andExpect(model().attribute("pageNavigationStartIndex", getPageNavigationStartIndex(page, nrPages)))
+              .andExpect(model().attribute("pageNavigationEndIndex", getPageNavigationEndIndex(page, nrPages)))
+              .andExpect(model().attribute("searchRequest", new SearchRequest(page, size, field + ',' + direction, EXPERIENCE_FILTER_KEY)));
+    }
+
+    @Test
+    void findAllByKey_test() throws Exception {
+        Page<ExperienceDto> experienceDtosPage = new PageImpl<>(experienceDtosPage1);
+        int page = experienceDtosPage.getNumber();
+        int size = experienceDtosPage.getSize();
+        String field = getSortField(PAGEABLE);
+        String direction = getSortDirection(PAGEABLE);
+        mockMvc.perform(post(EXPERIENCES + "/search" + PAGINATION, page, size, field, direction, EXPERIENCE_FILTER_KEY).accept(TEXT_HTML))
+              .andExpect(status().isFound())
+              .andExpect(view().name(REDIRECT_EXPERIENCES_VIEW))
+              .andExpect(redirectedUrlPattern(EXPERIENCES + "?page=*&size=*&sort=*&key=*"));
     }
 
     @Test
@@ -148,10 +184,16 @@ class ExperienceControllerMockMvcTest {
 
     @Test
     void deleteById_validId_test() throws Exception {
-        mockMvc.perform(get(EXPERIENCES + "/delete/{id}", VALID_ID).accept(TEXT_HTML))
+        Page<ExperienceDto> experienceDtosPage = new PageImpl<>(experienceDtosPage1);
+        given(experienceService.findAllByKey(PAGEABLE, EXPERIENCE_FILTER_KEY)).willReturn(experienceDtosPage);
+        int page = experienceDtosPage.getNumber();
+        int size = experienceDtosPage.getSize();
+        String field = getSortField(PAGEABLE);
+        String direction = getSortDirection(PAGEABLE);
+        mockMvc.perform(get(EXPERIENCES + "/delete/{id}" + PAGINATION, VALID_ID, page, size, field, direction, EXPERIENCE_FILTER_KEY).accept(TEXT_HTML))
               .andExpect(status().isFound())
               .andExpect(view().name(REDIRECT_EXPERIENCES_VIEW))
-              .andExpect(redirectedUrl(EXPERIENCES));
+              .andExpect(redirectedUrlPattern(EXPERIENCES + "?page=*&size=*&sort=*&key=*"));
     }
 
     @Test

@@ -48,6 +48,8 @@ public class Constants {
     public static final String TRAINERS = "/trainers";
     public static final String USERS = "/users";
 
+    public static final String PAGINATION = "?page={page}&size={size}&sort={field},{direction}&key={key}";
+
     public static final String AUTHORITIES_VIEW = "authority/authorities";
     public static final String AUTHORITY_DETAILS_VIEW = "authority/authority-details";
     public static final String SAVE_AUTHORITY_VIEW = "authority/save-authority";
@@ -142,4 +144,5 @@ public class Constants {
     public static final Pageable PAGEABLE_PAGE1 = PageRequest.of(0, 2, Sort.Direction.ASC, "id");
     public static final Pageable PAGEABLE_PAGE2 = PageRequest.of(1, 2, Sort.Direction.ASC, "id");
     public static final Pageable PAGEABLE_PAGE3 = PageRequest.of(2, 2, Sort.Direction.ASC, "id");
+    public static final Pageable PAGEABLE = PageRequest.of(0, 2, Sort.Direction.ASC, "id");
 }

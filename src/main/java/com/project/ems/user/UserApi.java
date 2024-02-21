@@ -20,12 +20,12 @@ public interface UserApi {
           @ApiResponse(responseCode = "200", description = "Successful operation")})
     ResponseEntity<List<UserDto>> findAllActive();
 
-    @Operation(summary = "Find users paginated, sorted and filtered", description = "Return list with users paginated, sorted and filtered", tags = "employee", responses = {
+    @Operation(summary = "Find users paginated, sorted and filtered", description = "Return list with users paginated, sorted and filtered", tags = "user", responses = {
           @ApiResponse(responseCode = "200", description = "Successful operation")})
     ResponseEntity<PageWrapper<UserDto>> findAllByKey(@Parameter(name = "pageable", description = "Pageable object for paging and sorting") Pageable pageable,
                                                       @Parameter(name = "key", description = "Filtering key") String key);
 
-    @Operation(summary = "Find active users paginated, sorted and filtered", description = "Return list with active users paginated, sorted and filtered", tags = "employee", responses = {
+    @Operation(summary = "Find active users paginated, sorted and filtered", description = "Return list with active users paginated, sorted and filtered", tags = "user", responses = {
           @ApiResponse(responseCode = "200", description = "Successful operation")})
     ResponseEntity<PageWrapper<UserDto>> findAllActiveByKey(@Parameter(name = "pageable", description = "Pageable object for paging and sorting") Pageable pageable,
                                                             @Parameter(name = "key", description = "Filtering key") String key);
