@@ -63,8 +63,8 @@ class TrainerControllerTest {
         String direction = getSortDirection(PAGEABLE);
         long nrTrainers = trainerDtosPage.getTotalElements();
         int nrPages = trainerDtosPage.getTotalPages();
-        SearchRequest searchRequest = new SearchRequest(0, size, field + "," + direction, TRAINER_FILTER_KEY);
-        given(trainerService.findAllActiveByKey(PAGEABLE, TRAINER_FILTER_KEY)).willReturn(trainerDtosPage);
+        SearchRequest searchRequest = new SearchRequest(0, size, field + "," + direction, USER_FILTER_KEY);
+        given(trainerService.findAllActiveByKey(PAGEABLE, USER_FILTER_KEY)).willReturn(trainerDtosPage);
         given(model.getAttribute(TRAINERS_ATTRIBUTE)).willReturn(activeTrainersPage1);
         given(model.getAttribute("nrTrainers")).willReturn(nrTrainers);
         given(model.getAttribute("nrPages")).willReturn(nrPages);
@@ -72,13 +72,13 @@ class TrainerControllerTest {
         given(model.getAttribute("size")).willReturn(size);
         given(model.getAttribute("field")).willReturn(field);
         given(model.getAttribute("direction")).willReturn(direction);
-        given(model.getAttribute("key")).willReturn(TRAINER_FILTER_KEY);
+        given(model.getAttribute("key")).willReturn(USER_FILTER_KEY);
         given(model.getAttribute("pageStartIndex")).willReturn(getPageStartIndex(page, size));
         given(model.getAttribute("pageEndIndex")).willReturn(getPageEndIndex(page, size, nrTrainers));
         given(model.getAttribute("pageNavigationStartIndex")).willReturn(getPageNavigationStartIndex(page, nrPages));
         given(model.getAttribute("pageNavigationEndIndex")).willReturn(getPageNavigationEndIndex(page, nrPages));
         given(model.getAttribute("searchRequest")).willReturn(searchRequest);
-        String viewName = trainerController.findAllActivePage(model, PAGEABLE, TRAINER_FILTER_KEY);
+        String viewName = trainerController.findAllActivePage(model, PAGEABLE, USER_FILTER_KEY);
         then(viewName).isEqualTo(TRAINERS_VIEW);
         then(model.getAttribute(TRAINERS_ATTRIBUTE)).isEqualTo(activeTrainersPage1);
         then(model.getAttribute("nrTrainers")).isEqualTo(nrTrainers);
@@ -87,7 +87,7 @@ class TrainerControllerTest {
         then(model.getAttribute("size")).isEqualTo(size);
         then(model.getAttribute("field")).isEqualTo(field);
         then(model.getAttribute("direction")).isEqualTo(direction);
-        then(model.getAttribute("key")).isEqualTo(TRAINER_FILTER_KEY);
+        then(model.getAttribute("key")).isEqualTo(USER_FILTER_KEY);
         then(model.getAttribute("pageStartIndex")).isEqualTo(getPageStartIndex(page, size));
         then(model.getAttribute("pageEndIndex")).isEqualTo(getPageEndIndex(page, size, nrTrainers));
         then(model.getAttribute("pageNavigationStartIndex")).isEqualTo(getPageNavigationStartIndex(page, nrPages));
@@ -104,13 +104,13 @@ class TrainerControllerTest {
         given(redirectAttributes.getAttribute("page")).willReturn(page);
         given(redirectAttributes.getAttribute("size")).willReturn(size);
         given(redirectAttributes.getAttribute("sort")).willReturn(sort);
-        given(redirectAttributes.getAttribute("key")).willReturn(TRAINER_FILTER_KEY);
-        String viewName = trainerController.findAllActiveByKey(new SearchRequest(page, size, sort, TRAINER_FILTER_KEY), redirectAttributes);
+        given(redirectAttributes.getAttribute("key")).willReturn(USER_FILTER_KEY);
+        String viewName = trainerController.findAllActiveByKey(new SearchRequest(page, size, sort, USER_FILTER_KEY), redirectAttributes);
         then(viewName).isEqualTo(REDIRECT_TRAINERS_VIEW);
         then(redirectAttributes.getAttribute("page")).isEqualTo(page);
         then(redirectAttributes.getAttribute("size")).isEqualTo(size);
         then(redirectAttributes.getAttribute("sort")).isEqualTo(sort);
-        then(redirectAttributes.getAttribute("key")).isEqualTo(TRAINER_FILTER_KEY);
+        then(redirectAttributes.getAttribute("key")).isEqualTo(USER_FILTER_KEY);
     }
 
     @Test
@@ -124,7 +124,7 @@ class TrainerControllerTest {
 
     @Test
     void findByIdPage_invalidId_test() {
-        String message = String.format(TRAINER_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(trainerService.findEntityById(INVALID_ID)).willThrow(new ResourceNotFoundException(message));
         thenThrownBy(() -> trainerController.findByIdPage(model, INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
@@ -154,7 +154,7 @@ class TrainerControllerTest {
 
     @Test
     void getSavePage_invalidId_test() {
-        String message = String.format(TRAINER_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(trainerService.findById(INVALID_ID)).willThrow(new ResourceNotFoundException(message));
         thenThrownBy(() -> trainerController.getSavePage(model, INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
@@ -177,7 +177,7 @@ class TrainerControllerTest {
 
     @Test
     void save_invalidId_test() {
-        String message = String.format(TRAINER_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(trainerService.updateById(trainerDto, INVALID_ID)).willThrow(new ResourceNotFoundException(message));
         thenThrownBy(() -> trainerController.save(trainerDto, INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
@@ -190,25 +190,25 @@ class TrainerControllerTest {
         int page = trainerDtosPage.getNumber();
         int size = trainerDtosPage.getSize();
         String sort = getSortField(PAGEABLE) + ',' + getSortDirection(PAGEABLE);
-        given(trainerService.findAllActiveByKey(PAGEABLE, TRAINER_FILTER_KEY)).willReturn(trainerDtosPage);
+        given(trainerService.findAllActiveByKey(PAGEABLE, USER_FILTER_KEY)).willReturn(trainerDtosPage);
         given(redirectAttributes.getAttribute("page")).willReturn(page);
         given(redirectAttributes.getAttribute("size")).willReturn(size);
         given(redirectAttributes.getAttribute("sort")).willReturn(sort);
-        given(redirectAttributes.getAttribute("key")).willReturn(TRAINER_FILTER_KEY);
-        String viewName = trainerController.disableById(VALID_ID, redirectAttributes, PAGEABLE, TRAINER_FILTER_KEY);
+        given(redirectAttributes.getAttribute("key")).willReturn(USER_FILTER_KEY);
+        String viewName = trainerController.disableById(VALID_ID, redirectAttributes, PAGEABLE, USER_FILTER_KEY);
         verify(trainerService).disableById(VALID_ID);
         then(viewName).isEqualTo(REDIRECT_TRAINERS_VIEW);
         then(redirectAttributes.getAttribute("page")).isEqualTo(page);
         then(redirectAttributes.getAttribute("size")).isEqualTo(size);
         then(redirectAttributes.getAttribute("sort")).isEqualTo(sort);
-        then(redirectAttributes.getAttribute("key")).isEqualTo(TRAINER_FILTER_KEY);
+        then(redirectAttributes.getAttribute("key")).isEqualTo(USER_FILTER_KEY);
     }
 
     @Test
     void disableById_invalidId_test() {
-        String message = String.format(TRAINER_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         doThrow(new ResourceNotFoundException(message)).when(trainerService).disableById(INVALID_ID);
-        thenThrownBy(() -> trainerController.disableById(INVALID_ID, redirectAttributes, PAGEABLE, TRAINER_FILTER_KEY))
+        thenThrownBy(() -> trainerController.disableById(INVALID_ID, redirectAttributes, PAGEABLE, USER_FILTER_KEY))
               .isInstanceOf(ResourceNotFoundException.class)
               .hasMessage(message);
     }

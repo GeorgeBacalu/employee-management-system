@@ -1,12 +1,10 @@
 package com.project.ems.unit.experience;
 
-import com.project.ems.employee.Employee;
-import com.project.ems.employee.EmployeeRepository;
 import com.project.ems.exception.InvalidRequestException;
 import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.experience.*;
-import com.project.ems.trainer.Trainer;
-import com.project.ems.trainer.TrainerRepository;
+import com.project.ems.user.User;
+import com.project.ems.user.UserRepository;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,9 +23,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.project.ems.constants.Constants.*;
-import static com.project.ems.mock.EmployeeMock.getMockedEmployee1;
 import static com.project.ems.mock.ExperienceMock.*;
-import static com.project.ems.mock.TrainerMock.getMockedTrainer1;
+import static com.project.ems.mock.UserMock.getMockedUser1;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -46,10 +43,7 @@ class ExperienceServiceImplTest {
     private ExperienceRepository experienceRepository;
 
     @Mock
-    private EmployeeRepository employeeRepository;
-
-    @Mock
-    private TrainerRepository trainerRepository;
+    private UserRepository userRepository;
 
     @Spy
     private ModelMapper modelMapper;
@@ -69,8 +63,7 @@ class ExperienceServiceImplTest {
     private List<ExperienceDto> experienceDtosPage1;
     private List<ExperienceDto> experienceDtosPage2;
     private List<ExperienceDto> experienceDtosPage3;
-    private Employee employee;
-    private Trainer trainer;
+    private User user;
 
     @BeforeEach
     void setUp() {
@@ -86,8 +79,7 @@ class ExperienceServiceImplTest {
         experienceDtosPage1 = getMockedExperienceDtosPage1();
         experienceDtosPage2 = getMockedExperienceDtosPage2();
         experienceDtosPage3 = getMockedExperienceDtosPage3();
-        employee = getMockedEmployee1();
-        trainer = getMockedTrainer1();
+        user = getMockedUser1();
     }
 
     @Test
@@ -141,8 +133,7 @@ class ExperienceServiceImplTest {
     @Test
     void deleteById_validId_test() {
         given(experienceRepository.findById(VALID_ID)).willReturn(Optional.ofNullable(experience1));
-        given(employeeRepository.findAllByExperiencesContains(any(Experience.class))).willReturn(List.of(employee));
-        given(trainerRepository.findAllByExperiencesContains(any(Experience.class))).willReturn(List.of(trainer));
+        given(userRepository.findAllByExperiencesContains(any(Experience.class))).willReturn(List.of(user));
         experienceService.deleteById(VALID_ID);
         verify(experienceRepository).delete(experience1);
     }

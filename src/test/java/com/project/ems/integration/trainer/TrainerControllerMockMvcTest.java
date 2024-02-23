@@ -58,7 +58,7 @@ class TrainerControllerMockMvcTest {
     @Test
     void findAllActivePage_test() throws Exception {
         Page<TrainerDto> trainerDtosPage = new PageImpl<>(activeTrainerDtosPage1);
-        given(trainerService.findAllActiveByKey(PAGEABLE, TRAINER_FILTER_KEY)).willReturn(trainerDtosPage);
+        given(trainerService.findAllActiveByKey(PAGEABLE, USER_FILTER_KEY)).willReturn(trainerDtosPage);
         given(trainerService.convertToEntities(trainerDtosPage.getContent())).willReturn(activeTrainersPage1);
         int page = PAGEABLE.getPageNumber();
         int size = PAGEABLE.getPageSize();
@@ -66,7 +66,7 @@ class TrainerControllerMockMvcTest {
         String direction = getSortDirection(PAGEABLE);
         long nrTrainers = trainerDtosPage.getTotalElements();
         int nrPages = trainerDtosPage.getTotalPages();
-        mockMvc.perform(get(TRAINERS + PAGINATION, page, size, field, direction, TRAINER_FILTER_KEY).accept(TEXT_HTML))
+        mockMvc.perform(get(TRAINERS + PAGINATION, page, size, field, direction, USER_FILTER_KEY).accept(TEXT_HTML))
               .andExpect(status().isOk())
               .andExpect(content().contentType(TEXT_HTML_UTF8))
               .andExpect(view().name(TRAINERS_VIEW))
@@ -77,12 +77,12 @@ class TrainerControllerMockMvcTest {
               .andExpect(model().attribute("size", size))
               .andExpect(model().attribute("field", field))
               .andExpect(model().attribute("direction", direction))
-              .andExpect(model().attribute("key", TRAINER_FILTER_KEY))
+              .andExpect(model().attribute("key", USER_FILTER_KEY))
               .andExpect(model().attribute("pageStartIndex", getPageStartIndex(page, size)))
               .andExpect(model().attribute("pageEndIndex", getPageEndIndex(page, size, nrTrainers)))
               .andExpect(model().attribute("pageNavigationStartIndex", getPageNavigationStartIndex(page, nrPages)))
               .andExpect(model().attribute("pageNavigationEndIndex", getPageNavigationEndIndex(page, nrPages)))
-              .andExpect(model().attribute("searchRequest", new SearchRequest(page, size, field + ',' + direction, TRAINER_FILTER_KEY)));
+              .andExpect(model().attribute("searchRequest", new SearchRequest(page, size, field + ',' + direction, USER_FILTER_KEY)));
     }
 
     @Test
@@ -92,7 +92,7 @@ class TrainerControllerMockMvcTest {
         int size = trainerDtosPage.getSize();
         String field = getSortField(PAGEABLE);
         String direction = getSortDirection(PAGEABLE);
-        mockMvc.perform(post(TRAINERS + "/search" + PAGINATION, page, size, field, direction, TRAINER_FILTER_KEY).accept(TEXT_HTML))
+        mockMvc.perform(post(TRAINERS + "/search" + PAGINATION, page, size, field, direction, USER_FILTER_KEY).accept(TEXT_HTML))
               .andExpect(status().isFound())
               .andExpect(view().name(REDIRECT_TRAINERS_VIEW))
               .andExpect(redirectedUrlPattern(TRAINERS + "?page=*&size=*&sort=*&key=*"));
@@ -110,7 +110,7 @@ class TrainerControllerMockMvcTest {
 
     @Test
     void findByIdPage_invalidId_test() throws Exception {
-        String message = String.format(TRAINER_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(trainerService.findEntityById(INVALID_ID)).willThrow(new ResourceNotFoundException(message));
         mockMvc.perform(get(TRAINERS + "/{id}", INVALID_ID).accept(TEXT_HTML))
               .andExpect(status().isNotFound())
@@ -141,7 +141,7 @@ class TrainerControllerMockMvcTest {
 
     @Test
     void getSavePage_invalidId_test() throws Exception {
-        String message = String.format(TRAINER_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(trainerService.findById(INVALID_ID)).willThrow(new ResourceNotFoundException(message));
         mockMvc.perform(get(TRAINERS + "/save/{id}", INVALID_ID).accept(TEXT_HTML))
               .andExpect(status().isNotFound())
@@ -171,7 +171,7 @@ class TrainerControllerMockMvcTest {
 
     @Test
     void save_invalidId_test() throws Exception {
-        String message = String.format(TRAINER_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(trainerService.updateById(any(TrainerDto.class), anyInt())).willThrow(new ResourceNotFoundException(message));
         mockMvc.perform(post(TRAINERS + "/save/{id}", INVALID_ID).accept(TEXT_HTML)
                     .contentType(APPLICATION_FORM_URLENCODED_VALUE)
@@ -184,12 +184,12 @@ class TrainerControllerMockMvcTest {
     @Test
     void disableById_validId_test() throws Exception {
         Page<TrainerDto> trainerDtosPage = new PageImpl<>(activeTrainerDtosPage1);
-        given(trainerService.findAllActiveByKey(PAGEABLE, TRAINER_FILTER_KEY)).willReturn(trainerDtosPage);
+        given(trainerService.findAllActiveByKey(PAGEABLE, USER_FILTER_KEY)).willReturn(trainerDtosPage);
         int page = trainerDtosPage.getNumber();
         int size = trainerDtosPage.getSize();
         String field = getSortField(PAGEABLE);
         String direction = getSortDirection(PAGEABLE);
-        mockMvc.perform(get(TRAINERS + "/delete/{id}" + PAGINATION, VALID_ID, page, size, field, direction, TRAINER_FILTER_KEY).accept(TEXT_HTML))
+        mockMvc.perform(get(TRAINERS + "/delete/{id}" + PAGINATION, VALID_ID, page, size, field, direction, USER_FILTER_KEY).accept(TEXT_HTML))
               .andExpect(status().isFound())
               .andExpect(view().name(REDIRECT_TRAINERS_VIEW))
               .andExpect(redirectedUrlPattern(TRAINERS + "?page=*&size=*&sort=*&key=*"));
@@ -197,7 +197,7 @@ class TrainerControllerMockMvcTest {
 
     @Test
     void disableById_invalidId_test() throws Exception {
-        String message = String.format(TRAINER_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         doThrow(new ResourceNotFoundException(message)).when(trainerService).disableById(INVALID_ID);
         mockMvc.perform(get(TRAINERS + "/delete/{id}", INVALID_ID).accept(TEXT_HTML))
               .andExpect(status().isNotFound())

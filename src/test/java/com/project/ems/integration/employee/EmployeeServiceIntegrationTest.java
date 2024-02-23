@@ -146,7 +146,7 @@ class EmployeeServiceIntegrationTest {
     void findById_invalidId_test() {
         thenThrownBy(() -> employeeService.findById(INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
-              .hasMessage(String.format(EMPLOYEE_NOT_FOUND, INVALID_ID));
+              .hasMessage(String.format(USER_NOT_FOUND, INVALID_ID));
     }
 
     @Test
@@ -177,7 +177,7 @@ class EmployeeServiceIntegrationTest {
     void updateById_invalidId_test() {
         thenThrownBy(() -> employeeService.updateById(employeeDto2, INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
-              .hasMessage(String.format(EMPLOYEE_NOT_FOUND, INVALID_ID));
+              .hasMessage(String.format(USER_NOT_FOUND, INVALID_ID));
         verify(employeeRepository, never()).save(any(Employee.class));
     }
 
@@ -196,7 +196,7 @@ class EmployeeServiceIntegrationTest {
     void disableById_invalidId_test() {
         thenThrownBy(() -> employeeService.disableById(INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
-              .hasMessage(String.format(EMPLOYEE_NOT_FOUND, INVALID_ID));
+              .hasMessage(String.format(USER_NOT_FOUND, INVALID_ID));
         verify(employeeRepository, never()).save(any(Employee.class));
     }
 

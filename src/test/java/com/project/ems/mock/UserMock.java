@@ -1,5 +1,12 @@
 package com.project.ems.mock;
 
+import com.project.ems.employee.Employee;
+import com.project.ems.employee.EmployeeDto;
+import com.project.ems.employee.enums.EmploymentType;
+import com.project.ems.employee.enums.Grade;
+import com.project.ems.employee.enums.Position;
+import com.project.ems.trainer.Trainer;
+import com.project.ems.trainer.TrainerDto;
 import com.project.ems.user.User;
 import com.project.ems.user.UserDto;
 import lombok.AccessLevel;
@@ -10,8 +17,10 @@ import java.util.List;
 
 import static com.project.ems.mock.AuthorityMock.getMockedAuthorities;
 import static com.project.ems.mock.AuthorityMock.getMockedAuthorities1;
+import static com.project.ems.mock.ExperienceMock.*;
 import static com.project.ems.mock.RoleMock.getMockedRole1;
 import static com.project.ems.mock.RoleMock.getMockedRole2;
+import static com.project.ems.mock.StudyMock.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserMock {
@@ -71,7 +80,7 @@ public class UserMock {
     }
 
     public static User getMockedUser1() {
-        return User.builder()
+        return Trainer.builder()
               .id(1)
               .name("John Doe")
               .email("john.doe@example.com")
@@ -82,11 +91,21 @@ public class UserMock {
               .role(getMockedRole2())
               .authorities(getMockedAuthorities())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.FRONTEND)
+              .grade(Grade.SENIOR)
+              .salary(21000.0)
+              .hiredAt(LocalDate.of(2015, 1, 1))
+              .experiences(getMockedExperiences1())
+              .studies(getMockedStudies1())
+              .supervisingTrainer(null)
+              .nrTrainees(7)
+              .maxTrainees(10)
               .build();
     }
 
     public static User getMockedUser2() {
-        return User.builder()
+        return Trainer.builder()
               .id(2)
               .name("Jane Smith")
               .email("jane.smith@example.com")
@@ -97,11 +116,21 @@ public class UserMock {
               .role(getMockedRole2())
               .authorities(getMockedAuthorities())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.FRONTEND)
+              .grade(Grade.SENIOR)
+              .salary(19000.0)
+              .hiredAt(LocalDate.of(2017, 1, 1))
+              .experiences(getMockedExperiences2())
+              .studies(getMockedStudies2())
+              .supervisingTrainer(null)
+              .nrTrainees(7)
+              .maxTrainees(10)
               .build();
     }
 
     public static User getMockedUser3() {
-        return User.builder()
+        return Trainer.builder()
               .id(3)
               .name("Michael Johnson")
               .email("michael.johnson@example.com")
@@ -112,11 +141,21 @@ public class UserMock {
               .role(getMockedRole2())
               .authorities(getMockedAuthorities())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.FRONTEND)
+              .grade(Grade.SENIOR)
+              .salary(17000.0)
+              .hiredAt(LocalDate.of(2018, 1, 1))
+              .experiences(getMockedExperiences3())
+              .studies(getMockedStudies3())
+              .supervisingTrainer(null)
+              .nrTrainees(7)
+              .maxTrainees(10)
               .build();
     }
 
     public static User getMockedUser4() {
-        return User.builder()
+        return Trainer.builder()
               .id(4)
               .name("Laura Brown")
               .email("laura.brown@example.com")
@@ -127,11 +166,21 @@ public class UserMock {
               .role(getMockedRole2())
               .authorities(getMockedAuthorities())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.FRONTEND)
+              .grade(Grade.SENIOR)
+              .salary(16500.0)
+              .hiredAt(LocalDate.of(2018, 2, 4))
+              .experiences(getMockedExperiences4())
+              .studies(getMockedStudies4())
+              .supervisingTrainer(null)
+              .nrTrainees(7)
+              .maxTrainees(10)
               .build();
     }
 
     public static User getMockedUser5() {
-        return User.builder()
+        return Trainer.builder()
               .id(5)
               .name("Robert Davis")
               .email("robert.davis@example.com")
@@ -142,11 +191,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.BACKEND)
+              .grade(Grade.SENIOR)
+              .salary(16750.0)
+              .hiredAt(LocalDate.of(2017, 3, 18))
+              .experiences(getMockedExperiences5())
+              .studies(getMockedStudies5())
+              .supervisingTrainer(null)
+              .nrTrainees(7)
+              .maxTrainees(10)
               .build();
     }
 
     public static User getMockedUser6() {
-        return User.builder()
+        return Trainer.builder()
               .id(6)
               .name("Emily Wilson")
               .email("emily.wilson@example.com")
@@ -157,11 +216,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.BACKEND)
+              .grade(Grade.SENIOR)
+              .salary(15000.0)
+              .hiredAt(LocalDate.of(2018, 6, 20))
+              .experiences(getMockedExperiences6())
+              .studies(getMockedStudies6())
+              .supervisingTrainer(null)
+              .nrTrainees(7)
+              .maxTrainees(10)
               .build();
     }
 
     public static User getMockedUser7() {
-        return User.builder()
+        return Trainer.builder()
               .id(7)
               .name("Michaela Taylor")
               .email("michaela.taylor@example.com")
@@ -172,11 +241,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.BACKEND)
+              .grade(Grade.SENIOR)
+              .salary(15750.0)
+              .hiredAt(LocalDate.of(2019, 1, 20))
+              .experiences(getMockedExperiences7())
+              .studies(getMockedStudies1())
+              .supervisingTrainer((Trainer) getMockedUser1())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser8() {
-        return User.builder()
+        return Trainer.builder()
               .id(8)
               .name("David Anderson")
               .email("david.anderson@example.com")
@@ -187,11 +266,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.BACKEND)
+              .grade(Grade.SENIOR)
+              .salary(18250.0)
+              .hiredAt(LocalDate.of(2016, 4, 9))
+              .experiences(getMockedExperiences8())
+              .studies(getMockedStudies2())
+              .supervisingTrainer((Trainer) getMockedUser1())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser9() {
-        return User.builder()
+        return Trainer.builder()
               .id(9)
               .name("Sophia Garcia")
               .email("sophia.garcia@example.com")
@@ -202,11 +291,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DEVOPS)
+              .grade(Grade.SENIOR)
+              .salary(18000.0)
+              .hiredAt(LocalDate.of(2014, 11, 29))
+              .experiences(getMockedExperiences1())
+              .studies(getMockedStudies3())
+              .supervisingTrainer((Trainer) getMockedUser1())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser10() {
-        return User.builder()
+        return Trainer.builder()
               .id(10)
               .name("Joseph Wilson")
               .email("joseph.wilson@example.com")
@@ -217,11 +316,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DEVOPS)
+              .grade(Grade.SENIOR)
+              .salary(17000.0)
+              .hiredAt(LocalDate.of(2017, 8, 14))
+              .experiences(getMockedExperiences2())
+              .studies(getMockedStudies4())
+              .supervisingTrainer((Trainer) getMockedUser1())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser11() {
-        return User.builder()
+        return Trainer.builder()
               .id(11)
               .name("Olivia Martinez")
               .email("olivia.martinez@example.com")
@@ -232,11 +341,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DEVOPS)
+              .grade(Grade.SENIOR)
+              .salary(19500.0)
+              .hiredAt(LocalDate.of(2015, 10, 10))
+              .experiences(getMockedExperiences3())
+              .studies(getMockedStudies5())
+              .supervisingTrainer((Trainer) getMockedUser1())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser12() {
-        return User.builder()
+        return Trainer.builder()
               .id(12)
               .name("Daniel Thompson")
               .email("daniel.thompson@example.com")
@@ -247,11 +366,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DEVOPS)
+              .grade(Grade.SENIOR)
+              .salary(14750.0)
+              .hiredAt(LocalDate.of(2016, 2, 15))
+              .experiences(getMockedExperiences4())
+              .studies(getMockedStudies6())
+              .supervisingTrainer((Trainer) getMockedUser1())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser13() {
-        return User.builder()
+        return Trainer.builder()
               .id(13)
               .name("Emma Thompson")
               .email("emma.thompson@example.com")
@@ -262,11 +391,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.TESTING)
+              .grade(Grade.SENIOR)
+              .salary(16250.0)
+              .hiredAt(LocalDate.of(2018, 4, 8))
+              .experiences(getMockedExperiences5())
+              .studies(getMockedStudies1())
+              .supervisingTrainer((Trainer) getMockedUser2())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser14() {
-        return User.builder()
+        return Trainer.builder()
               .id(14)
               .name("Liam Brown")
               .email("liam.brown@example.com")
@@ -277,11 +416,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.TESTING)
+              .grade(Grade.SENIOR)
+              .salary(17250.0)
+              .hiredAt(LocalDate.of(2017, 12, 13))
+              .experiences(getMockedExperiences6())
+              .studies(getMockedStudies2())
+              .supervisingTrainer((Trainer) getMockedUser2())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser15() {
-        return User.builder()
+        return Trainer.builder()
               .id(15)
               .name("Olivia Wilson")
               .email("olivia.wilson@example.com")
@@ -292,11 +441,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.TESTING)
+              .grade(Grade.SENIOR)
+              .salary(14500.0)
+              .hiredAt(LocalDate.of(2018, 7, 25))
+              .experiences(getMockedExperiences7())
+              .studies(getMockedStudies3())
+              .supervisingTrainer((Trainer) getMockedUser2())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser16() {
-        return User.builder()
+        return Trainer.builder()
               .id(16)
               .name("Noah Taylor")
               .email("noah.taylor@example.com")
@@ -307,11 +466,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(false)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.TESTING)
+              .grade(Grade.SENIOR)
+              .salary(15250.0)
+              .hiredAt(LocalDate.of(2017, 9, 30))
+              .experiences(getMockedExperiences8())
+              .studies(getMockedStudies4())
+              .supervisingTrainer((Trainer) getMockedUser2())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser17() {
-        return User.builder()
+        return Trainer.builder()
               .id(17)
               .name("Ava Johnson")
               .email("ava.johnson@example.com")
@@ -322,11 +491,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DESIGN)
+              .grade(Grade.SENIOR)
+              .salary(16000.0)
+              .hiredAt(LocalDate.of(2017, 5, 17))
+              .experiences(getMockedExperiences1())
+              .studies(getMockedStudies5())
+              .supervisingTrainer((Trainer) getMockedUser2())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser18() {
-        return User.builder()
+        return Trainer.builder()
               .id(18)
               .name("William Davis")
               .email("william.davis@example.com")
@@ -337,11 +516,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DESIGN)
+              .grade(Grade.SENIOR)
+              .salary(18250.0)
+              .hiredAt(LocalDate.of(2016, 4, 16))
+              .experiences(getMockedExperiences2())
+              .studies(getMockedStudies6())
+              .supervisingTrainer((Trainer) getMockedUser2())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser19() {
-        return User.builder()
+        return Trainer.builder()
               .id(19)
               .name("Sophia Martinez")
               .email("sophia.martinez@example.com")
@@ -352,11 +541,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DESIGN)
+              .grade(Grade.SENIOR)
+              .salary(19750.0)
+              .hiredAt(LocalDate.of(2014, 9, 9))
+              .experiences(getMockedExperiences3())
+              .studies(getMockedStudies1())
+              .supervisingTrainer((Trainer) getMockedUser3())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser20() {
-        return User.builder()
+        return Trainer.builder()
               .id(20)
               .name("Isabella Anderson")
               .email("isabella.anderson@example.com")
@@ -367,11 +566,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DESIGN)
+              .grade(Grade.SENIOR)
+              .salary(19250.0)
+              .hiredAt(LocalDate.of(2015, 7, 14))
+              .experiences(getMockedExperiences4())
+              .studies(getMockedStudies2())
+              .supervisingTrainer((Trainer) getMockedUser3())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser21() {
-        return User.builder()
+        return Trainer.builder()
               .id(21)
               .name("Mason Thompson")
               .email("mason.thompson@example.com")
@@ -382,11 +591,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DATA_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(17750.0)
+              .hiredAt(LocalDate.of(2017, 11, 20))
+              .experiences(getMockedExperiences5())
+              .studies(getMockedStudies3())
+              .supervisingTrainer((Trainer) getMockedUser3())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser22() {
-        return User.builder()
+        return Trainer.builder()
               .id(22)
               .name("Charlotte Thompson")
               .email("charlotte.thompson@example.com")
@@ -397,11 +616,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DATA_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(18750.0)
+              .hiredAt(LocalDate.of(2016, 3, 8))
+              .experiences(getMockedExperiences6())
+              .studies(getMockedStudies4())
+              .supervisingTrainer((Trainer) getMockedUser3())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser23() {
-        return User.builder()
+        return Trainer.builder()
               .id(23)
               .name("Elijah Smith")
               .email("elijah.smith@example.com")
@@ -412,11 +641,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DATA_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(17000.0)
+              .hiredAt(LocalDate.of(2017, 10, 18))
+              .experiences(getMockedExperiences7())
+              .studies(getMockedStudies5())
+              .supervisingTrainer((Trainer) getMockedUser3())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser24() {
-        return User.builder()
+        return Trainer.builder()
               .id(24)
               .name("Amelia Johnson")
               .email("amelia.johnson@example.com")
@@ -427,11 +666,22 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DATA_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(15500.0)
+              .hiredAt(LocalDate.of(2018, 6, 3))
+              .experiences(getMockedExperiences8())
+              .studies(getMockedStudies6())
+              .supervisingTrainer((Trainer) getMockedUser3())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
+
     public static User getMockedUser25() {
-        return User.builder()
+        return Trainer.builder()
               .id(25)
               .name("Harper Wilson")
               .email("harper.wilson@example.com")
@@ -442,11 +692,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.MACHINE_LEARNING)
+              .grade(Grade.SENIOR)
+              .salary(20000.0)
+              .hiredAt(LocalDate.of(2015, 8, 17))
+              .experiences(getMockedExperiences1())
+              .studies(getMockedStudies1())
+              .supervisingTrainer((Trainer) getMockedUser4())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser26() {
-        return User.builder()
+        return Trainer.builder()
               .id(26)
               .name("Benjamin Thompson")
               .email("benjamin.thompson@example.com")
@@ -457,11 +717,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.MACHINE_LEARNING)
+              .grade(Grade.SENIOR)
+              .salary(20250.0)
+              .hiredAt(LocalDate.of(2016, 2, 20))
+              .experiences(getMockedExperiences2())
+              .studies(getMockedStudies2())
+              .supervisingTrainer((Trainer) getMockedUser4())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser27() {
-        return User.builder()
+        return Trainer.builder()
               .id(27)
               .name("Liam Thompson")
               .email("liam.thompson@example.com")
@@ -472,11 +742,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.MACHINE_LEARNING)
+              .grade(Grade.SENIOR)
+              .salary(18500.0)
+              .hiredAt(LocalDate.of(2017, 4, 20))
+              .experiences(getMockedExperiences3())
+              .studies(getMockedStudies3())
+              .supervisingTrainer((Trainer) getMockedUser4())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser28() {
-        return User.builder()
+        return Trainer.builder()
               .id(28)
               .name("Grace Martinez")
               .email("grace.martinez@example.com")
@@ -487,11 +767,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.MACHINE_LEARNING)
+              .grade(Grade.SENIOR)
+              .salary(19500.0)
+              .hiredAt(LocalDate.of(2016, 12, 18))
+              .experiences(getMockedExperiences4())
+              .studies(getMockedStudies4())
+              .supervisingTrainer((Trainer) getMockedUser4())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser29() {
-        return User.builder()
+        return Trainer.builder()
               .id(29)
               .name("Isabella White")
               .email("isabella.white@example.com")
@@ -502,11 +792,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.BUSINESS_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(16000.0)
+              .hiredAt(LocalDate.of(2018, 5, 14))
+              .experiences(getMockedExperiences5())
+              .studies(getMockedStudies5())
+              .supervisingTrainer((Trainer) getMockedUser4())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser30() {
-        return User.builder()
+        return Trainer.builder()
               .id(30)
               .name("Logan Thompson")
               .email("logan.thompson@example.com")
@@ -517,11 +817,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.BUSINESS_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(20500.0)
+              .hiredAt(LocalDate.of(2015, 8, 7))
+              .experiences(getMockedExperiences6())
+              .studies(getMockedStudies6())
+              .supervisingTrainer((Trainer) getMockedUser4())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser31() {
-        return User.builder()
+        return Trainer.builder()
               .id(31)
               .name("Evelyn Brown")
               .email("evelyn.brown@example.com")
@@ -532,11 +842,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.BUSINESS_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(15500.0)
+              .hiredAt(LocalDate.of(2019, 3, 19))
+              .experiences(getMockedExperiences7())
+              .studies(getMockedStudies1())
+              .supervisingTrainer((Trainer) getMockedUser5())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser32() {
-        return User.builder()
+        return Trainer.builder()
               .id(32)
               .name("Henry Davis")
               .email("henry.davis@example.com")
@@ -547,11 +867,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.BUSINESS_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(18250.0)
+              .hiredAt(LocalDate.of(2018, 6, 12))
+              .experiences(getMockedExperiences8())
+              .studies(getMockedStudies2())
+              .supervisingTrainer((Trainer) getMockedUser5())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser33() {
-        return User.builder()
+        return Trainer.builder()
               .id(33)
               .name("Sofia Smith")
               .email("sofia.smith@example.com")
@@ -562,11 +892,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.SCRUM_MASTER)
+              .grade(Grade.SENIOR)
+              .salary(16500.0)
+              .hiredAt(LocalDate.of(2019, 11, 11))
+              .experiences(getMockedExperiences1())
+              .studies(getMockedStudies3())
+              .supervisingTrainer((Trainer) getMockedUser5())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser34() {
-        return User.builder()
+        return Trainer.builder()
               .id(34)
               .name("Jack Wilson")
               .email("jack.wilson@example.com")
@@ -577,11 +917,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.SCRUM_MASTER)
+              .grade(Grade.SENIOR)
+              .salary(18750.0)
+              .hiredAt(LocalDate.of(2018, 4, 28))
+              .experiences(getMockedExperiences2())
+              .studies(getMockedStudies4())
+              .supervisingTrainer((Trainer) getMockedUser5())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser35() {
-        return User.builder()
+        return Trainer.builder()
               .id(35)
               .name("Emily Anderson")
               .email("emily.anderson@example.com")
@@ -592,11 +942,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.SCRUM_MASTER)
+              .grade(Grade.SENIOR)
+              .salary(19000.0)
+              .hiredAt(LocalDate.of(2017, 1, 1))
+              .experiences(getMockedExperiences3())
+              .studies(getMockedStudies5())
+              .supervisingTrainer((Trainer) getMockedUser5())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser36() {
-        return User.builder()
+        return Trainer.builder()
               .id(36)
               .name("Adrian Thompson")
               .email("adrian.thompson@example.com")
@@ -607,11 +967,21 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.SCRUM_MASTER)
+              .grade(Grade.SENIOR)
+              .salary(20750.0)
+              .hiredAt(LocalDate.of(2016, 9, 14))
+              .experiences(getMockedExperiences4())
+              .studies(getMockedStudies6())
+              .supervisingTrainer((Trainer) getMockedUser5())
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static User getMockedUser37() {
-        return User.builder()
+        return Employee.builder()
               .id(37)
               .name("Abigail Johnson")
               .email("abigail.johnson@example.com")
@@ -622,11 +992,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.FRONTEND)
+              .grade(Grade.JUNIOR)
+              .salary(4000.0)
+              .hiredAt(LocalDate.of(2023, 1, 1))
+              .experiences(getMockedExperiences1())
+              .studies(getMockedStudies1())
+              .trainer((Trainer) getMockedUser1())
               .build();
     }
 
     public static User getMockedUser38() {
-        return User.builder()
+        return Employee.builder()
               .id(38)
               .name("Michael Davis")
               .email("michael.davis@example.com")
@@ -637,11 +1015,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.FRONTEND)
+              .grade(Grade.JUNIOR)
+              .salary(3500.0)
+              .hiredAt(LocalDate.of(2022, 10, 4))
+              .experiences(getMockedExperiences2())
+              .studies(getMockedStudies2())
+              .trainer((Trainer) getMockedUser2())
               .build();
     }
 
     public static User getMockedUser39() {
-        return User.builder()
+        return Employee.builder()
               .id(39)
               .name("Mia Wilson")
               .email("mia.wilson@example.com")
@@ -652,11 +1038,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.FRONTEND)
+              .grade(Grade.MID)
+              .salary(5000.0)
+              .hiredAt(LocalDate.of(2020, 9, 12))
+              .experiences(getMockedExperiences3())
+              .studies(getMockedStudies3())
+              .trainer((Trainer) getMockedUser3())
               .build();
     }
 
     public static User getMockedUser40() {
-        return User.builder()
+        return Employee.builder()
               .id(40)
               .name("James Lee")
               .email("james.lee@example.com")
@@ -667,11 +1061,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.FRONTEND)
+              .grade(Grade.SENIOR)
+              .salary(6500.0)
+              .hiredAt(LocalDate.of(2021, 8, 15))
+              .experiences(getMockedExperiences4())
+              .studies(getMockedStudies4())
+              .trainer((Trainer) getMockedUser4())
               .build();
     }
 
     public static User getMockedUser41() {
-        return User.builder()
+        return Employee.builder()
               .id(41)
               .name("Maria Thompson")
               .email("maria.thompson@example.com")
@@ -682,11 +1084,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.BACKEND)
+              .grade(Grade.JUNIOR)
+              .salary(3000.0)
+              .hiredAt(LocalDate.of(2023, 2, 9))
+              .experiences(getMockedExperiences5())
+              .studies(getMockedStudies5())
+              .trainer((Trainer) getMockedUser5())
               .build();
     }
 
     public static User getMockedUser42() {
-        return User.builder()
+        return Employee.builder()
               .id(42)
               .name("Ethan Smith")
               .email("ethan.smith@example.com")
@@ -697,11 +1107,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.BACKEND)
+              .grade(Grade.JUNIOR)
+              .salary(2500.0)
+              .hiredAt(LocalDate.of(2022, 11, 16))
+              .experiences(getMockedExperiences6())
+              .studies(getMockedStudies6())
+              .trainer((Trainer) getMockedUser6())
               .build();
     }
 
     public static User getMockedUser43() {
-        return User.builder()
+        return Employee.builder()
               .id(43)
               .name("Olivia Smith")
               .email("olivia.smith@example.com")
@@ -712,11 +1130,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.BACKEND)
+              .grade(Grade.MID)
+              .salary(4000.0)
+              .hiredAt(LocalDate.of(2021, 7, 19))
+              .experiences(getMockedExperiences7())
+              .studies(getMockedStudies1())
+              .trainer((Trainer) getMockedUser7())
               .build();
     }
 
     public static User getMockedUser44() {
-        return User.builder()
+        return Employee.builder()
               .id(44)
               .name("Emily Davis")
               .email("emily.davis@example.com")
@@ -727,11 +1153,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.BACKEND)
+              .grade(Grade.SENIOR)
+              .salary(7000.0)
+              .hiredAt(LocalDate.of(2020, 2, 16))
+              .experiences(getMockedExperiences8())
+              .studies(getMockedStudies2())
+              .trainer((Trainer) getMockedUser8())
               .build();
     }
 
     public static User getMockedUser45() {
-        return User.builder()
+        return Employee.builder()
               .id(45)
               .name("Henry Wilson")
               .email("henry.wilson@example.com")
@@ -742,11 +1176,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DEVOPS)
+              .grade(Grade.JUNIOR)
+              .salary(4500.0)
+              .hiredAt(LocalDate.of(2022, 10, 14))
+              .experiences(getMockedExperiences1())
+              .studies(getMockedStudies3())
+              .trainer((Trainer) getMockedUser9())
               .build();
     }
 
     public static User getMockedUser46() {
-        return User.builder()
+        return Employee.builder()
               .id(46)
               .name("Scarlett Thompson")
               .email("scarlett.thompson@example.com")
@@ -757,11 +1199,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DEVOPS)
+              .grade(Grade.JUNIOR)
+              .salary(5000.0)
+              .hiredAt(LocalDate.of(2022, 3, 28))
+              .experiences(getMockedExperiences2())
+              .studies(getMockedStudies4())
+              .trainer((Trainer) getMockedUser10())
               .build();
     }
 
     public static User getMockedUser47() {
-        return User.builder()
+        return Employee.builder()
               .id(47)
               .name("Jacob Brown")
               .email("jacob.brown@example.com")
@@ -772,11 +1222,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DEVOPS)
+              .grade(Grade.MID)
+              .salary(6000.0)
+              .hiredAt(LocalDate.of(2021, 11, 10))
+              .experiences(getMockedExperiences3())
+              .studies(getMockedStudies5())
+              .trainer((Trainer) getMockedUser11())
               .build();
     }
 
     public static User getMockedUser48() {
-        return User.builder()
+        return Employee.builder()
               .id(48)
               .name("Ava Smith")
               .email("ava.smith@example.com")
@@ -787,11 +1245,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DEVOPS)
+              .grade(Grade.SENIOR)
+              .salary(7500.0)
+              .hiredAt(LocalDate.of(2020, 5, 28))
+              .experiences(getMockedExperiences4())
+              .studies(getMockedStudies6())
+              .trainer((Trainer) getMockedUser12())
               .build();
     }
 
     public static User getMockedUser49() {
-        return User.builder()
+        return Employee.builder()
               .id(49)
               .name("Oliver Johnson")
               .email("oliver.johnson@example.com")
@@ -802,11 +1268,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(false)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.TESTING)
+              .grade(Grade.JUNIOR)
+              .salary(4000.0)
+              .hiredAt(LocalDate.of(2023, 1, 20))
+              .experiences(getMockedExperiences5())
+              .studies(getMockedStudies1())
+              .trainer((Trainer) getMockedUser13())
               .build();
     }
 
     public static User getMockedUser50() {
-        return User.builder()
+        return Employee.builder()
               .id(50)
               .name("Sophia Wilson")
               .email("sophia.wilson@example.com")
@@ -817,11 +1291,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.TESTING)
+              .grade(Grade.JUNIOR)
+              .salary(4500.0)
+              .hiredAt(LocalDate.of(2022, 4, 16))
+              .experiences(getMockedExperiences6())
+              .studies(getMockedStudies2())
+              .trainer((Trainer) getMockedUser14())
               .build();
     }
 
     public static User getMockedUser51() {
-        return User.builder()
+        return Employee.builder()
               .id(51)
               .name("William Harris")
               .email("william.harris@example.com")
@@ -832,11 +1314,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.TESTING)
+              .grade(Grade.MID)
+              .salary(6000.0)
+              .hiredAt(LocalDate.of(2021, 5, 18))
+              .experiences(getMockedExperiences7())
+              .studies(getMockedStudies3())
+              .trainer((Trainer) getMockedUser15())
               .build();
     }
 
     public static User getMockedUser52() {
-        return User.builder()
+        return Employee.builder()
               .id(52)
               .name("Mia Johnson")
               .email("mia.johnson@example.com")
@@ -847,11 +1337,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.TESTING)
+              .grade(Grade.SENIOR)
+              .salary(7000.0)
+              .hiredAt(LocalDate.of(2020, 9, 15))
+              .experiences(getMockedExperiences8())
+              .studies(getMockedStudies4())
+              .trainer((Trainer) getMockedUser16())
               .build();
     }
 
     public static User getMockedUser53() {
-        return User.builder()
+        return Employee.builder()
               .id(53)
               .name("Jacob Lee")
               .email("jacob.lee@example.com")
@@ -862,11 +1360,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(false)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DESIGN)
+              .grade(Grade.JUNIOR)
+              .salary(3500.0)
+              .hiredAt(LocalDate.of(2023, 1, 31))
+              .experiences(getMockedExperiences1())
+              .studies(getMockedStudies5())
+              .trainer((Trainer) getMockedUser17())
               .build();
     }
 
     public static User getMockedUser54() {
-        return User.builder()
+        return Employee.builder()
               .id(54)
               .name("Charlotte Brown")
               .email("charlotte.brown@example.com")
@@ -877,11 +1383,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DESIGN)
+              .grade(Grade.JUNIOR)
+              .salary(4000.0)
+              .hiredAt(LocalDate.of(2023, 3, 17))
+              .experiences(getMockedExperiences2())
+              .studies(getMockedStudies6())
+              .trainer((Trainer) getMockedUser18())
               .build();
     }
 
     public static User getMockedUser55() {
-        return User.builder()
+        return Employee.builder()
               .id(55)
               .name("Ethan Johnson")
               .email("ethan.johnson@example.com")
@@ -892,11 +1406,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DESIGN)
+              .grade(Grade.MID)
+              .salary(5500.0)
+              .hiredAt(LocalDate.of(2022, 2, 28))
+              .experiences(getMockedExperiences3())
+              .studies(getMockedStudies1())
+              .trainer((Trainer) getMockedUser19())
               .build();
     }
 
     public static User getMockedUser56() {
-        return User.builder()
+        return Employee.builder()
               .id(56)
               .name("Sophia Davis")
               .email("sophia.davis@example.com")
@@ -907,11 +1429,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DESIGN)
+              .grade(Grade.SENIOR)
+              .salary(6500.0)
+              .hiredAt(LocalDate.of(2021, 8, 9))
+              .experiences(getMockedExperiences4())
+              .studies(getMockedStudies2())
+              .trainer((Trainer) getMockedUser20())
               .build();
     }
 
     public static User getMockedUser57() {
-        return User.builder()
+        return Employee.builder()
               .id(57)
               .name("Jacob Thompson")
               .email("jacob.thompson@example.com")
@@ -922,11 +1452,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DATA_ANALYST)
+              .grade(Grade.JUNIOR)
+              .salary(5000.0)
+              .hiredAt(LocalDate.of(2023, 6, 12))
+              .experiences(getMockedExperiences5())
+              .studies(getMockedStudies3())
+              .trainer((Trainer) getMockedUser21())
               .build();
     }
 
     public static User getMockedUser58() {
-        return User.builder()
+        return Employee.builder()
               .id(58)
               .name("Liam Wilson")
               .email("liam.wilson@example.com")
@@ -937,11 +1475,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DATA_ANALYST)
+              .grade(Grade.JUNIOR)
+              .salary(5500.0)
+              .hiredAt(LocalDate.of(2022, 10, 30))
+              .experiences(getMockedExperiences6())
+              .studies(getMockedStudies4())
+              .trainer((Trainer) getMockedUser22())
               .build();
     }
 
     public static User getMockedUser59() {
-        return User.builder()
+        return Employee.builder()
               .id(59)
               .name("Ava Brown")
               .email("ava.brown@example.com")
@@ -952,11 +1498,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DATA_ANALYST)
+              .grade(Grade.MID)
+              .salary(7000.0)
+              .hiredAt(LocalDate.of(2020, 12, 15))
+              .experiences(getMockedExperiences7())
+              .studies(getMockedStudies5())
+              .trainer((Trainer) getMockedUser23())
               .build();
     }
 
     public static User getMockedUser60() {
-        return User.builder()
+        return Employee.builder()
               .id(60)
               .name("Scarlett Wilson")
               .email("scarlett.wilson@example.com")
@@ -967,11 +1521,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DATA_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(8000.0)
+              .hiredAt(LocalDate.of(2020, 4, 10))
+              .experiences(getMockedExperiences8())
+              .studies(getMockedStudies6())
+              .trainer((Trainer) getMockedUser24())
               .build();
     }
 
     public static User getMockedUser61() {
-        return User.builder()
+        return Employee.builder()
               .id(61)
               .name("Noah Martinez")
               .email("noah.martinez@example.com")
@@ -982,11 +1544,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.MACHINE_LEARNING)
+              .grade(Grade.JUNIOR)
+              .salary(4750.0)
+              .hiredAt(LocalDate.of(2023, 3, 27))
+              .experiences(getMockedExperiences1())
+              .studies(getMockedStudies1())
+              .trainer((Trainer) getMockedUser25())
               .build();
     }
 
     public static User getMockedUser62() {
-        return User.builder()
+        return Employee.builder()
               .id(62)
               .name("Mia Anderson")
               .email("mia.anderson@example.com")
@@ -997,11 +1567,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.MACHINE_LEARNING)
+              .grade(Grade.JUNIOR)
+              .salary(5250.0)
+              .hiredAt(LocalDate.of(2022, 11, 18))
+              .experiences(getMockedExperiences2())
+              .studies(getMockedStudies2())
+              .trainer((Trainer) getMockedUser26())
               .build();
     }
 
     public static User getMockedUser63() {
-        return User.builder()
+        return Employee.builder()
               .id(63)
               .name("Grace Lee")
               .email("grace.lee@example.com")
@@ -1012,11 +1590,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.MACHINE_LEARNING)
+              .grade(Grade.MID)
+              .salary(7000.0)
+              .hiredAt(LocalDate.of(2022, 6, 29))
+              .experiences(getMockedExperiences3())
+              .studies(getMockedStudies3())
+              .trainer((Trainer) getMockedUser27())
               .build();
     }
 
     public static User getMockedUser64() {
-        return User.builder()
+        return Employee.builder()
               .id(64)
               .name("Benjamin Taylor")
               .email("benjamin.taylor@example.com")
@@ -1027,11 +1613,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.MACHINE_LEARNING)
+              .grade(Grade.SENIOR)
+              .salary(8750.0)
+              .hiredAt(LocalDate.of(2020, 7, 16))
+              .experiences(getMockedExperiences4())
+              .studies(getMockedStudies4())
+              .trainer((Trainer) getMockedUser28())
               .build();
     }
 
     public static User getMockedUser65() {
-        return User.builder()
+        return Employee.builder()
               .id(65)
               .name("Elijah Roberts")
               .email("elijah.roberts@example.com")
@@ -1042,11 +1636,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.BUSINESS_ANALYST)
+              .grade(Grade.JUNIOR)
+              .salary(4500.0)
+              .hiredAt(LocalDate.of(2023, 5, 19))
+              .experiences(getMockedExperiences5())
+              .studies(getMockedStudies5())
+              .trainer((Trainer) getMockedUser29())
               .build();
     }
 
     public static User getMockedUser66() {
-        return User.builder()
+        return Employee.builder()
               .id(66)
               .name("Amelia Walker")
               .email("amelia.walker@example.com")
@@ -1057,11 +1659,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.BUSINESS_ANALYST)
+              .grade(Grade.JUNIOR)
+              .salary(4750.0)
+              .hiredAt(LocalDate.of(2023, 3, 19))
+              .experiences(getMockedExperiences6())
+              .studies(getMockedStudies6())
+              .trainer((Trainer) getMockedUser30())
               .build();
     }
 
     public static User getMockedUser67() {
-        return User.builder()
+        return Employee.builder()
               .id(67)
               .name("Daniel Green")
               .email("daniel.green@example.com")
@@ -1072,11 +1682,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.BUSINESS_ANALYST)
+              .grade(Grade.MID)
+              .salary(5500.0)
+              .hiredAt(LocalDate.of(2022, 8, 24))
+              .experiences(getMockedExperiences7())
+              .studies(getMockedStudies1())
+              .trainer((Trainer) getMockedUser31())
               .build();
     }
 
     public static User getMockedUser68() {
-        return User.builder()
+        return Employee.builder()
               .id(68)
               .name("Liam Hall")
               .email("liam.hall@example.com")
@@ -1087,11 +1705,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.BUSINESS_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(6500.0)
+              .hiredAt(LocalDate.of(2021, 1, 23))
+              .experiences(getMockedExperiences8())
+              .studies(getMockedStudies2())
+              .trainer((Trainer) getMockedUser32())
               .build();
     }
 
     public static User getMockedUser69() {
-        return User.builder()
+        return Employee.builder()
               .id(69)
               .name("Sophia Young")
               .email("sophia.young@example.com")
@@ -1102,11 +1728,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.SCRUM_MASTER)
+              .grade(Grade.JUNIOR)
+              .salary(6000.0)
+              .hiredAt(LocalDate.of(2021, 8, 17))
+              .experiences(getMockedExperiences1())
+              .studies(getMockedStudies3())
+              .trainer((Trainer) getMockedUser33())
               .build();
     }
 
     public static User getMockedUser70() {
-        return User.builder()
+        return Employee.builder()
               .id(70)
               .name("Noah Clark")
               .email("noah.clark@example.com")
@@ -1117,11 +1751,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.SCRUM_MASTER)
+              .grade(Grade.JUNIOR)
+              .salary(6250.0)
+              .hiredAt(LocalDate.of(2021, 3, 30))
+              .experiences(getMockedExperiences2())
+              .studies(getMockedStudies4())
+              .trainer((Trainer) getMockedUser34())
               .build();
     }
 
     public static User getMockedUser71() {
-        return User.builder()
+        return Employee.builder()
               .id(71)
               .name("Olivia Hill")
               .email("olivia.hill@example.com")
@@ -1132,11 +1774,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.SCRUM_MASTER)
+              .grade(Grade.MID)
+              .salary(7750.0)
+              .hiredAt(LocalDate.of(2020, 11, 8))
+              .experiences(getMockedExperiences3())
+              .studies(getMockedStudies5())
+              .trainer((Trainer) getMockedUser35())
               .build();
     }
 
     public static User getMockedUser72() {
-        return User.builder()
+        return Employee.builder()
               .id(72)
               .name("Michaela Allen")
               .email("michaela.allen@example.com")
@@ -1147,11 +1797,19 @@ public class UserMock {
               .role(getMockedRole1())
               .authorities(getMockedAuthorities1())
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.SCRUM_MASTER)
+              .grade(Grade.SENIOR)
+              .salary(8750.0)
+              .hiredAt(LocalDate.of(2019, 12, 3))
+              .experiences(getMockedExperiences4())
+              .studies(getMockedStudies6())
+              .trainer((Trainer) getMockedUser36())
               .build();
     }
 
     public static UserDto getMockedUserDto1() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(1)
               .name("John Doe")
               .email("john.doe@example.com")
@@ -1162,11 +1820,21 @@ public class UserMock {
               .roleId(2)
               .authoritiesIds(List.of(1, 2, 3, 4))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.FRONTEND)
+              .grade(Grade.SENIOR)
+              .salary(21000.0)
+              .hiredAt(LocalDate.of(2015, 1, 1))
+              .experiencesIds(List.of(1, 2))
+              .studiesIds(List.of(1, 2))
+              .supervisingTrainerId(null)
+              .nrTrainees(7)
+              .maxTrainees(10)
               .build();
     }
 
     public static UserDto getMockedUserDto2() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(2)
               .name("Jane Smith")
               .email("jane.smith@example.com")
@@ -1177,11 +1845,21 @@ public class UserMock {
               .roleId(2)
               .authoritiesIds(List.of(1, 2, 3, 4))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.FRONTEND)
+              .grade(Grade.SENIOR)
+              .salary(19000.0)
+              .hiredAt(LocalDate.of(2017, 1, 1))
+              .experiencesIds(List.of(3, 4))
+              .studiesIds(List.of(3, 4))
+              .supervisingTrainerId(null)
+              .nrTrainees(7)
+              .maxTrainees(10)
               .build();
     }
 
     public static UserDto getMockedUserDto3() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(3)
               .name("Michael Johnson")
               .email("michael.johnson@example.com")
@@ -1192,11 +1870,21 @@ public class UserMock {
               .roleId(2)
               .authoritiesIds(List.of(1, 2, 3, 4))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.FRONTEND)
+              .grade(Grade.SENIOR)
+              .salary(17000.0)
+              .hiredAt(LocalDate.of(2018, 1, 1))
+              .experiencesIds(List.of(5, 6))
+              .studiesIds(List.of(5, 6))
+              .supervisingTrainerId(null)
+              .nrTrainees(7)
+              .maxTrainees(10)
               .build();
     }
 
     public static UserDto getMockedUserDto4() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(4)
               .name("Laura Brown")
               .email("laura.brown@example.com")
@@ -1207,11 +1895,21 @@ public class UserMock {
               .roleId(2)
               .authoritiesIds(List.of(1, 2, 3, 4))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.FRONTEND)
+              .grade(Grade.SENIOR)
+              .salary(16500.0)
+              .hiredAt(LocalDate.of(2018, 2, 4))
+              .experiencesIds(List.of(7, 8))
+              .studiesIds(List.of(7, 8))
+              .supervisingTrainerId(null)
+              .nrTrainees(7)
+              .maxTrainees(10)
               .build();
     }
 
     public static UserDto getMockedUserDto5() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(5)
               .name("Robert Davis")
               .email("robert.davis@example.com")
@@ -1222,11 +1920,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.BACKEND)
+              .grade(Grade.SENIOR)
+              .salary(16750.0)
+              .hiredAt(LocalDate.of(2017, 3, 18))
+              .experiencesIds(List.of(9, 10))
+              .studiesIds(List.of(9, 10))
+              .supervisingTrainerId(null)
+              .nrTrainees(7)
+              .maxTrainees(10)
               .build();
     }
 
     public static UserDto getMockedUserDto6() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(6)
               .name("Emily Wilson")
               .email("emily.wilson@example.com")
@@ -1237,11 +1945,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.BACKEND)
+              .grade(Grade.SENIOR)
+              .salary(15000.0)
+              .hiredAt(LocalDate.of(2018, 6, 20))
+              .experiencesIds(List.of(11, 12))
+              .studiesIds(List.of(11, 12))
+              .supervisingTrainerId(null)
+              .nrTrainees(7)
+              .maxTrainees(10)
               .build();
     }
 
     public static UserDto getMockedUserDto7() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(7)
               .name("Michaela Taylor")
               .email("michaela.taylor@example.com")
@@ -1252,11 +1970,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.BACKEND)
+              .grade(Grade.SENIOR)
+              .salary(15750.0)
+              .hiredAt(LocalDate.of(2019, 1, 20))
+              .experiencesIds(List.of(13, 14))
+              .studiesIds(List.of(1, 2))
+              .supervisingTrainerId(1)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto8() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(8)
               .name("David Anderson")
               .email("david.anderson@example.com")
@@ -1267,11 +1995,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.BACKEND)
+              .grade(Grade.SENIOR)
+              .salary(18250.0)
+              .hiredAt(LocalDate.of(2016, 4, 9))
+              .experiencesIds(List.of(15, 16))
+              .studiesIds(List.of(3, 4))
+              .supervisingTrainerId(1)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto9() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(9)
               .name("Sophia Garcia")
               .email("sophia.garcia@example.com")
@@ -1282,11 +2020,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DEVOPS)
+              .grade(Grade.SENIOR)
+              .salary(18000.0)
+              .hiredAt(LocalDate.of(2014, 11, 29))
+              .experiencesIds(List.of(1, 2))
+              .studiesIds(List.of(5, 6))
+              .supervisingTrainerId(1)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto10() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(10)
               .name("Joseph Wilson")
               .email("joseph.wilson@example.com")
@@ -1297,11 +2045,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DEVOPS)
+              .grade(Grade.SENIOR)
+              .salary(17000.0)
+              .hiredAt(LocalDate.of(2017, 8, 14))
+              .experiencesIds(List.of(3, 4))
+              .studiesIds(List.of(7, 8))
+              .supervisingTrainerId(1)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto11() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(11)
               .name("Olivia Martinez")
               .email("olivia.martinez@example.com")
@@ -1312,11 +2070,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DEVOPS)
+              .grade(Grade.SENIOR)
+              .salary(19500.0)
+              .hiredAt(LocalDate.of(2015, 10, 10))
+              .experiencesIds(List.of(5, 6))
+              .studiesIds(List.of(9, 10))
+              .supervisingTrainerId(1)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto12() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(12)
               .name("Daniel Thompson")
               .email("daniel.thompson@example.com")
@@ -1327,11 +2095,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DEVOPS)
+              .grade(Grade.SENIOR)
+              .salary(14750.0)
+              .hiredAt(LocalDate.of(2016, 2, 15))
+              .experiencesIds(List.of(7, 8))
+              .studiesIds(List.of(11, 12))
+              .supervisingTrainerId(1)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto13() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(13)
               .name("Emma Thompson")
               .email("emma.thompson@example.com")
@@ -1342,11 +2120,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.TESTING)
+              .grade(Grade.SENIOR)
+              .salary(16250.0)
+              .hiredAt(LocalDate.of(2018, 4, 8))
+              .experiencesIds(List.of(9, 10))
+              .studiesIds(List.of(1, 2))
+              .supervisingTrainerId(2)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto14() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(14)
               .name("Liam Brown")
               .email("liam.brown@example.com")
@@ -1357,11 +2145,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.TESTING)
+              .grade(Grade.SENIOR)
+              .salary(17250.0)
+              .hiredAt(LocalDate.of(2017, 12, 13))
+              .experiencesIds(List.of(11, 12))
+              .studiesIds(List.of(3, 4))
+              .supervisingTrainerId(2)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto15() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(15)
               .name("Olivia Wilson")
               .email("olivia.wilson@example.com")
@@ -1372,11 +2170,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.TESTING)
+              .grade(Grade.SENIOR)
+              .salary(14500.0)
+              .hiredAt(LocalDate.of(2018, 7, 25))
+              .experiencesIds(List.of(13, 14))
+              .studiesIds(List.of(5, 6))
+              .supervisingTrainerId(2)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto16() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(16)
               .name("Noah Taylor")
               .email("noah.taylor@example.com")
@@ -1387,11 +2195,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(false)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.TESTING)
+              .grade(Grade.SENIOR)
+              .salary(15250.0)
+              .hiredAt(LocalDate.of(2017, 9, 30))
+              .experiencesIds(List.of(15, 16))
+              .studiesIds(List.of(7, 8))
+              .supervisingTrainerId(2)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto17() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(17)
               .name("Ava Johnson")
               .email("ava.johnson@example.com")
@@ -1402,11 +2220,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DESIGN)
+              .grade(Grade.SENIOR)
+              .salary(16000.0)
+              .hiredAt(LocalDate.of(2017, 5, 17))
+              .experiencesIds(List.of(1, 2))
+              .studiesIds(List.of(9, 10))
+              .supervisingTrainerId(2)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto18() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(18)
               .name("William Davis")
               .email("william.davis@example.com")
@@ -1417,11 +2245,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DESIGN)
+              .grade(Grade.SENIOR)
+              .salary(18250.0)
+              .hiredAt(LocalDate.of(2016, 4, 16))
+              .experiencesIds(List.of(3, 4))
+              .studiesIds(List.of(11, 12))
+              .supervisingTrainerId(2)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto19() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(19)
               .name("Sophia Martinez")
               .email("sophia.martinez@example.com")
@@ -1432,11 +2270,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DESIGN)
+              .grade(Grade.SENIOR)
+              .salary(19750.0)
+              .hiredAt(LocalDate.of(2014, 9, 9))
+              .experiencesIds(List.of(5, 6))
+              .studiesIds(List.of(1, 2))
+              .supervisingTrainerId(3)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto20() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(20)
               .name("Isabella Anderson")
               .email("isabella.anderson@example.com")
@@ -1447,11 +2295,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DESIGN)
+              .grade(Grade.SENIOR)
+              .salary(19250.0)
+              .hiredAt(LocalDate.of(2015, 7, 14))
+              .experiencesIds(List.of(7, 8))
+              .studiesIds(List.of(3, 4))
+              .supervisingTrainerId(3)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto21() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(21)
               .name("Mason Thompson")
               .email("mason.thompson@example.com")
@@ -1462,11 +2320,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DATA_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(17750.0)
+              .hiredAt(LocalDate.of(2017, 11, 20))
+              .experiencesIds(List.of(9, 10))
+              .studiesIds(List.of(5, 6))
+              .supervisingTrainerId(3)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto22() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(22)
               .name("Charlotte Thompson")
               .email("charlotte.thompson@example.com")
@@ -1477,11 +2345,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DATA_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(18750.0)
+              .hiredAt(LocalDate.of(2016, 3, 8))
+              .experiencesIds(List.of(11, 12))
+              .studiesIds(List.of(7, 8))
+              .supervisingTrainerId(3)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto23() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(23)
               .name("Elijah Smith")
               .email("elijah.smith@example.com")
@@ -1492,11 +2370,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DATA_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(17000.0)
+              .hiredAt(LocalDate.of(2017, 10, 18))
+              .experiencesIds(List.of(13, 14))
+              .studiesIds(List.of(9, 10))
+              .supervisingTrainerId(3)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto24() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(24)
               .name("Amelia Johnson")
               .email("amelia.johnson@example.com")
@@ -1507,11 +2395,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DATA_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(15500.0)
+              .hiredAt(LocalDate.of(2018, 6, 3))
+              .experiencesIds(List.of(15, 16))
+              .studiesIds(List.of(11, 12))
+              .supervisingTrainerId(3)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto25() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(25)
               .name("Harper Wilson")
               .email("harper.wilson@example.com")
@@ -1522,11 +2420,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.MACHINE_LEARNING)
+              .grade(Grade.SENIOR)
+              .salary(20000.0)
+              .hiredAt(LocalDate.of(2015, 8, 17))
+              .experiencesIds(List.of(1, 2))
+              .studiesIds(List.of(1, 2))
+              .supervisingTrainerId(4)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto26() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(26)
               .name("Benjamin Thompson")
               .email("benjamin.thompson@example.com")
@@ -1537,11 +2445,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.MACHINE_LEARNING)
+              .grade(Grade.SENIOR)
+              .salary(20250.0)
+              .hiredAt(LocalDate.of(2016, 2, 20))
+              .experiencesIds(List.of(3, 4))
+              .studiesIds(List.of(3, 4))
+              .supervisingTrainerId(4)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto27() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(27)
               .name("Liam Thompson")
               .email("liam.thompson@example.com")
@@ -1552,11 +2470,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.MACHINE_LEARNING)
+              .grade(Grade.SENIOR)
+              .salary(18500.0)
+              .hiredAt(LocalDate.of(2017, 4, 20))
+              .experiencesIds(List.of(5, 6))
+              .studiesIds(List.of(5, 6))
+              .supervisingTrainerId(4)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto28() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(28)
               .name("Grace Martinez")
               .email("grace.martinez@example.com")
@@ -1567,11 +2495,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.MACHINE_LEARNING)
+              .grade(Grade.SENIOR)
+              .salary(19500.0)
+              .hiredAt(LocalDate.of(2016, 12, 18))
+              .experiencesIds(List.of(7, 8))
+              .studiesIds(List.of(7, 8))
+              .supervisingTrainerId(4)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto29() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(29)
               .name("Isabella White")
               .email("isabella.white@example.com")
@@ -1582,11 +2520,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.BUSINESS_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(16000.0)
+              .hiredAt(LocalDate.of(2018, 5, 14))
+              .experiencesIds(List.of(9, 10))
+              .studiesIds(List.of(9, 10))
+              .supervisingTrainerId(4)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto30() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(30)
               .name("Logan Thompson")
               .email("logan.thompson@example.com")
@@ -1597,11 +2545,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.BUSINESS_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(20500.0)
+              .hiredAt(LocalDate.of(2015, 8, 7))
+              .experiencesIds(List.of(11, 12))
+              .studiesIds(List.of(11, 12))
+              .supervisingTrainerId(4)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto31() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(31)
               .name("Evelyn Brown")
               .email("evelyn.brown@example.com")
@@ -1612,11 +2570,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.BUSINESS_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(15500.0)
+              .hiredAt(LocalDate.of(2019, 3, 19))
+              .experiencesIds(List.of(13, 14))
+              .studiesIds(List.of(1, 2))
+              .supervisingTrainerId(5)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto32() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(32)
               .name("Henry Davis")
               .email("henry.davis@example.com")
@@ -1627,11 +2595,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.BUSINESS_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(18250.0)
+              .hiredAt(LocalDate.of(2018, 6, 12))
+              .experiencesIds(List.of(15, 16))
+              .studiesIds(List.of(3, 4))
+              .supervisingTrainerId(5)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto33() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(33)
               .name("Sofia Smith")
               .email("sofia.smith@example.com")
@@ -1642,11 +2620,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.SCRUM_MASTER)
+              .grade(Grade.SENIOR)
+              .salary(16500.0)
+              .hiredAt(LocalDate.of(2019, 11, 11))
+              .experiencesIds(List.of(1, 2))
+              .studiesIds(List.of(5, 6))
+              .supervisingTrainerId(5)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto34() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(34)
               .name("Jack Wilson")
               .email("jack.wilson@example.com")
@@ -1657,11 +2645,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.SCRUM_MASTER)
+              .grade(Grade.SENIOR)
+              .salary(18750.0)
+              .hiredAt(LocalDate.of(2018, 4, 28))
+              .experiencesIds(List.of(3, 4))
+              .studiesIds(List.of(7, 8))
+              .supervisingTrainerId(5)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto35() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(35)
               .name("Emily Anderson")
               .email("emily.anderson@example.com")
@@ -1672,11 +2670,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.SCRUM_MASTER)
+              .grade(Grade.SENIOR)
+              .salary(19000.0)
+              .hiredAt(LocalDate.of(2017, 1, 1))
+              .experiencesIds(List.of(5, 6))
+              .studiesIds(List.of(9, 10))
+              .supervisingTrainerId(5)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto36() {
-        return UserDto.builder()
+        return TrainerDto.builder()
               .id(36)
               .name("Adrian Thompson")
               .email("adrian.thompson@example.com")
@@ -1687,11 +2695,21 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.SCRUM_MASTER)
+              .grade(Grade.SENIOR)
+              .salary(20750.0)
+              .hiredAt(LocalDate.of(2016, 9, 14))
+              .experiencesIds(List.of(7, 8))
+              .studiesIds(List.of(11, 12))
+              .supervisingTrainerId(5)
+              .nrTrainees(1)
+              .maxTrainees(5)
               .build();
     }
 
     public static UserDto getMockedUserDto37() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(37)
               .name("Abigail Johnson")
               .email("abigail.johnson@example.com")
@@ -1702,11 +2720,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.FRONTEND)
+              .grade(Grade.JUNIOR)
+              .salary(4000.0)
+              .hiredAt(LocalDate.of(2023, 1, 1))
+              .experiencesIds(List.of(1, 2))
+              .studiesIds(List.of(1, 2))
+              .trainerId(1)
               .build();
     }
 
     public static UserDto getMockedUserDto38() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(38)
               .name("Michael Davis")
               .email("michael.davis@example.com")
@@ -1717,11 +2743,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.FRONTEND)
+              .grade(Grade.JUNIOR)
+              .salary(3500.0)
+              .hiredAt(LocalDate.of(2022, 10, 4))
+              .experiencesIds(List.of(3, 4))
+              .studiesIds(List.of(3, 4))
+              .trainerId(2)
               .build();
     }
 
     public static UserDto getMockedUserDto39() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(39)
               .name("Mia Wilson")
               .email("mia.wilson@example.com")
@@ -1732,11 +2766,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.FRONTEND)
+              .grade(Grade.MID)
+              .salary(5000.0)
+              .hiredAt(LocalDate.of(2020, 9, 12))
+              .experiencesIds(List.of(5, 6))
+              .studiesIds(List.of(5, 6))
+              .trainerId(3)
               .build();
     }
 
     public static UserDto getMockedUserDto40() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(40)
               .name("James Lee")
               .email("james.lee@example.com")
@@ -1747,11 +2789,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.FRONTEND)
+              .grade(Grade.SENIOR)
+              .salary(6500.0)
+              .hiredAt(LocalDate.of(2021, 8, 15))
+              .experiencesIds(List.of(7, 8))
+              .studiesIds(List.of(7, 8))
+              .trainerId(4)
               .build();
     }
 
     public static UserDto getMockedUserDto41() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(41)
               .name("Maria Thompson")
               .email("maria.thompson@example.com")
@@ -1762,11 +2812,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.BACKEND)
+              .grade(Grade.JUNIOR)
+              .salary(3000.0)
+              .hiredAt(LocalDate.of(2023, 2, 9))
+              .experiencesIds(List.of(9, 10))
+              .studiesIds(List.of(9, 10))
+              .trainerId(5)
               .build();
     }
 
     public static UserDto getMockedUserDto42() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(42)
               .name("Ethan Smith")
               .email("ethan.smith@example.com")
@@ -1777,11 +2835,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.BACKEND)
+              .grade(Grade.JUNIOR)
+              .salary(2500.0)
+              .hiredAt(LocalDate.of(2022, 11, 16))
+              .experiencesIds(List.of(11, 12))
+              .studiesIds(List.of(11, 12))
+              .trainerId(6)
               .build();
     }
 
     public static UserDto getMockedUserDto43() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(43)
               .name("Olivia Smith")
               .email("olivia.smith@example.com")
@@ -1792,11 +2858,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.BACKEND)
+              .grade(Grade.MID)
+              .salary(4000.0)
+              .hiredAt(LocalDate.of(2021, 7, 19))
+              .experiencesIds(List.of(13, 14))
+              .studiesIds(List.of(1, 2))
+              .trainerId(7)
               .build();
     }
 
     public static UserDto getMockedUserDto44() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(44)
               .name("Emily Davis")
               .email("emily.davis@example.com")
@@ -1807,11 +2881,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.BACKEND)
+              .grade(Grade.SENIOR)
+              .salary(7000.0)
+              .hiredAt(LocalDate.of(2020, 2, 16))
+              .experiencesIds(List.of(15, 16))
+              .studiesIds(List.of(3, 4))
+              .trainerId(8)
               .build();
     }
 
     public static UserDto getMockedUserDto45() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(45)
               .name("Henry Wilson")
               .email("henry.wilson@example.com")
@@ -1822,11 +2904,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DEVOPS)
+              .grade(Grade.JUNIOR)
+              .salary(4500.0)
+              .hiredAt(LocalDate.of(2022, 10, 14))
+              .experiencesIds(List.of(1, 2))
+              .studiesIds(List.of(5, 6))
+              .trainerId(9)
               .build();
     }
 
     public static UserDto getMockedUserDto46() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(46)
               .name("Scarlett Thompson")
               .email("scarlett.thompson@example.com")
@@ -1837,11 +2927,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DEVOPS)
+              .grade(Grade.JUNIOR)
+              .salary(5000.0)
+              .hiredAt(LocalDate.of(2022, 3, 28))
+              .experiencesIds(List.of(3, 4))
+              .studiesIds(List.of(7, 8))
+              .trainerId(10)
               .build();
     }
 
     public static UserDto getMockedUserDto47() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(47)
               .name("Jacob Brown")
               .email("jacob.brown@example.com")
@@ -1852,11 +2950,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DEVOPS)
+              .grade(Grade.MID)
+              .salary(6000.0)
+              .hiredAt(LocalDate.of(2021, 11, 10))
+              .experiencesIds(List.of(5, 6))
+              .studiesIds(List.of(9, 10))
+              .trainerId(11)
               .build();
     }
 
     public static UserDto getMockedUserDto48() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(48)
               .name("Ava Smith")
               .email("ava.smith@example.com")
@@ -1867,11 +2973,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DEVOPS)
+              .grade(Grade.SENIOR)
+              .salary(7500.0)
+              .hiredAt(LocalDate.of(2020, 5, 28))
+              .experiencesIds(List.of(7, 8))
+              .studiesIds(List.of(11, 12))
+              .trainerId(12)
               .build();
     }
 
     public static UserDto getMockedUserDto49() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(49)
               .name("Oliver Johnson")
               .email("oliver.johnson@example.com")
@@ -1882,11 +2996,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(false)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.TESTING)
+              .grade(Grade.JUNIOR)
+              .salary(4000.0)
+              .hiredAt(LocalDate.of(2023, 1, 20))
+              .experiencesIds(List.of(9, 10))
+              .studiesIds(List.of(1, 2))
+              .trainerId(13)
               .build();
     }
 
     public static UserDto getMockedUserDto50() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(50)
               .name("Sophia Wilson")
               .email("sophia.wilson@example.com")
@@ -1897,11 +3019,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.TESTING)
+              .grade(Grade.JUNIOR)
+              .salary(4500.0)
+              .hiredAt(LocalDate.of(2022, 4, 16))
+              .experiencesIds(List.of(11, 12))
+              .studiesIds(List.of(3, 4))
+              .trainerId(14)
               .build();
     }
 
     public static UserDto getMockedUserDto51() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(51)
               .name("William Harris")
               .email("william.harris@example.com")
@@ -1912,11 +3042,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.TESTING)
+              .grade(Grade.MID)
+              .salary(6000.0)
+              .hiredAt(LocalDate.of(2021, 5, 18))
+              .experiencesIds(List.of(13, 14))
+              .studiesIds(List.of(5, 6))
+              .trainerId(15)
               .build();
     }
 
     public static UserDto getMockedUserDto52() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(52)
               .name("Mia Johnson")
               .email("mia.johnson@example.com")
@@ -1927,11 +3065,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.TESTING)
+              .grade(Grade.SENIOR)
+              .salary(7000.0)
+              .hiredAt(LocalDate.of(2020, 9, 15))
+              .experiencesIds(List.of(15, 16))
+              .studiesIds(List.of(7, 8))
+              .trainerId(16)
               .build();
     }
 
     public static UserDto getMockedUserDto53() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(53)
               .name("Jacob Lee")
               .email("jacob.lee@example.com")
@@ -1942,11 +3088,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(false)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DESIGN)
+              .grade(Grade.JUNIOR)
+              .salary(3500.0)
+              .hiredAt(LocalDate.of(2023, 1, 31))
+              .experiencesIds(List.of(1, 2))
+              .studiesIds(List.of(9, 10))
+              .trainerId(17)
               .build();
     }
 
     public static UserDto getMockedUserDto54() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(54)
               .name("Charlotte Brown")
               .email("charlotte.brown@example.com")
@@ -1957,11 +3111,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.FULL_TIME)
+              .position(Position.DESIGN)
+              .grade(Grade.JUNIOR)
+              .salary(4000.0)
+              .hiredAt(LocalDate.of(2023, 3, 17))
+              .experiencesIds(List.of(3, 4))
+              .studiesIds(List.of(11, 12))
+              .trainerId(18)
               .build();
     }
 
     public static UserDto getMockedUserDto55() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(55)
               .name("Ethan Johnson")
               .email("ethan.johnson@example.com")
@@ -1972,11 +3134,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DESIGN)
+              .grade(Grade.MID)
+              .salary(5500.0)
+              .hiredAt(LocalDate.of(2022, 2, 28))
+              .experiencesIds(List.of(5, 6))
+              .studiesIds(List.of(1, 2))
+              .trainerId(19)
               .build();
     }
 
     public static UserDto getMockedUserDto56() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(56)
               .name("Sophia Davis")
               .email("sophia.davis@example.com")
@@ -1987,11 +3157,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DESIGN)
+              .grade(Grade.SENIOR)
+              .salary(6500.0)
+              .hiredAt(LocalDate.of(2021, 8, 9))
+              .experiencesIds(List.of(7, 8))
+              .studiesIds(List.of(3, 4))
+              .trainerId(20)
               .build();
     }
 
     public static UserDto getMockedUserDto57() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(57)
               .name("Jacob Thompson")
               .email("jacob.thompson@example.com")
@@ -2002,11 +3180,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DATA_ANALYST)
+              .grade(Grade.JUNIOR)
+              .salary(5000.0)
+              .hiredAt(LocalDate.of(2023, 6, 12))
+              .experiencesIds(List.of(9, 10))
+              .studiesIds(List.of(5, 6))
+              .trainerId(21)
               .build();
     }
 
     public static UserDto getMockedUserDto58() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(58)
               .name("Liam Wilson")
               .email("liam.wilson@example.com")
@@ -2017,11 +3203,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DATA_ANALYST)
+              .grade(Grade.JUNIOR)
+              .salary(5500.0)
+              .hiredAt(LocalDate.of(2022, 10, 30))
+              .experiencesIds(List.of(11, 12))
+              .studiesIds(List.of(7, 8))
+              .trainerId(22)
               .build();
     }
 
     public static UserDto getMockedUserDto59() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(59)
               .name("Ava Brown")
               .email("ava.brown@example.com")
@@ -2032,11 +3226,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DATA_ANALYST)
+              .grade(Grade.MID)
+              .salary(7000.0)
+              .hiredAt(LocalDate.of(2020, 12, 15))
+              .experiencesIds(List.of(13, 14))
+              .studiesIds(List.of(9, 10))
+              .trainerId(23)
               .build();
     }
 
     public static UserDto getMockedUserDto60() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(60)
               .name("Scarlett Wilson")
               .email("scarlett.wilson@example.com")
@@ -2047,11 +3249,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.DATA_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(8000.0)
+              .hiredAt(LocalDate.of(2020, 4, 10))
+              .experiencesIds(List.of(15, 16))
+              .studiesIds(List.of(11, 12))
+              .trainerId(24)
               .build();
     }
 
     public static UserDto getMockedUserDto61() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(61)
               .name("Noah Martinez")
               .email("noah.martinez@example.com")
@@ -2062,11 +3272,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.MACHINE_LEARNING)
+              .grade(Grade.JUNIOR)
+              .salary(4750.0)
+              .hiredAt(LocalDate.of(2023, 3, 27))
+              .experiencesIds(List.of(1, 2))
+              .studiesIds(List.of(1, 2))
+              .trainerId(25)
               .build();
     }
 
     public static UserDto getMockedUserDto62() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(62)
               .name("Mia Anderson")
               .email("mia.anderson@example.com")
@@ -2077,11 +3295,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.MACHINE_LEARNING)
+              .grade(Grade.JUNIOR)
+              .salary(5250.0)
+              .hiredAt(LocalDate.of(2022, 11, 18))
+              .experiencesIds(List.of(3, 4))
+              .studiesIds(List.of(3, 4))
+              .trainerId(26)
               .build();
     }
 
     public static UserDto getMockedUserDto63() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(63)
               .name("Grace Lee")
               .email("grace.lee@example.com")
@@ -2092,11 +3318,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.MACHINE_LEARNING)
+              .grade(Grade.MID)
+              .salary(7000.0)
+              .hiredAt(LocalDate.of(2022, 6, 29))
+              .experiencesIds(List.of(5, 6))
+              .studiesIds(List.of(5, 6))
+              .trainerId(27)
               .build();
     }
 
     public static UserDto getMockedUserDto64() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(64)
               .name("Benjamin Taylor")
               .email("benjamin.taylor@example.com")
@@ -2107,11 +3341,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.MACHINE_LEARNING)
+              .grade(Grade.SENIOR)
+              .salary(8750.0)
+              .hiredAt(LocalDate.of(2020, 7, 16))
+              .experiencesIds(List.of(7, 8))
+              .studiesIds(List.of(7, 8))
+              .trainerId(28)
               .build();
     }
 
     public static UserDto getMockedUserDto65() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(65)
               .name("Elijah Roberts")
               .email("elijah.roberts@example.com")
@@ -2122,11 +3364,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.BUSINESS_ANALYST)
+              .grade(Grade.JUNIOR)
+              .salary(4500.0)
+              .hiredAt(LocalDate.of(2023, 5, 19))
+              .experiencesIds(List.of(9, 10))
+              .studiesIds(List.of(9, 10))
+              .trainerId(29)
               .build();
     }
 
     public static UserDto getMockedUserDto66() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(66)
               .name("Amelia Walker")
               .email("amelia.walker@example.com")
@@ -2137,11 +3387,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.BUSINESS_ANALYST)
+              .grade(Grade.JUNIOR)
+              .salary(4750.0)
+              .hiredAt(LocalDate.of(2023, 3, 19))
+              .experiencesIds(List.of(11, 12))
+              .studiesIds(List.of(11, 12))
+              .trainerId(30)
               .build();
     }
 
     public static UserDto getMockedUserDto67() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(67)
               .name("Daniel Green")
               .email("daniel.green@example.com")
@@ -2152,11 +3410,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.BUSINESS_ANALYST)
+              .grade(Grade.MID)
+              .salary(5500.0)
+              .hiredAt(LocalDate.of(2022, 8, 24))
+              .experiencesIds(List.of(13, 14))
+              .studiesIds(List.of(1, 2))
+              .trainerId(31)
               .build();
     }
 
     public static UserDto getMockedUserDto68() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(68)
               .name("Liam Hall")
               .email("liam.hall@example.com")
@@ -2167,11 +3433,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.BUSINESS_ANALYST)
+              .grade(Grade.SENIOR)
+              .salary(6500.0)
+              .hiredAt(LocalDate.of(2021, 1, 23))
+              .experiencesIds(List.of(15, 16))
+              .studiesIds(List.of(3, 4))
+              .trainerId(32)
               .build();
     }
 
     public static UserDto getMockedUserDto69() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(69)
               .name("Sophia Young")
               .email("sophia.young@example.com")
@@ -2182,11 +3456,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(false)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.SCRUM_MASTER)
+              .grade(Grade.JUNIOR)
+              .salary(6000.0)
+              .hiredAt(LocalDate.of(2021, 8, 17))
+              .experiencesIds(List.of(1, 2))
+              .studiesIds(List.of(5, 6))
+              .trainerId(33)
               .build();
     }
 
     public static UserDto getMockedUserDto70() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(70)
               .name("Noah Clark")
               .email("noah.clark@example.com")
@@ -2197,11 +3479,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.SCRUM_MASTER)
+              .grade(Grade.JUNIOR)
+              .salary(6250.0)
+              .hiredAt(LocalDate.of(2021, 3, 30))
+              .experiencesIds(List.of(3, 4))
+              .studiesIds(List.of(7, 8))
+              .trainerId(34)
               .build();
     }
 
     public static UserDto getMockedUserDto71() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(71)
               .name("Olivia Hill")
               .email("olivia.hill@example.com")
@@ -2212,11 +3502,19 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.SCRUM_MASTER)
+              .grade(Grade.MID)
+              .salary(7750.0)
+              .hiredAt(LocalDate.of(2020, 11, 8))
+              .experiencesIds(List.of(5, 6))
+              .studiesIds(List.of(9, 10))
+              .trainerId(35)
               .build();
     }
 
     public static UserDto getMockedUserDto72() {
-        return UserDto.builder()
+        return EmployeeDto.builder()
               .id(72)
               .name("Michaela Allen")
               .email("michaela.allen@example.com")
@@ -2227,6 +3525,14 @@ public class UserMock {
               .roleId(1)
               .authoritiesIds(List.of(1, 2))
               .isActive(true)
+              .employmentType(EmploymentType.PART_TIME)
+              .position(Position.SCRUM_MASTER)
+              .grade(Grade.SENIOR)
+              .salary(8750.0)
+              .hiredAt(LocalDate.of(2019, 12, 3))
+              .experiencesIds(List.of(7, 8))
+              .studiesIds(List.of(11, 12))
+              .trainerId(36)
               .build();
     }
 }

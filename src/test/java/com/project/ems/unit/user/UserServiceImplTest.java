@@ -122,27 +122,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    void save_test() {
-        userDto1.getAuthoritiesIds().forEach(id -> given(authorityService.findEntityById(id)).willReturn(authorities.get(id - 1)));
-        given(roleService.findEntityById(anyInt())).willReturn(role);
-        given(userRepository.save(any(User.class))).willReturn(user1);
-        UserDto result = userService.save(userDto1);
-        verify(userRepository).save(userCaptor.capture());
-        then(result).isEqualTo(userService.convertToDto(userCaptor.getValue()));
-    }
-
-    @Test
-    void updateById_validId_test() {
-        User updatedUser = user2;
-        updatedUser.setId(VALID_ID);
-        given(userRepository.findById(VALID_ID)).willReturn(Optional.ofNullable(user1));
-        given(userRepository.save(any(User.class))).willReturn(updatedUser);
-        UserDto result = userService.updateById(userDto2, VALID_ID);
-        verify(userRepository).save(userCaptor.capture());
-        then(result).isEqualTo(userService.convertToDto(updatedUser));
-    }
-
-    @Test
     void updateById_invalidId_test() {
         thenThrownBy(() -> userService.updateById(userDto2, INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)

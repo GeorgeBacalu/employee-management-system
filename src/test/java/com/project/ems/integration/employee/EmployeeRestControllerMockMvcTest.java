@@ -103,7 +103,7 @@ class EmployeeRestControllerMockMvcTest {
 
     @Test
     void findById_invalidId_test() throws Exception {
-        String message = String.format(EMPLOYEE_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(employeeService.findById(INVALID_ID)).willThrow(new ResourceNotFoundException(message));
         mockMvc.perform(get(API_EMPLOYEES + "/{id}", INVALID_ID))
               .andExpect(status().isNotFound())
@@ -139,7 +139,7 @@ class EmployeeRestControllerMockMvcTest {
 
     @Test
     void updateById_invalidId_test() throws Exception {
-        String message = String.format(EMPLOYEE_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(employeeService.updateById(employeeDto2, INVALID_ID)).willThrow(new ResourceNotFoundException(message));
         mockMvc.perform(put(API_EMPLOYEES + "/{id}", INVALID_ID)
                     .contentType(APPLICATION_JSON_VALUE)
@@ -162,7 +162,7 @@ class EmployeeRestControllerMockMvcTest {
 
     @Test
     void disableById_invalidId_test() throws Exception {
-        String message = String.format(EMPLOYEE_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(employeeService.disableById(INVALID_ID)).willThrow(new ResourceNotFoundException(message));
         mockMvc.perform(delete(API_EMPLOYEES + "/{id}", INVALID_ID))
               .andExpect(status().isNotFound())
@@ -201,9 +201,9 @@ class EmployeeRestControllerMockMvcTest {
         Page<EmployeeDto> employeeDtosPage2 = new PageImpl<>(employeeDtosListPage2);
         Page<EmployeeDto> employeeDtosPage3 = new PageImpl<>(employeeDtosListPage3);
         Page<EmployeeDto> emptyPage = new PageImpl<>(Collections.emptyList());
-        return Stream.of(Arguments.of(0, 2, "id", "asc", EMPLOYEE_FILTER_KEY, employeeDtosPage1),
-              Arguments.of(1, 2, "id", "asc", EMPLOYEE_FILTER_KEY, employeeDtosPage2),
-              Arguments.of(2, 2, "id", "asc", EMPLOYEE_FILTER_KEY, emptyPage),
+        return Stream.of(Arguments.of(0, 2, "id", "asc", USER_FILTER_KEY, employeeDtosPage1),
+              Arguments.of(1, 2, "id", "asc", USER_FILTER_KEY, employeeDtosPage2),
+              Arguments.of(2, 2, "id", "asc", USER_FILTER_KEY, emptyPage),
               Arguments.of(0, 2, "id", "asc", "", employeeDtosPage1),
               Arguments.of(1, 2, "id", "asc", "", employeeDtosPage2),
               Arguments.of(2, 2, "id", "asc", "", employeeDtosPage3));

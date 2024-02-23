@@ -36,15 +36,15 @@ class EmployeeRepositoryIntegrationTest {
 
     @Test
     void findAllByKey_test() {
-        then(employeeRepository.findAllByKey(PAGEABLE_PAGE1, EMPLOYEE_FILTER_KEY).getContent()).usingRecursiveComparison().isEqualTo(filteredEmployeesPage1);
-        then(employeeRepository.findAllByKey(PAGEABLE_PAGE2, EMPLOYEE_FILTER_KEY).getContent()).usingRecursiveComparison().isEqualTo(filteredEmployeesPage2);
-        then(employeeRepository.findAllByKey(PAGEABLE_PAGE3, EMPLOYEE_FILTER_KEY).getContent()).isEmpty();
+        then(employeeRepository.findAllByKey(PAGEABLE_PAGE1, USER_FILTER_KEY).getContent()).usingRecursiveComparison().isEqualTo(filteredEmployeesPage1);
+        then(employeeRepository.findAllByKey(PAGEABLE_PAGE2, USER_FILTER_KEY).getContent()).usingRecursiveComparison().isEqualTo(filteredEmployeesPage2);
+        then(employeeRepository.findAllByKey(PAGEABLE_PAGE3, USER_FILTER_KEY).getContent()).isEmpty();
     }
 
     @Test
     void findAllActiveByKey_test() {
-        then(employeeRepository.findAllActiveByKey(PAGEABLE_PAGE1, EMPLOYEE_FILTER_KEY).getContent()).usingRecursiveComparison().isEqualTo(filteredEmployeesPage1);
-        then(employeeRepository.findAllActiveByKey(PAGEABLE_PAGE2, EMPLOYEE_FILTER_KEY).getContent()).usingRecursiveComparison().isEqualTo(filteredEmployeesPage2);
-        then(employeeRepository.findAllActiveByKey(PAGEABLE_PAGE3, EMPLOYEE_FILTER_KEY).getContent()).isEmpty();
+        then(employeeRepository.findAllActiveByKey(PAGEABLE_PAGE1, USER_FILTER_KEY).getContent()).usingRecursiveComparison().isEqualTo(filteredEmployeesPage1);
+        then(employeeRepository.findAllActiveByKey(PAGEABLE_PAGE2, USER_FILTER_KEY).getContent()).usingRecursiveComparison().isEqualTo(filteredEmployeesPage2);
+        then(employeeRepository.findAllActiveByKey(PAGEABLE_PAGE3, USER_FILTER_KEY).getContent()).isEmpty();
     }
 }

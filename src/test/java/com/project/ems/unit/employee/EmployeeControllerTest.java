@@ -63,8 +63,8 @@ class EmployeeControllerTest {
         String direction = getSortDirection(PAGEABLE);
         long nrEmployees = employeeDtosPage.getTotalElements();
         int nrPages = employeeDtosPage.getTotalPages();
-        SearchRequest searchRequest = new SearchRequest(0, size, field + "," + direction, EMPLOYEE_FILTER_KEY);
-        given(employeeService.findAllActiveByKey(PAGEABLE, EMPLOYEE_FILTER_KEY)).willReturn(employeeDtosPage);
+        SearchRequest searchRequest = new SearchRequest(0, size, field + "," + direction, USER_FILTER_KEY);
+        given(employeeService.findAllActiveByKey(PAGEABLE, USER_FILTER_KEY)).willReturn(employeeDtosPage);
         given(model.getAttribute(EMPLOYEES_ATTRIBUTE)).willReturn(activeEmployeesPage1);
         given(model.getAttribute("nrEmployees")).willReturn(nrEmployees);
         given(model.getAttribute("nrPages")).willReturn(nrPages);
@@ -72,13 +72,13 @@ class EmployeeControllerTest {
         given(model.getAttribute("size")).willReturn(size);
         given(model.getAttribute("field")).willReturn(field);
         given(model.getAttribute("direction")).willReturn(direction);
-        given(model.getAttribute("key")).willReturn(EMPLOYEE_FILTER_KEY);
+        given(model.getAttribute("key")).willReturn(USER_FILTER_KEY);
         given(model.getAttribute("pageStartIndex")).willReturn(getPageStartIndex(page, size));
         given(model.getAttribute("pageEndIndex")).willReturn(getPageEndIndex(page, size, nrEmployees));
         given(model.getAttribute("pageNavigationStartIndex")).willReturn(getPageNavigationStartIndex(page, nrPages));
         given(model.getAttribute("pageNavigationEndIndex")).willReturn(getPageNavigationEndIndex(page, nrPages));
         given(model.getAttribute("searchRequest")).willReturn(searchRequest);
-        String viewName = employeeController.findAllActivePage(model, PAGEABLE, EMPLOYEE_FILTER_KEY);
+        String viewName = employeeController.findAllActivePage(model, PAGEABLE, USER_FILTER_KEY);
         then(viewName).isEqualTo(EMPLOYEES_VIEW);
         then(model.getAttribute(EMPLOYEES_ATTRIBUTE)).isEqualTo(activeEmployeesPage1);
         then(model.getAttribute("nrEmployees")).isEqualTo(nrEmployees);
@@ -87,7 +87,7 @@ class EmployeeControllerTest {
         then(model.getAttribute("size")).isEqualTo(size);
         then(model.getAttribute("field")).isEqualTo(field);
         then(model.getAttribute("direction")).isEqualTo(direction);
-        then(model.getAttribute("key")).isEqualTo(EMPLOYEE_FILTER_KEY);
+        then(model.getAttribute("key")).isEqualTo(USER_FILTER_KEY);
         then(model.getAttribute("pageStartIndex")).isEqualTo(getPageStartIndex(page, size));
         then(model.getAttribute("pageEndIndex")).isEqualTo(getPageEndIndex(page, size, nrEmployees));
         then(model.getAttribute("pageNavigationStartIndex")).isEqualTo(getPageNavigationStartIndex(page, nrPages));
@@ -104,13 +104,13 @@ class EmployeeControllerTest {
         given(redirectAttributes.getAttribute("page")).willReturn(page);
         given(redirectAttributes.getAttribute("size")).willReturn(size);
         given(redirectAttributes.getAttribute("sort")).willReturn(sort);
-        given(redirectAttributes.getAttribute("key")).willReturn(EMPLOYEE_FILTER_KEY);
-        String viewName = employeeController.findAllActiveByKey(new SearchRequest(page, size, sort, EMPLOYEE_FILTER_KEY), redirectAttributes);
+        given(redirectAttributes.getAttribute("key")).willReturn(USER_FILTER_KEY);
+        String viewName = employeeController.findAllActiveByKey(new SearchRequest(page, size, sort, USER_FILTER_KEY), redirectAttributes);
         then(viewName).isEqualTo(REDIRECT_EMPLOYEES_VIEW);
         then(redirectAttributes.getAttribute("page")).isEqualTo(page);
         then(redirectAttributes.getAttribute("size")).isEqualTo(size);
         then(redirectAttributes.getAttribute("sort")).isEqualTo(sort);
-        then(redirectAttributes.getAttribute("key")).isEqualTo(EMPLOYEE_FILTER_KEY);
+        then(redirectAttributes.getAttribute("key")).isEqualTo(USER_FILTER_KEY);
     }
 
     @Test
@@ -124,7 +124,7 @@ class EmployeeControllerTest {
 
     @Test
     void findByIdPage_invalidId_test() {
-        String message = String.format(EMPLOYEE_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(employeeService.findEntityById(INVALID_ID)).willThrow(new ResourceNotFoundException(message));
         thenThrownBy(() -> employeeController.findByIdPage(model, INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
@@ -154,7 +154,7 @@ class EmployeeControllerTest {
 
     @Test
     void getSavePage_invalidId_test() {
-        String message = String.format(EMPLOYEE_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(employeeService.findById(INVALID_ID)).willThrow(new ResourceNotFoundException(message));
         thenThrownBy(() -> employeeController.getSavePage(model, INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
@@ -177,7 +177,7 @@ class EmployeeControllerTest {
 
     @Test
     void save_invalidId_test() {
-        String message = String.format(EMPLOYEE_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(employeeService.updateById(employeeDto, INVALID_ID)).willThrow(new ResourceNotFoundException(message));
         thenThrownBy(() -> employeeController.save(employeeDto, INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
@@ -190,25 +190,25 @@ class EmployeeControllerTest {
         int page = employeeDtosPage.getNumber();
         int size = employeeDtosPage.getSize();
         String sort = getSortField(PAGEABLE) + ',' + getSortDirection(PAGEABLE);
-        given(employeeService.findAllActiveByKey(PAGEABLE, EMPLOYEE_FILTER_KEY)).willReturn(employeeDtosPage);
+        given(employeeService.findAllActiveByKey(PAGEABLE, USER_FILTER_KEY)).willReturn(employeeDtosPage);
         given(redirectAttributes.getAttribute("page")).willReturn(page);
         given(redirectAttributes.getAttribute("size")).willReturn(size);
         given(redirectAttributes.getAttribute("sort")).willReturn(sort);
-        given(redirectAttributes.getAttribute("key")).willReturn(EMPLOYEE_FILTER_KEY);
-        String viewName = employeeController.disableById(VALID_ID, redirectAttributes, PAGEABLE, EMPLOYEE_FILTER_KEY);
+        given(redirectAttributes.getAttribute("key")).willReturn(USER_FILTER_KEY);
+        String viewName = employeeController.disableById(VALID_ID, redirectAttributes, PAGEABLE, USER_FILTER_KEY);
         verify(employeeService).disableById(VALID_ID);
         then(viewName).isEqualTo(REDIRECT_EMPLOYEES_VIEW);
         then(redirectAttributes.getAttribute("page")).isEqualTo(page);
         then(redirectAttributes.getAttribute("size")).isEqualTo(size);
         then(redirectAttributes.getAttribute("sort")).isEqualTo(sort);
-        then(redirectAttributes.getAttribute("key")).isEqualTo(EMPLOYEE_FILTER_KEY);
+        then(redirectAttributes.getAttribute("key")).isEqualTo(USER_FILTER_KEY);
     }
 
     @Test
     void disableById_invalidId_test() {
-        String message = String.format(EMPLOYEE_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         doThrow(new ResourceNotFoundException(message)).when(employeeService).disableById(INVALID_ID);
-        thenThrownBy(() -> employeeController.disableById(INVALID_ID, redirectAttributes, PAGEABLE, EMPLOYEE_FILTER_KEY))
+        thenThrownBy(() -> employeeController.disableById(INVALID_ID, redirectAttributes, PAGEABLE, USER_FILTER_KEY))
               .isInstanceOf(ResourceNotFoundException.class)
               .hasMessage(message);
     }

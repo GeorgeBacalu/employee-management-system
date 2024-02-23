@@ -145,7 +145,7 @@ class TrainerServiceIntegrationTest {
     void findById_invalidId_test() {
         thenThrownBy(() -> trainerService.findById(INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
-              .hasMessage(String.format(TRAINER_NOT_FOUND, INVALID_ID));
+              .hasMessage(String.format(USER_NOT_FOUND, INVALID_ID));
     }
 
     @Test
@@ -175,7 +175,7 @@ class TrainerServiceIntegrationTest {
     void updateById_invalidId_test() {
         thenThrownBy(() -> trainerService.updateById(trainerDto2, INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
-              .hasMessage(String.format(TRAINER_NOT_FOUND, INVALID_ID));
+              .hasMessage(String.format(USER_NOT_FOUND, INVALID_ID));
         verify(trainerRepository, never()).save(any(Trainer.class));
     }
 
@@ -196,7 +196,7 @@ class TrainerServiceIntegrationTest {
     void disableById_invalidId_test() {
         thenThrownBy(() -> trainerService.disableById(INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
-              .hasMessage(String.format(TRAINER_NOT_FOUND, INVALID_ID));
+              .hasMessage(String.format(USER_NOT_FOUND, INVALID_ID));
         verify(trainerRepository, never()).save(any(Trainer.class));
     }
 

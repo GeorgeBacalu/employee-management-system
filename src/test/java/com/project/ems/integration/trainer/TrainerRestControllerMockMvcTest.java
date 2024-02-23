@@ -103,7 +103,7 @@ class TrainerRestControllerMockMvcTest {
 
     @Test
     void findById_invalidId_test() throws Exception {
-        String message = String.format(TRAINER_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(trainerService.findById(INVALID_ID)).willThrow(new ResourceNotFoundException(message));
         mockMvc.perform(get(API_TRAINERS + "/{id}", INVALID_ID))
               .andExpect(status().isNotFound())
@@ -139,7 +139,7 @@ class TrainerRestControllerMockMvcTest {
 
     @Test
     void updateById_invalidId_test() throws Exception {
-        String message = String.format(TRAINER_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(trainerService.updateById(trainerDto2, INVALID_ID)).willThrow(new ResourceNotFoundException(message));
         mockMvc.perform(put(API_TRAINERS + "/{id}", INVALID_ID)
                     .contentType(APPLICATION_JSON_VALUE)
@@ -162,7 +162,7 @@ class TrainerRestControllerMockMvcTest {
 
     @Test
     void disableById_invalidId_test() throws Exception {
-        String message = String.format(TRAINER_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(trainerService.disableById(INVALID_ID)).willThrow(new ResourceNotFoundException(message));
         mockMvc.perform(delete(API_TRAINERS + "/{id}", INVALID_ID))
               .andExpect(status().isNotFound())
@@ -201,9 +201,9 @@ class TrainerRestControllerMockMvcTest {
         Page<TrainerDto> trainerDtosPage2 = new PageImpl<>(trainerDtosListPage2);
         Page<TrainerDto> trainerDtosPage3 = new PageImpl<>(trainerDtosListPage3);
         Page<TrainerDto> emptyPage = new PageImpl<>(Collections.emptyList());
-        return Stream.of(Arguments.of(0, 2, "id", "asc", TRAINER_FILTER_KEY, trainerDtosPage1),
-                         Arguments.of(1, 2, "id", "asc", TRAINER_FILTER_KEY, trainerDtosPage2),
-                         Arguments.of(2, 2, "id", "asc", TRAINER_FILTER_KEY, emptyPage),
+        return Stream.of(Arguments.of(0, 2, "id", "asc", USER_FILTER_KEY, trainerDtosPage1),
+                         Arguments.of(1, 2, "id", "asc", USER_FILTER_KEY, trainerDtosPage2),
+                         Arguments.of(2, 2, "id", "asc", USER_FILTER_KEY, emptyPage),
                          Arguments.of(0, 2, "id", "asc", "", trainerDtosPage1),
                          Arguments.of(1, 2, "id", "asc", "", trainerDtosPage2),
                          Arguments.of(2, 2, "id", "asc", "", trainerDtosPage3));

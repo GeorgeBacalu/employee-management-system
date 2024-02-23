@@ -36,15 +36,15 @@ class TrainerRepositoryIntegrationTest {
 
     @Test
     void findAllByKey_test() {
-        then(trainerRepository.findAllByKey(PAGEABLE_PAGE1, TRAINER_FILTER_KEY).getContent()).usingRecursiveComparison().isEqualTo(filteredTrainersPage1);
-        then(trainerRepository.findAllByKey(PAGEABLE_PAGE2, TRAINER_FILTER_KEY).getContent()).usingRecursiveComparison().isEqualTo(filteredTrainersPage2);
-        then(trainerRepository.findAllByKey(PAGEABLE_PAGE3, TRAINER_FILTER_KEY).getContent()).isEmpty();
+        then(trainerRepository.findAllByKey(PAGEABLE_PAGE1, USER_FILTER_KEY).getContent()).usingRecursiveComparison().isEqualTo(filteredTrainersPage1);
+        then(trainerRepository.findAllByKey(PAGEABLE_PAGE2, USER_FILTER_KEY).getContent()).usingRecursiveComparison().isEqualTo(filteredTrainersPage2);
+        then(trainerRepository.findAllByKey(PAGEABLE_PAGE3, USER_FILTER_KEY).getContent()).isEmpty();
     }
 
     @Test
     void findAllActiveByKey_test() {
-        then(trainerRepository.findAllActiveByKey(PAGEABLE_PAGE1, TRAINER_FILTER_KEY).getContent()).usingRecursiveComparison().isEqualTo(filteredTrainersPage1);
-        then(trainerRepository.findAllActiveByKey(PAGEABLE_PAGE2, TRAINER_FILTER_KEY).getContent()).usingRecursiveComparison().isEqualTo(filteredTrainersPage2);
-        then(trainerRepository.findAllActiveByKey(PAGEABLE_PAGE3, TRAINER_FILTER_KEY).getContent()).isEmpty();
+        then(trainerRepository.findAllActiveByKey(PAGEABLE_PAGE1, USER_FILTER_KEY).getContent()).usingRecursiveComparison().isEqualTo(filteredTrainersPage1);
+        then(trainerRepository.findAllActiveByKey(PAGEABLE_PAGE2, USER_FILTER_KEY).getContent()).usingRecursiveComparison().isEqualTo(filteredTrainersPage2);
+        then(trainerRepository.findAllActiveByKey(PAGEABLE_PAGE3, USER_FILTER_KEY).getContent()).isEmpty();
     }
 }

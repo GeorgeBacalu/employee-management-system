@@ -58,7 +58,7 @@ class EmployeeControllerMockMvcTest {
     @Test
     void findAllActivePage_test() throws Exception {
         Page<EmployeeDto> employeeDtosPage = new PageImpl<>(activeEmployeeDtosPage1);
-        given(employeeService.findAllActiveByKey(PAGEABLE, EMPLOYEE_FILTER_KEY)).willReturn(employeeDtosPage);
+        given(employeeService.findAllActiveByKey(PAGEABLE, USER_FILTER_KEY)).willReturn(employeeDtosPage);
         given(employeeService.convertToEntities(employeeDtosPage.getContent())).willReturn(activeEmployeesPage1);
         int page = PAGEABLE.getPageNumber();
         int size = PAGEABLE.getPageSize();
@@ -66,7 +66,7 @@ class EmployeeControllerMockMvcTest {
         String direction = getSortDirection(PAGEABLE);
         long nrEmployees = employeeDtosPage.getTotalElements();
         int nrPages = employeeDtosPage.getTotalPages();
-        mockMvc.perform(get(EMPLOYEES + PAGINATION, page, size, field, direction, EMPLOYEE_FILTER_KEY).accept(TEXT_HTML))
+        mockMvc.perform(get(EMPLOYEES + PAGINATION, page, size, field, direction, USER_FILTER_KEY).accept(TEXT_HTML))
               .andExpect(status().isOk())
               .andExpect(content().contentType(TEXT_HTML_UTF8))
               .andExpect(view().name(EMPLOYEES_VIEW))
@@ -77,12 +77,12 @@ class EmployeeControllerMockMvcTest {
               .andExpect(model().attribute("size", size))
               .andExpect(model().attribute("field", field))
               .andExpect(model().attribute("direction", direction))
-              .andExpect(model().attribute("key", EMPLOYEE_FILTER_KEY))
+              .andExpect(model().attribute("key", USER_FILTER_KEY))
               .andExpect(model().attribute("pageStartIndex", getPageStartIndex(page, size)))
               .andExpect(model().attribute("pageEndIndex", getPageEndIndex(page, size, nrEmployees)))
               .andExpect(model().attribute("pageNavigationStartIndex", getPageNavigationStartIndex(page, nrPages)))
               .andExpect(model().attribute("pageNavigationEndIndex", getPageNavigationEndIndex(page, nrPages)))
-              .andExpect(model().attribute("searchRequest", new SearchRequest(page, size, field + ',' + direction, EMPLOYEE_FILTER_KEY)));
+              .andExpect(model().attribute("searchRequest", new SearchRequest(page, size, field + ',' + direction, USER_FILTER_KEY)));
     }
 
     @Test
@@ -92,7 +92,7 @@ class EmployeeControllerMockMvcTest {
         int size = employeeDtosPage.getSize();
         String field = getSortField(PAGEABLE);
         String direction = getSortDirection(PAGEABLE);
-        mockMvc.perform(post(EMPLOYEES + "/search" + PAGINATION, page, size, field, direction, EMPLOYEE_FILTER_KEY).accept(TEXT_HTML))
+        mockMvc.perform(post(EMPLOYEES + "/search" + PAGINATION, page, size, field, direction, USER_FILTER_KEY).accept(TEXT_HTML))
               .andExpect(status().isFound())
               .andExpect(view().name(REDIRECT_EMPLOYEES_VIEW))
               .andExpect(redirectedUrlPattern(EMPLOYEES + "?page=*&size=*&sort=*&key=*"));
@@ -110,7 +110,7 @@ class EmployeeControllerMockMvcTest {
 
     @Test
     void findByIdPage_invalidId_test() throws Exception {
-        String message = String.format(EMPLOYEE_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(employeeService.findEntityById(INVALID_ID)).willThrow(new ResourceNotFoundException(message));
         mockMvc.perform(get(EMPLOYEES + "/{id}", INVALID_ID).accept(TEXT_HTML))
               .andExpect(status().isNotFound())
@@ -141,7 +141,7 @@ class EmployeeControllerMockMvcTest {
 
     @Test
     void getSavePage_invalidId_test() throws Exception {
-        String message = String.format(EMPLOYEE_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(employeeService.findById(INVALID_ID)).willThrow(new ResourceNotFoundException(message));
         mockMvc.perform(get(EMPLOYEES + "/save/{id}", INVALID_ID).accept(TEXT_HTML))
               .andExpect(status().isNotFound())
@@ -171,7 +171,7 @@ class EmployeeControllerMockMvcTest {
 
     @Test
     void save_invalidId_test() throws Exception {
-        String message = String.format(EMPLOYEE_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         given(employeeService.updateById(any(EmployeeDto.class), anyInt())).willThrow(new ResourceNotFoundException(message));
         mockMvc.perform(post(EMPLOYEES + "/save/{id}", INVALID_ID).accept(TEXT_HTML)
                     .contentType(APPLICATION_FORM_URLENCODED_VALUE)
@@ -184,12 +184,12 @@ class EmployeeControllerMockMvcTest {
     @Test
     void disableById_validId_test() throws Exception {
         Page<EmployeeDto> employeeDtosPage = new PageImpl<>(activeEmployeeDtosPage1);
-        given(employeeService.findAllActiveByKey(PAGEABLE, EMPLOYEE_FILTER_KEY)).willReturn(employeeDtosPage);
+        given(employeeService.findAllActiveByKey(PAGEABLE, USER_FILTER_KEY)).willReturn(employeeDtosPage);
         int page = employeeDtosPage.getNumber();
         int size = employeeDtosPage.getSize();
         String field = getSortField(PAGEABLE);
         String direction = getSortDirection(PAGEABLE);
-        mockMvc.perform(get(EMPLOYEES + "/delete/{id}" + PAGINATION, VALID_ID, page, size, field, direction, EMPLOYEE_FILTER_KEY).accept(TEXT_HTML))
+        mockMvc.perform(get(EMPLOYEES + "/delete/{id}" + PAGINATION, VALID_ID, page, size, field, direction, USER_FILTER_KEY).accept(TEXT_HTML))
               .andExpect(status().isFound())
               .andExpect(view().name(REDIRECT_EMPLOYEES_VIEW))
               .andExpect(redirectedUrlPattern(EMPLOYEES + "?page=*&size=*&sort=*&key=*"));
@@ -197,7 +197,7 @@ class EmployeeControllerMockMvcTest {
 
     @Test
     void disableById_invalidId_test() throws Exception {
-        String message = String.format(EMPLOYEE_NOT_FOUND, INVALID_ID);
+        String message = String.format(USER_NOT_FOUND, INVALID_ID);
         doThrow(new ResourceNotFoundException(message)).when(employeeService).disableById(INVALID_ID);
         mockMvc.perform(get(EMPLOYEES + "/delete/{id}", INVALID_ID).accept(TEXT_HTML))
               .andExpect(status().isNotFound())

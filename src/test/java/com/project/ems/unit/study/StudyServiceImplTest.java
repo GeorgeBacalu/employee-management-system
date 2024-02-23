@@ -1,12 +1,10 @@
 package com.project.ems.unit.study;
 
-import com.project.ems.employee.Employee;
-import com.project.ems.employee.EmployeeRepository;
 import com.project.ems.exception.InvalidRequestException;
 import com.project.ems.exception.ResourceNotFoundException;
 import com.project.ems.study.*;
-import com.project.ems.trainer.Trainer;
-import com.project.ems.trainer.TrainerRepository;
+import com.project.ems.user.User;
+import com.project.ems.user.UserRepository;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,9 +23,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.project.ems.constants.Constants.*;
-import static com.project.ems.mock.EmployeeMock.getMockedEmployee1;
 import static com.project.ems.mock.StudyMock.*;
-import static com.project.ems.mock.TrainerMock.getMockedTrainer1;
+import static com.project.ems.mock.UserMock.getMockedUser1;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -46,10 +43,7 @@ class StudyServiceImplTest {
     private StudyRepository studyRepository;
 
     @Mock
-    private EmployeeRepository employeeRepository;
-
-    @Mock
-    private TrainerRepository trainerRepository;
+    private UserRepository userRepository;
 
     @Spy
     private ModelMapper modelMapper;
@@ -69,8 +63,7 @@ class StudyServiceImplTest {
     private List<StudyDto> studyDtosPage1;
     private List<StudyDto> studyDtosPage2;
     private List<StudyDto> studyDtosPage3;
-    private Employee employee;
-    private Trainer trainer;
+    private User user;
 
     @BeforeEach
     void setUp() {
@@ -86,8 +79,7 @@ class StudyServiceImplTest {
         studyDtosPage1 = getMockedStudyDtosPage1();
         studyDtosPage2 = getMockedStudyDtosPage2();
         studyDtosPage3 = getMockedStudyDtosPage3();
-        employee = getMockedEmployee1();
-        trainer = getMockedTrainer1();
+        user = getMockedUser1();
     }
 
     @Test
@@ -141,8 +133,7 @@ class StudyServiceImplTest {
     @Test
     void deleteById_validId_test() {
         given(studyRepository.findById(VALID_ID)).willReturn(Optional.ofNullable(study1));
-        given(employeeRepository.findAllByStudiesContains(any(Study.class))).willReturn(List.of(employee));
-        given(trainerRepository.findAllByStudiesContains(any(Study.class))).willReturn(List.of(trainer));
+        given(userRepository.findAllByStudiesContains(any(Study.class))).willReturn(List.of(user));
         studyService.deleteById(VALID_ID);
         verify(studyRepository).delete(study1);
     }

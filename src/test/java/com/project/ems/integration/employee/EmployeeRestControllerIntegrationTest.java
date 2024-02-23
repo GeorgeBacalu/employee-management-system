@@ -89,7 +89,7 @@ class EmployeeRestControllerIntegrationTest {
         ResponseEntity<String> response = template.getForEntity(API_EMPLOYEES + "/" + INVALID_ID, String.class);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        then(response.getBody()).isEqualTo(RESOURCE_NOT_FOUND + String.format(EMPLOYEE_NOT_FOUND, INVALID_ID));
+        then(response.getBody()).isEqualTo(RESOURCE_NOT_FOUND + String.format(USER_NOT_FOUND, INVALID_ID));
     }
 
     @Test
@@ -127,7 +127,7 @@ class EmployeeRestControllerIntegrationTest {
         ResponseEntity<String> response = template.exchange(API_EMPLOYEES + "/" + INVALID_ID, HttpMethod.PUT, new HttpEntity<>(employeeDto2), String.class);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        then(response.getBody()).isEqualTo(RESOURCE_NOT_FOUND + String.format(EMPLOYEE_NOT_FOUND, INVALID_ID));
+        then(response.getBody()).isEqualTo(RESOURCE_NOT_FOUND + String.format(USER_NOT_FOUND, INVALID_ID));
     }
 
     @Test
@@ -152,7 +152,7 @@ class EmployeeRestControllerIntegrationTest {
         ResponseEntity<String> response = template.exchange(API_EMPLOYEES + "/" + INVALID_ID, HttpMethod.DELETE, null, String.class);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        then(response.getBody()).isEqualTo(RESOURCE_NOT_FOUND + String.format(EMPLOYEE_NOT_FOUND, INVALID_ID));
+        then(response.getBody()).isEqualTo(RESOURCE_NOT_FOUND + String.format(USER_NOT_FOUND, INVALID_ID));
     }
 
     @ParameterizedTest
@@ -180,9 +180,9 @@ class EmployeeRestControllerIntegrationTest {
         Page<EmployeeDto> employeeDtosPage2 = new PageImpl<>(employeeDtosListPage2);
         Page<EmployeeDto> employeeDtosPage3 = new PageImpl<>(employeeDtosListPage3);
         Page<EmployeeDto> emptyPage = new PageImpl<>(Collections.emptyList());
-        return Stream.of(Arguments.of(0, 2, "id", "asc", EMPLOYEE_FILTER_KEY, employeeDtosPage1),
-                         Arguments.of(1, 2, "id", "asc", EMPLOYEE_FILTER_KEY, employeeDtosPage2),
-                         Arguments.of(2, 2, "id", "asc", EMPLOYEE_FILTER_KEY, emptyPage),
+        return Stream.of(Arguments.of(0, 2, "id", "asc", USER_FILTER_KEY, employeeDtosPage1),
+                         Arguments.of(1, 2, "id", "asc", USER_FILTER_KEY, employeeDtosPage2),
+                         Arguments.of(2, 2, "id", "asc", USER_FILTER_KEY, emptyPage),
                          Arguments.of(0, 2, "id", "asc", "", employeeDtosPage1),
                          Arguments.of(1, 2, "id", "asc", "", employeeDtosPage2),
                          Arguments.of(2, 2, "id", "asc", "", employeeDtosPage3));

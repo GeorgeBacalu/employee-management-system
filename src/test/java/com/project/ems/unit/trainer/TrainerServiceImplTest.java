@@ -142,7 +142,7 @@ class TrainerServiceImplTest {
     void findById_invalidId_test() {
         thenThrownBy(() -> trainerService.findById(INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
-              .hasMessage(String.format(TRAINER_NOT_FOUND, INVALID_ID));
+              .hasMessage(String.format(USER_NOT_FOUND, INVALID_ID));
     }
 
     @Test
@@ -172,7 +172,7 @@ class TrainerServiceImplTest {
     void updateById_invalidId_test() {
         thenThrownBy(() -> trainerService.updateById(trainerDto2, INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
-              .hasMessage(String.format(TRAINER_NOT_FOUND, INVALID_ID));
+              .hasMessage(String.format(USER_NOT_FOUND, INVALID_ID));
         verify(trainerRepository, never()).save(any(Trainer.class));
     }
 
@@ -193,12 +193,12 @@ class TrainerServiceImplTest {
     void disableById_invalidId_test() {
         thenThrownBy(() -> trainerService.disableById(INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
-              .hasMessage(String.format(TRAINER_NOT_FOUND, INVALID_ID));
+              .hasMessage(String.format(USER_NOT_FOUND, INVALID_ID));
         verify(trainerRepository, never()).save(any(Trainer.class));
     }
 
     @ParameterizedTest
-    @CsvSource({"0, ${TRAINER_FILTER_KEY}", "1, ${TRAINER_FILTER_KEY}", "2, ${TRAINER_FILTER_KEY}", "0, ''", "1, ''", "2, ''"})
+    @CsvSource({"0, ${USER_FILTER_KEY}", "1, ${USER_FILTER_KEY}", "2, ${USER_FILTER_KEY}", "0, ''", "1, ''", "2, ''"})
     void findAllByKey_test(int page, String key) {
         Pair<Pageable, List<Trainer>> pageableTrainersPair = switch (page) {
             case 0 -> Pair.of(PAGEABLE_PAGE1, trainersPage1);
@@ -217,7 +217,7 @@ class TrainerServiceImplTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"0, ${TRAINER_FILTER_KEY}", "1, ${TRAINER_FILTER_KEY}", "0, ''", "1, ''"})
+    @CsvSource({"0, ${USER_FILTER_KEY}", "1, ${USER_FILTER_KEY}", "0, ''", "1, ''"})
     void findAllActiveByKey_test(int page, String key) {
         Pair<Pageable, List<Trainer>> pageableActiveTrainersPair = switch (page) {
             case 0 -> Pair.of(PAGEABLE_PAGE1, trainersPage1);

@@ -89,7 +89,7 @@ class TrainerRestControllerIntegrationTest {
         ResponseEntity<String> response = template.getForEntity(API_TRAINERS + "/" + INVALID_ID, String.class);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        then(response.getBody()).isEqualTo(RESOURCE_NOT_FOUND + String.format(TRAINER_NOT_FOUND, INVALID_ID));
+        then(response.getBody()).isEqualTo(RESOURCE_NOT_FOUND + String.format(USER_NOT_FOUND, INVALID_ID));
     }
 
     @Test
@@ -127,7 +127,7 @@ class TrainerRestControllerIntegrationTest {
         ResponseEntity<String> response = template.exchange(API_TRAINERS + "/" + INVALID_ID, HttpMethod.PUT, new HttpEntity<>(trainerDto2), String.class);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        then(response.getBody()).isEqualTo(RESOURCE_NOT_FOUND + String.format(TRAINER_NOT_FOUND, INVALID_ID));
+        then(response.getBody()).isEqualTo(RESOURCE_NOT_FOUND + String.format(USER_NOT_FOUND, INVALID_ID));
     }
 
     @Test
@@ -155,7 +155,7 @@ class TrainerRestControllerIntegrationTest {
         ResponseEntity<String> response = template.exchange(API_TRAINERS + "/" + INVALID_ID, HttpMethod.DELETE, null, String.class);
         then(response).isNotNull();
         then(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        then(response.getBody()).isEqualTo(RESOURCE_NOT_FOUND + String.format(TRAINER_NOT_FOUND, INVALID_ID));
+        then(response.getBody()).isEqualTo(RESOURCE_NOT_FOUND + String.format(USER_NOT_FOUND, INVALID_ID));
     }
 
     @ParameterizedTest
@@ -183,9 +183,9 @@ class TrainerRestControllerIntegrationTest {
         Page<TrainerDto> trainerDtosPage2 = new PageImpl<>(trainerDtosListPage2);
         Page<TrainerDto> trainerDtosPage3 = new PageImpl<>(trainerDtosListPage3);
         Page<TrainerDto> emptyPage = new PageImpl<>(Collections.emptyList());
-        return Stream.of(Arguments.of(0, 2, "id", "asc", TRAINER_FILTER_KEY, trainerDtosPage1),
-                         Arguments.of(1, 2, "id", "asc", TRAINER_FILTER_KEY, trainerDtosPage2),
-                         Arguments.of(2, 2, "id", "asc", TRAINER_FILTER_KEY, emptyPage),
+        return Stream.of(Arguments.of(0, 2, "id", "asc", USER_FILTER_KEY, trainerDtosPage1),
+                         Arguments.of(1, 2, "id", "asc", USER_FILTER_KEY, trainerDtosPage2),
+                         Arguments.of(2, 2, "id", "asc", USER_FILTER_KEY, emptyPage),
                          Arguments.of(0, 2, "id", "asc", "", trainerDtosPage1),
                          Arguments.of(1, 2, "id", "asc", "", trainerDtosPage2),
                          Arguments.of(2, 2, "id", "asc", "", trainerDtosPage3));

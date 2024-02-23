@@ -143,7 +143,7 @@ class EmployeeServiceImplTest {
     void findById_invalidId_test() {
         thenThrownBy(() -> employeeService.findById(INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
-              .hasMessage(String.format(EMPLOYEE_NOT_FOUND, INVALID_ID));
+              .hasMessage(String.format(USER_NOT_FOUND, INVALID_ID));
     }
 
     @Test
@@ -174,7 +174,7 @@ class EmployeeServiceImplTest {
     void updateById_invalidId_test() {
         thenThrownBy(() -> employeeService.updateById(employeeDto2, INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
-              .hasMessage(String.format(EMPLOYEE_NOT_FOUND, INVALID_ID));
+              .hasMessage(String.format(USER_NOT_FOUND, INVALID_ID));
         verify(employeeRepository, never()).save(any(Employee.class));
     }
 
@@ -193,12 +193,12 @@ class EmployeeServiceImplTest {
     void disableById_invalidId_test() {
         thenThrownBy(() -> employeeService.disableById(INVALID_ID))
               .isInstanceOf(ResourceNotFoundException.class)
-              .hasMessage(String.format(EMPLOYEE_NOT_FOUND, INVALID_ID));
+              .hasMessage(String.format(USER_NOT_FOUND, INVALID_ID));
         verify(employeeRepository, never()).save(any(Employee.class));
     }
 
     @ParameterizedTest
-    @CsvSource({"0, ${EMPLOYEE_FILTER_KEY}", "1, ${EMPLOYEE_FILTER_KEY}", "2, ${EMPLOYEE_FILTER_KEY}", "0, ''", "1, ''", "2, ''"})
+    @CsvSource({"0, ${USER_FILTER_KEY}", "1, ${USER_FILTER_KEY}", "2, ${USER_FILTER_KEY}", "0, ''", "1, ''", "2, ''"})
     void findAllByKey_test(int page, String key) {
         Pair<Pageable, List<Employee>> pageableEmployeesPair = switch (page) {
             case 0 -> Pair.of(PAGEABLE_PAGE1, employeesPage1);
@@ -217,7 +217,7 @@ class EmployeeServiceImplTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"0, ${EMPLOYEE_FILTER_KEY}", "1, ${EMPLOYEE_FILTER_KEY}", "0, ''", "1, ''"})
+    @CsvSource({"0, ${USER_FILTER_KEY}", "1, ${USER_FILTER_KEY}", "0, ''", "1, ''"})
     void findAllActiveByKey_test(int page, String key) {
         Pair<Pageable, List<Employee>> pageableActiveEmployeesPair = switch (page) {
             case 0 -> Pair.of(PAGEABLE_PAGE1, employeesPage1);

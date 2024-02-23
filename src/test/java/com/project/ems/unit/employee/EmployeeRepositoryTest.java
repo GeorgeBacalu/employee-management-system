@@ -22,28 +22,28 @@ class EmployeeRepositoryTest {
 
     @Test
     void findAllByKey_test() {
-        String param = "%" + EMPLOYEE_FILTER_KEY + "%";
-        given(entityManager.createQuery(EMPLOYEE_FILTER_QUERY)).willReturn(query);
+        String param = "%" + USER_FILTER_KEY + "%";
+        given(entityManager.createQuery(USER_FILTER_QUERY)).willReturn(query);
         given(query.setParameter("key", param)).willReturn(query);
         given(query.getResultList()).willReturn(null);
-        Query actualQuery = entityManager.createQuery(EMPLOYEE_FILTER_QUERY);
+        Query actualQuery = entityManager.createQuery(USER_FILTER_QUERY);
         actualQuery.setParameter("key", param);
         actualQuery.getResultList();
-        verify(entityManager).createQuery(EMPLOYEE_FILTER_QUERY);
+        verify(entityManager).createQuery(USER_FILTER_QUERY);
         verify(query).setParameter("key", param);
         verify(query).getResultList();
     }
 
     @Test
     void findAllActiveByKey_test() {
-        String param = "%" + EMPLOYEE_FILTER_KEY + "%";
-        given(entityManager.createQuery(EMPLOYEE_ACTIVE_FILTER_QUERY)).willReturn(query);
+        String param = "%" + USER_FILTER_KEY + "%";
+        given(entityManager.createQuery(USER_ACTIVE_FILTER_QUERY)).willReturn(query);
         given(query.setParameter("key", param)).willReturn(query);
         given(query.getResultList()).willReturn(null);
-        Query actualQuery = entityManager.createQuery(EMPLOYEE_ACTIVE_FILTER_QUERY);
+        Query actualQuery = entityManager.createQuery(USER_ACTIVE_FILTER_QUERY);
         actualQuery.setParameter("key", param);
         actualQuery.getResultList();
-        verify(entityManager).createQuery(EMPLOYEE_ACTIVE_FILTER_QUERY);
+        verify(entityManager).createQuery(USER_ACTIVE_FILTER_QUERY);
         verify(query).setParameter("key", param);
         verify(query).getResultList();
     }
