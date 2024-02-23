@@ -1,8 +1,7 @@
 package com.project.ems.experience;
 
-import com.project.ems.employee.EmployeeRepository;
 import com.project.ems.exception.ResourceNotFoundException;
-import com.project.ems.trainer.TrainerRepository;
+import com.project.ems.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -18,8 +17,7 @@ import static com.project.ems.constants.Constants.EXPERIENCE_NOT_FOUND;
 public class ExperienceServiceImpl implements ExperienceService {
 
     private final ExperienceRepository experienceRepository;
-    private final EmployeeRepository employeeRepository;
-    private final TrainerRepository trainerRepository;
+    private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -53,8 +51,7 @@ public class ExperienceServiceImpl implements ExperienceService {
     @Override
     public void deleteById(Integer id) {
         Experience experienceToDelete = findEntityById(id);
-        employeeRepository.findAllByExperiencesContains(experienceToDelete).forEach(employee -> employee.getExperiences().remove(experienceToDelete));
-        trainerRepository.findAllByExperiencesContains(experienceToDelete).forEach(trainer -> trainer.getExperiences().remove(experienceToDelete));
+        userRepository.findAllByExperiencesContains(experienceToDelete).forEach(user -> user.getExperiences().remove(experienceToDelete));
         experienceRepository.delete(experienceToDelete);
     }
 

@@ -1,50 +1,86 @@
 package com.project.ems.user;
 
 import com.project.ems.authority.Authority;
+import com.project.ems.employee.enums.EmploymentType;
+import com.project.ems.employee.enums.Grade;
+import com.project.ems.employee.enums.Position;
+import com.project.ems.experience.Experience;
 import com.project.ems.role.Role;
+import com.project.ems.study.Study;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "_user")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    protected Integer id;
 
     @Column(unique = true)
-    private String name;
+    protected String name;
 
     @Column(unique = true)
-    private String email;
+    protected String email;
 
-    private String password;
+    protected String password;
 
-    private String mobile;
+    protected String mobile;
 
-    private String address;
+    protected String address;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birthday;
+    protected LocalDate birthday;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    private Role role;
+    protected Role role;
 
     @ManyToMany
     @JoinTable(name = "user_authority",
           joinColumns = @JoinColumn(name = "user_id"),
           inverseJoinColumns = @JoinColumn(name = "authority_id"))
-    private List<Authority> authorities;
+    protected List<Authority> authorities;
 
-    private Boolean isActive;
+    protected Boolean isActive;
+
+    @Enumerated(EnumType.STRING)
+    protected EmploymentType employmentType;
+
+    @Enumerated(EnumType.STRING)
+    protected Position position;
+
+    @Enumerated(EnumType.STRING)
+    protected Grade grade;
+
+    protected Double salary;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    protected LocalDate hiredAt;
+
+    @ManyToMany
+    @JoinTable(name = "user_experience",
+          joinColumns = @JoinColumn(name = "user_id"),
+          inverseJoinColumns = @JoinColumn(name = "experience_id"))
+    protected List<Experience> experiences;
+
+    @ManyToMany
+    @JoinTable(name = "user_study",
+          joinColumns = @JoinColumn(name = "user_id"),
+          inverseJoinColumns = @JoinColumn(name = "study_id"))
+    protected List<Study> studies;
 }
